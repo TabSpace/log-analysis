@@ -1,0 +1,28 @@
+{
+  "name": "log-analysis",
+  "version": "0.0.0",
+  "description": "Generate report files for data.",
+  "main": "gruntfile.js",
+  "dependencies": {
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt": "~0.4.3"
+  },
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Esoul/log-analysis.git"
+  },
+  "author": "Tony.Liang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Esoul/log-analysis/issues"
+  },
+  "homepage": "https://github.com/Esoul/log-analysis"
+}
