@@ -6,8 +6,6 @@ define('lib/common/transport',function(require,exports,module){
 
 	var $ = require('lib');
 	var $layer = require('lib/common/layer');
-	var $channel = require('lib/common/channel');
-	var $attempt = require('lib/kit/util/attempt');
 	var $network = require('lib/kit/env/network');
 
 	//下面的选项中，未在 privatePropList 中列举的属性都会被传递给$.ajax方法
@@ -27,17 +25,26 @@ define('lib/common/transport',function(require,exports,module){
 
 	//下面的属性不会传递给$.ajax
 	var extraProp = {
-		name : '',					//接口名称
-		forceToRequest : false,		//强制请求该地址 
+		//接口名称
+		name : '',
+		//强制请求该地址 
+		forceToRequest : false,
 		//与后端约定，返回的json数据中，标记成功的status值
 		//其他均为失败
-		statusSuccess : 'A00006',	//标识成功的状态数据
-		timeout : 0,				//超时时间(ms)，为0则取消超时判断
-		autoExecuteError : false,	//自动处理错误码
-		autoExecuteFailure : false,	//自动处理请求失败的情况
-		onComplete : $.noop,		//无论成功失败，请求后都会执行的回调
-		onSuccess : $.noop,			//成功后执行的回调
-		onFailure : $.noop			//失败后执行的回调
+		//标识成功的状态数据
+		statusSuccess : 'A00006',
+		//超时时间(ms)，为0则取消超时判断
+		timeout : 0,
+		//自动处理错误码
+		autoExecuteError : true,
+		//自动处理请求失败的情况
+		autoExecuteFailure : true,
+		//无论成功失败，请求后都会执行的回调
+		onComplete : $.noop,
+		//成功后执行的回调
+		onSuccess : $.noop,
+		//失败后执行的回调
+		onFailure : $.noop
 	};
 
 	//privatePropList 中列举的属性不会被传递给$.ajax方法
@@ -96,7 +103,7 @@ define('lib/common/transport',function(require,exports,module){
 					data.code = data.code.toString();
 				}
 				if(conf.dataType === 'json' || conf.dataType === 'jsonp'){
-					if( data.code === conf.statusSuccess ){
+					if( data && data.code === conf.statusSuccess ){
 						this.success(data, {
 							status : textStatus,
 							xhr : jqXHR
@@ -162,56 +169,42 @@ define('lib/common/transport',function(require,exports,module){
 		},
 		complete : function(rs, extra){
 			var conf = this.conf;
-			$attempt(function(){
-				if(this.requesting){
-					conf.onComplete(rs, extra);
-				}
-			}, {
-				name : conf.name + ' ajax complete',
-				bind : this
-			});
+			if(this.requesting){
+				conf.onComplete(rs, extra);
+			}
 		},
 		success : function(rs, extra){
 			var conf = this.conf;
 			this.complete(rs, extra);
-			$attempt(function(){
-				if(this.requesting){
-					conf.onSuccess(rs, extra);
-				}
-			}, {
-				name : conf.name + ' ajax success',
-				bind : this
-			});
+			if(this.requesting){
+				conf.onSuccess(rs, extra);
+			}
 			this.detach();
 		},
 		failure : function(rs, extra){
 			var conf = this.conf;
 			this.complete(rs, extra);
-			$attempt(function(){
-				if(this.requesting){
-					conf.onFailure(rs, extra);
-					if(conf.autoExecuteError){
-						this.autoExecuteError(rs, extra);
-					}
-					if(conf.autoExecuteFailure){
-						this.autoExecuteFailure(rs, extra);
-					}
+			if(this.requesting){
+				conf.onFailure(rs, extra);
+				if(conf.autoExecuteError){
+					this.autoExecuteError(rs, extra);
 				}
-			}, {
-				name : conf.name + ' ajax failure',
-				bind : this
-			});
+				if(conf.autoExecuteFailure){
+					this.autoExecuteFailure(rs, extra);
+				}
+			}
 			this.detach();
 		},
 		//自动处理错误码
 		autoExecuteError : function(rs, extra){
-			var message = $.type(rs.msg) === 'string' ? rs.msg : '';
+			var message = '';
+			var code = '';
 			if(rs && rs.code){
-				if(rs.code === 'A00004'){
-					//需要登录
-					$channel.fire('need-login');
-				}else if(rs.code === '100002'){
-					$channel.fire('change-location', rs.data);
+				code = rs.code.toString();
+				message = $.type(rs.msg) === 'string' ? rs.msg : '';
+				//未登录需要跳转
+				if(code === '100001' && rs.data && rs.data.url){
+					window.location = rs.data.url;
 				}else if(message){
 					//通用错误处理
 					$layer.tip(message);
@@ -222,7 +215,7 @@ define('lib/common/transport',function(require,exports,module){
 		autoExecuteFailure : function(rs, extra){
 			if( (!rs || !rs.code) && extra){
 				if(extra.status === 'offline'){
-					$layer.tip('网络连接已断开，请检查网络连接');
+					$layer.tip('请检查网络连接');
 				}if(extra.status === 'timeout'){
 					$layer.tip('请求超时，请检查网络连接');
 				}else if(extra.status === 'abort'){
