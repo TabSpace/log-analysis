@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script>
+var $CONFIG = {
+	srcPath : 'src/',
+	dataPath : 'data/result.dat'
+};
+</script>
+<link rel="stylesheet" type="text/css" href="src/css/index.css">
+</head>
+<body>
+<div class="wrapper">
+	<section class="box sec-info">
+		<table>
+			<tr>
+				<td class="title">数据文件路径：</td>
+				<td class="path">&nbsp;</td>
+				<td class="operate"><input type="button" value="更新"/></td>
+			</tr>
+		</table>
+	</section>
+	<section class="box sec-menu">
+		<ul>
+			<li>控制</li>
+			<li>视图</li>
+			<li>数据</li>
+		</ul>
+	</section>
+	<section class="box sec-ctrl">
+		<h3>控制面板</h3>
+	</section>
+	<section class="box sec-view">
+		<h3>数据视图</h3>
+	</section>
+	<section class="box sec-list">
+		<h3>数据列表</h3>
+	</section>
+</div>
+<script src="src/js/lithe.js" data-config="/config.js" data-main="conf/page/index.js"></script>
+</body>
+</html>

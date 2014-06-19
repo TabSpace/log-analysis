@@ -3,4 +3,19 @@
 
 @import url('reset.css');
 
+body{font-size:12px;}
+.box{ margin: 10px; border-bottom: 1px solid #ddd; padding-bottom: 10px;}
+.box:last-child{border-bottom: none;}
+.box h3{font-size: 1.2em;}
+input[type="button"]{padding: 5px 10px; }
+
+.sec-info table{border-collapse:collapse; border-spacing: 0; font-size: 1.2em;width: 100%;}
+.sec-info td{word-break: break-all;}
+.sec-info .title{width: 100px;}
+.sec-info .path{padding-right: 10px;}
+.sec-info .operate{width: 80px;}
+
+.sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ddd; padding: 10px 20px;margin-right: 10px;}
+
+
 

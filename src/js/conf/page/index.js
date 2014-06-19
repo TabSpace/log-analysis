@@ -5,5 +5,8 @@
 define('conf/page/index',function(require,exports,module){
 	require('conf/global');
 
+	var $data = require('mods/model/data');
+
+
 });
 
