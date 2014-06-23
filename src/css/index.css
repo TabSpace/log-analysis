@@ -11,7 +11,7 @@ input[type="button"]{padding: 5px 10px; }
 
 .sec-menu{margin:10px;}
 .sec-menu ul{border-bottom: 1px solid #ddd;}
-.sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;}
-.sec-menu li.current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;}
+.sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
+.sec-menu .current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
 
 

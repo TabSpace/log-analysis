@@ -35,10 +35,28 @@ define('mods/view/menu',function(require,exports,module){
 			var conf = this.conf;
 			this.role('root').appendTo($(conf.parent));
 		},
+		setEvents : function(action){
+			var stage = this.stage;
+			var proxy = this.proxy();
+			this.delegate(action);
+			stage[action]('change:currentTab', proxy('checkTab'));
+		},
 		switchTab : function(evt){
 			var li = $(evt.currentTarget);
 			var role = li.attr('data-role');
 			this.stage.set('currentTab', role);
+		},
+		checkTab : function(){
+			var stage = this.stage;
+			var role = stage.get('currentTab');
+			this.role('root').find('li').each(function(){
+				var el = $(this);
+				if(el.attr('data-role') === role){
+					el.addClass('current');
+				}else{
+					el.removeClass('current');
+				}
+			});
 		}
 	});
 
