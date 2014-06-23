@@ -4,9 +4,8 @@
 @import url('reset.css');
 
 body{font-size:12px;}
-.box{ margin: 10px; border-bottom: 1px solid #ddd; padding-bottom: 10px;}
-.box:last-child{border-bottom: none;}
-.box h3{font-size: 1.2em;}
+.box{ margin: 10px; border-bottom: 1px solid #ddd; padding-bottom:10px;}
+.box h3{font-size: 1.2em;border-bottom: 1px solid #ddd;padding-bottom: 10px;}
 input[type="button"]{padding: 5px 10px; }
 
 .sec-menu{margin:10px;}

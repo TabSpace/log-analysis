@@ -7,7 +7,9 @@ define('mods/model/stage',function(require,exports,module){
 	var $model = require('lib/mvc/model');
 
 	var Stage = $model.extend({
-		currentTab : 'data'
+		defaults : {
+			currentTab : 'data'
+		}
 	});
 
 	module.exports = Stage;
