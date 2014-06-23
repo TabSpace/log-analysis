@@ -5,6 +5,7 @@
 define('mods/view/controlPanel',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
+	var $stage = require('mods/model/stage');
 
 	var TPL = {
 		box : [
@@ -17,13 +18,10 @@ define('mods/view/controlPanel',function(require,exports,module){
 	var ControlPanel = $view.extend({
 		defaults : {
 			name : 'control',
-			data : null,
-			stage : null,
 			parent : null,
 			template : TPL.box
 		},
 		build : function(){
-			this.stage = this.conf.stage;
 			this.insert();
 			this.checkVisible();
 		},
@@ -33,14 +31,13 @@ define('mods/view/controlPanel',function(require,exports,module){
 		},
 		setEvents : function(action){
 			var proxy = this.proxy();
-			var stage = this.stage;
 			this.delegate(action);
-			stage[action]('change:currentTab', proxy('checkVisible'));
+			$stage[action]('change:currentTab', proxy('checkVisible'));
 		},
 		checkVisible : function(){
 			var conf = this.conf;
 			var root = this.role('root');
-			var current = this.stage.get('currentTab');
+			var current = $stage.get('currentTab');
 			if(conf.name === current){
 				root.show();
 			}else{

@@ -5,11 +5,18 @@
 define('mods/view/dataPanel',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
+	var $stage = require('mods/model/stage');
 
 	var TPL = {
 		box : [
 			'<section class="box sec-ctrl" style="display:none;">',
 				'<h3>数据列表</h3>',
+				'<table class="pathm">',
+					'<tr>',
+						'<td class="path"><input data-role="data-path" type="text"/></td>',
+						'<td class="add"><input data-role="add-data" type="button" value="添加"/></td>',
+					'</tr>',
+				'</table>',
 			'</section>'
 		]
 	};
@@ -17,13 +24,10 @@ define('mods/view/dataPanel',function(require,exports,module){
 	var DataPanel = $view.extend({
 		defaults : {
 			name : 'data',
-			data : null,
-			stage : null,
 			parent : null,
 			template : TPL.box
 		},
 		build : function(){
-			this.stage = this.conf.stage;
 			this.insert();
 			this.checkVisible();
 		},
@@ -33,14 +37,13 @@ define('mods/view/dataPanel',function(require,exports,module){
 		},
 		setEvents : function(action){
 			var proxy = this.proxy();
-			var stage = this.stage;
 			this.delegate(action);
-			stage[action]('change:currentTab', proxy('checkVisible'));
+			$stage[action]('change:currentTab', proxy('checkVisible'));
 		},
 		checkVisible : function(){
 			var conf = this.conf;
 			var root = this.role('root');
-			var current = this.stage.get('currentTab');
+			var current = $stage.get('currentTab');
 			if(conf.name === current){
 				root.show();
 			}else{

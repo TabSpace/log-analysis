@@ -4,13 +4,18 @@
 @import url('reset.css');
 
 body{font-size:12px;}
-.box{ margin: 10px; border-bottom: 1px solid #ddd; padding-bottom:10px;}
+.box{ margin: 10px; border-bottom: 1px solid #ddd;}
 .box h3{font-size: 1.2em;border-bottom: 1px solid #ddd;padding-bottom: 10px;}
 input[type="button"]{padding: 5px 10px; }
+.fl{float:left;}
+.fr{float:right;}
 
 .sec-menu{margin:10px;}
 .sec-menu ul{border-bottom: 1px solid #ddd;}
 .sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
 .sec-menu .current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
 
+.pathm{padding: 10px 0;width: 100%;}
+.pathm .path input{width: 100%;}
+.pathm .add{width: 80px;text-align: right;}
 

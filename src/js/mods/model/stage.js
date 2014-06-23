@@ -12,7 +12,7 @@ define('mods/model/stage',function(require,exports,module){
 		}
 	});
 
-	module.exports = Stage;
+	module.exports = new Stage();
 
 });
 

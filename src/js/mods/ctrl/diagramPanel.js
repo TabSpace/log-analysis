@@ -9,16 +9,12 @@ define('mods/ctrl/diagramPanel',function(require,exports,module){
 
 	var DiagramPanel = $controller.extend({
 		defaults : {
-			data : null,
-			stage : null,
 			parent : null
 		},
 		build : function(){
 			var conf = this.conf;
 			var objs = this.objs;
 			objs.view = new $diagramView({
-				data : conf.data,
-				stage : conf.stage,
 				parent : conf.parent
 			});
 		}

@@ -5,6 +5,7 @@
 define('mods/view/menu',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
+	var $stage = require('mods/model/stage');
 
 	var TPL = {
 		box : [
@@ -20,7 +21,6 @@ define('mods/view/menu',function(require,exports,module){
 
 	var Menu = $view.extend({
 		defaults : {
-			stage : null,
 			parent : null,
 			template : TPL.box,
 			events : {
@@ -28,7 +28,6 @@ define('mods/view/menu',function(require,exports,module){
 			}
 		},
 		build : function(){
-			this.stage = this.conf.stage;
 			this.insert();
 		},
 		insert : function(){
@@ -36,19 +35,17 @@ define('mods/view/menu',function(require,exports,module){
 			this.role('root').appendTo($(conf.parent));
 		},
 		setEvents : function(action){
-			var stage = this.stage;
 			var proxy = this.proxy();
 			this.delegate(action);
-			stage[action]('change:currentTab', proxy('checkTab'));
+			$stage[action]('change:currentTab', proxy('checkTab'));
 		},
 		switchTab : function(evt){
 			var li = $(evt.currentTarget);
 			var role = li.attr('data-role');
-			this.stage.set('currentTab', role);
+			$stage.set('currentTab', role);
 		},
 		checkTab : function(){
-			var stage = this.stage;
-			var role = stage.get('currentTab');
+			var role = $stage.get('currentTab');
 			this.role('root').find('li').each(function(){
 				var el = $(this);
 				if(el.attr('data-role') === role){
