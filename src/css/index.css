@@ -15,7 +15,10 @@ input[type="button"]{padding: 5px 10px; }
 .sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
 .sec-menu .current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
 
+.confp{margin-left: 20px;font-size: 0.8em;}
+
 .pathm{padding: 10px 0;width: 100%;}
+.pathm .name{width: 60px;}
 .pathm .path input{width: 100%;}
 .pathm .add{width: 80px;text-align: right;}
 

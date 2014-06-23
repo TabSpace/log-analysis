@@ -10,9 +10,11 @@ define('mods/model/data',function(require,exports,module){
 
 	var Data = $model.extend({
 		defaults : {
-			name : '',
 			path : '',
 			data : null
+		},
+		build : function(){
+			this.request();
 		},
 		request : function(){
 			var that = this;
@@ -22,10 +24,10 @@ define('mods/model/data',function(require,exports,module){
 				url : path,
 				success : function(rs){
 					that.buildData(rs);
-					$tip('数据加载成功');
+					$tip(path + ':数据加载成功');
 				},
-				failure : function(rs){
-					$tip('数据加载失败');
+				error : function(rs){
+					$tip(path + ':数据加载失败');
 				}
 			});
 		},
