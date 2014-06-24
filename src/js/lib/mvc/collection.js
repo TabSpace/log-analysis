@@ -106,14 +106,7 @@ define('lib/mvc/collection',function(require,exports,module){
 			var item;
 			var data = this.data;
 			if(isIndex(index)){
-				item = data[index];
-				if($.isPlainObject(item)){
-					return $.extend(true, {}, item);
-				}else if($.isArray(item)){
-					return $.extend(true, [], item);
-				}else{
-					return item;
-				}
+				return data[index];
 			}else if(typeof index === 'undefined'){
 				if(data === undefined || data === null){
 					return data;
@@ -208,6 +201,7 @@ define('lib/mvc/collection',function(require,exports,module){
 	ArrMethods.remove = function(index, amount){
 		var data = this.data;
 		var length = data.length;
+		amount = amount || 1;
 		if(isIndex(index)){
 			AP.splice.apply(data, [index, amount]);
 			if(data.length !== length){
