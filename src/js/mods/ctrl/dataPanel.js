@@ -27,10 +27,8 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			this.delegate(action);
 			objs.view[action]('addDataSource', proxy('addDataSource'));
 		},
-		addDataSource : function(path){
+		addDataSource : function(path, blob){
 			var objs = this.objs;
-			path = $config.get('dataPath') + path;
-
 			var data = $root.get(path);
 			var sourceBox = objs.view.role('source-list');
 			var sourcePath = 'source:' + path;
@@ -38,14 +36,13 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 
 			if(data){
 				if(confirm('该数据记录已加载，需要重新加载吗？')){
-					if(data)
 					data.set('data', null);
-					data.request();
+					data.readBlob(blob);
 				}else{
 					return;
 				}
 			}else{
-				$root.addData(path);
+				$root.addData(path, blob);
 				data = $root.get(path);
 				sourceView = objs[sourcePath];
 				if(!sourceView){

@@ -13,25 +13,13 @@ define('mods/model/data',function(require,exports,module){
 			path : '',
 			data : null
 		},
-		build : function(){
-			this.request();
-		},
-		request : function(){
+		readBlob : function(blob){
 			var that = this;
-			var path = this.get('path');
-			$.ajax({
-				dataType : 'text',
-				url : path,
-				success : function(rs){
-					that.buildData(rs);
-					$tip(path + ':数据加载成功');
-				},
-				error : function(rs){
-					$tip(path + ':数据加载失败');
-					that.trigger('destroy');
-					that.destroy();
-				}
-			});
+			var reader = new FileReader();
+			reader.readAsText(blob);
+			reader.onload = function(){
+				that.buildData(reader.result);
+			};
 		},
 		buildData : function(text){
 			var list = text.split(/[\r\n]/);

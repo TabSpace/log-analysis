@@ -28,18 +28,23 @@ input[type="button"]{padding: 5px 10px; }
 .w100{width: 100%;}
 .h100{height: 100%;}
 
-h3{font-size: 1.2em;}
+h1{font-size: 1.6em; font-weight: bold;}
+h2{font-size: 1.5em; font-weight: bold;}
+h3{font-size: 1.4em; font-weight: bold;}
+h4{font-size: 1.3em; font-weight: bold;}
+h5{font-size: 1.2em; font-weight: bold;}
+h6{font-size: 1.1em; font-weight: bold;}
 a.button{cursor: pointer; color:#428ad1;margin: 0 3px;}
 a.button:hover{text-decoration: underline;}
 
+/* 导航TAB菜单 */
 .sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
 .sec-menu .current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
 
-.confp{margin-left: 20px;font-size: 0.8em;}
+/* 数据源路径管理表单 */
+.pathm .add{text-align: right;}
 
-.pathm .name{width: 60px;}
-.pathm .add{width: 80px;text-align: right;}
-
+/* 列表中展示的表格 */
 .list table{background: #ddd;border-spacing: 1px;}
 .list th{text-align: center;}
 .list th, .list td{background: #fff;padding: 5px;}

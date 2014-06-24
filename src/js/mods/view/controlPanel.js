@@ -10,7 +10,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 
 	var TPL = $tpl({
 		box : [
-			'<section class="m10 bdb1 sec-ctrl" style="display:none;">',
+			'<section class="m10 sec-ctrl" style="display:none;">',
 				'<h3 class="pd1 pb10 bdb1">控制面板</h3>',
 			'</section>'
 		]

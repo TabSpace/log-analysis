@@ -9,7 +9,7 @@ define('mods/model/config',function(require,exports,module){
 
 	var Config = $model.extend({
 		defaults : {
-			dataPath : 'data/'
+
 		}
 	});
 

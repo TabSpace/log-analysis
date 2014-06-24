@@ -14,17 +14,19 @@ define('mods/view/dataPanel',function(require,exports,module){
 
 	var TPL = $tpl({
 		box : [
-			'<section class="m10 bdb1 sec-ctrl" style="display:none;">',
-				'<h3 class="pd1 pb10 bdb1">数据列表<span class="confp">数据路径：<cite data-role="conf-path"></cite></span></h3>',
-				'<table class="bdb1 w100 pt10 pb10 pathm">',
-					'<tr>',
-						'<td class="name">数据路径：</td>',
-						'<td class="path"><input class="w100" data-role="data-path" type="text"/></td>',
-						'<td class="add"><input data-role="add-data" type="button" value="添加"/></td>',
-					'</tr>',
-				'</table>',
-				'<div class="pt10 pb10 list" data-role="source-list" style="display:none;"></div>',
-				'<div class="pt10 pb10 list" data-role="pipe-list" style="display:none;"></div>',
+			'<section class="m10 sec-ctrl" style="display:none;">',
+				'<h3 class="pd1 pb10 bdb1">数据列表</h3>',
+				'<div class="bdb1">',
+					'<table class="pt10 pb10 pathm">',
+						'<tr>',
+							'<td class="name">数据源：</td>',
+							'<td class="path"><input data-role="data-path" type="file" vlaue="添加数据"/></td>',
+							'<td class="add"><input data-role="add-data" type="button" value="添加"/></td>',
+						'</tr>',
+					'</table>',
+				'</div>',
+				'<div class="pt10 pb10 list" data-role="source-list"></div>',
+				'<div class="pt10 pb10 list" data-role="pipe-list"></div>',
 			'</section>'
 		],
 		sourceList : [
@@ -63,7 +65,6 @@ define('mods/view/dataPanel',function(require,exports,module){
 		build : function(){
 			this.insert();
 			this.checkVisible();
-			this.renderDataPath();
 		},
 		insert : function(){
 			var conf = this.conf;
@@ -73,7 +74,6 @@ define('mods/view/dataPanel',function(require,exports,module){
 			var proxy = this.proxy();
 			this.delegate(action);
 			$stage[action]('change:currentTab', proxy('checkVisible'));
-			$config[action]('change:dataPath', proxy('renderDataPath'));
 			$root[action]('change', proxy('renderSourceList'));
 		},
 		checkVisible : function(){
@@ -88,16 +88,13 @@ define('mods/view/dataPanel',function(require,exports,module){
 		},
 		addDataSource : function(){
 			var elPath = this.role('data-path');
+			var input = elPath.get(0);
 			var path = elPath.val().trim();
-			if(!path){
-				$tip('请填写数据路径');
+			if(!path || !input.files.length){
+				$tip('请选择数据文件');
 			}else{
-				this.trigger('addDataSource', path);
+				this.trigger('addDataSource', path, input.files[0]);
 			}
-		},
-		renderDataPath : function(){
-			var elConfPath = this.role('conf-path');
-			elConfPath.html($config.get('dataPath'));
 		},
 		renderSourceList : function(){
 			var template = TPL.get('sourceList');

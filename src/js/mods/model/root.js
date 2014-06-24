@@ -12,7 +12,7 @@ define('mods/model/root',function(require,exports,module){
 		defaults : {
 
 		},
-		addData : function(path){
+		addData : function(path, blob){
 			var that = this;
 			var data = new $data({
 				path : path
@@ -24,6 +24,7 @@ define('mods/model/root',function(require,exports,module){
 				that.removeData(path);
 			});
 			this.set(path, data);
+			data.readBlob(blob);
 		},
 		removeData : function(path){
 			var data = this.get(path);
