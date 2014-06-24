@@ -24,6 +24,7 @@ define('mods/view/dataPanel',function(require,exports,module){
 					'</tr>',
 				'</table>',
 				'<div class="pt10 pb10 list" data-role="source-list" style="display:none;"></div>',
+				'<div class="pt10 pb10 list" data-role="pipe-list" style="display:none;"></div>',
 			'</section>'
 		],
 		sourceList : [

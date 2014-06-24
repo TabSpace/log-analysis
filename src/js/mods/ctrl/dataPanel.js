@@ -8,6 +8,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 	var $dataView = require('mods/view/dataPanel');
 	var $root = require('mods/model/root');
 	var $config = require('mods/model/config');
+	var $sourceView = require('mods/view/source');
 
 	var DataPanel = $controller.extend({
 		defaults : {
@@ -27,8 +28,34 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			objs.view[action]('addDataSource', proxy('addDataSource'));
 		},
 		addDataSource : function(path){
+			var objs = this.objs;
 			path = $config.get('dataPath') + path;
-			$root.addData(path);
+
+			var data = $root.get(path);
+			var sourceBox = objs.view.role('source-list');
+			var sourcePath = 'source:' + path;
+			var sourceView;
+
+			if(data){
+				if(confirm('该数据记录已加载，需要重新加载吗？')){
+					if(data)
+					data.set('data', null);
+					data.request();
+				}else{
+					return;
+				}
+			}else{
+				$root.addData(path);
+				data = $root.get(path);
+				sourceView = objs[sourcePath];
+				if(!sourceView){
+					sourceView = new $sourceView({
+						parent : sourceBox,
+						model : data
+					});
+					objs[sourcePath] = sourceView;
+				}
+			}
 		}
 	});
 

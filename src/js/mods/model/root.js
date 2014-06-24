@@ -12,30 +12,17 @@ define('mods/model/root',function(require,exports,module){
 		defaults : {
 
 		},
-		createData : function(path){
-			return new $data({
-				path : path
-			});
-		},
 		addData : function(path){
 			var that = this;
-			var data = this.get(path);
-			if(data){
-				if(confirm('该数据记录已加载，需要重新加载吗？')){
-					data.set('data', null);
-					data.request();
-				}else{
-					return;
-				}
-			}else{
-				data = this.createData(path);
-				data.on('change', function(){
-					that.trigger('change');
-				});
-				data.on('destroy', function(){
-					that.removeData(path);
-				});
-			}
+			var data = new $data({
+				path : path
+			});
+			data.on('change', function(){
+				that.trigger('change');
+			});
+			data.on('destroy', function(){
+				that.removeData(path);
+			});
 			this.set(path, data);
 		},
 		removeData : function(path){

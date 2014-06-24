@@ -136,7 +136,11 @@ define('lib/mvc/model',function(require,exports,module){
 		},
 		//获取模型上设置的所有键名
 		keys : function(){
-			return Object.keys(this.data);
+			if($.isPlainObject(this.data)){
+				return Object.keys(this.data);
+			}else{
+				return [];
+			}
 		},
 		//删除模型上的一个键
 		remove : function(key){
@@ -146,7 +150,7 @@ define('lib/mvc/model',function(require,exports,module){
 		},
 		//清除模型中所有数据
 		clear : function(){
-			Object.keys(this.data).forEach(this.remove, this);
+			this.keys().forEach(this.remove, this);
 		},
 		destroy : function(){
 			this.changed = false;
