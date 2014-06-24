@@ -6,18 +6,19 @@ define('mods/view/menu',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
 	var $stage = require('mods/model/stage');
+	var $tpl = require('lib/kit/util/template');
 
-	var TPL = {
+	var TPL = $tpl({
 		box : [
-			'<section class="sec-menu">',
-				'<ul>',
+			'<section class="m10 sec-menu">',
+				'<ul class="bdb1">',
 					'<li class="current" data-role="data">数据</li>',
 					'<li data-role="view">视图</li>',
 					'<li data-role="control">控制</li>',
 				'</ul>',
 			'</section>'
 		]
-	};
+	});
 
 	var Menu = $view.extend({
 		defaults : {

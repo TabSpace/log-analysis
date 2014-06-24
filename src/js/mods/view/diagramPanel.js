@@ -6,14 +6,15 @@ define('mods/view/diagramPanel',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
 	var $stage = require('mods/model/stage');
+	var $tpl = require('lib/kit/util/template');
 
-	var TPL = {
+	var TPL = $tpl({
 		box : [
-			'<section class="box sec-ctrl" style="display:none;">',
-				'<h3>数据视图</h3>',
+			'<section class="m10 bdb1 sec-ctrl" style="display:none;">',
+				'<h3 class="pd1 pb10 bdb1">数据视图</h3>',
 			'</section>'
 		]
-	};
+	});
 
 	var DiagramPanel = $view.extend({
 		defaults : {
