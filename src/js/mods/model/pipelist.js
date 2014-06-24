@@ -47,7 +47,7 @@ define('mods/model/pipelist',function(require,exports,module){
 		removePipe : function(name){
 			var index = this.getPipeIndex(name);
 			var pipe = this.getPipeByIndex(index);
-			pipe.off();
+			pipe.destroy();
 			this.remove(index);
 		}
 	});

@@ -9,6 +9,8 @@ define('mods/view/dataPanel',function(require,exports,module){
 	var $config = require('mods/model/config');
 	var $tip = require('mods/dialog/tip');
 	var $tpl = require('lib/kit/util/template');
+	var $root = require('mods/model/root');
+	var $mustache = require('lib/more/mustache');
 
 	var TPL = $tpl({
 		box : [
@@ -21,11 +23,27 @@ define('mods/view/dataPanel',function(require,exports,module){
 						'<td class="add"><input data-role="add-data" type="button" value="添加"/></td>',
 					'</tr>',
 				'</table>',
-				'<div class="slist"></div>',
+				'<div class="pt10 pb10 list" data-role="source-list" style="display:none;"></div>',
 			'</section>'
 		],
 		sourceList : [
-
+			'<table>',
+				'<tr>',
+					'<th>路径</th>',
+					'<th>数据量</th>',
+					'<th>操作</th>',
+				'</tr>',
+				'{{#.}}',
+				'<tr>',
+					'<td data-role="source-path">{{path}}</td>',
+					'<td>{{count}}</td>',
+					'<td>',
+						'<a class="button" data-role="source-del">移除</a>',
+						'<a class="button" data-role="source-generate">生成</a>',
+					'</td>',
+				'</tr>',
+				'{{/.}}',
+			'</table>'
 		]
 	});
 
@@ -36,7 +54,9 @@ define('mods/view/dataPanel',function(require,exports,module){
 			template : TPL.box,
 			events : {
 				'[data-role="add-data"] tap' : 'addDataSource',
-				'[data-role="data-path"] keydown' : 'checkKey'
+				'[data-role="data-path"] keydown' : 'checkKey',
+				'[data-role="source-del"] tap' : 'delDataSource',
+				'[data-role="source-generate"] tap' : 'generatePipeData'
 			}
 		},
 		build : function(){
@@ -53,6 +73,7 @@ define('mods/view/dataPanel',function(require,exports,module){
 			this.delegate(action);
 			$stage[action]('change:currentTab', proxy('checkVisible'));
 			$config[action]('change:dataPath', proxy('renderDataPath'));
+			$root[action]('change', proxy('renderSourceList'));
 		},
 		checkVisible : function(){
 			var conf = this.conf;
@@ -77,11 +98,45 @@ define('mods/view/dataPanel',function(require,exports,module){
 			var elConfPath = this.role('conf-path');
 			elConfPath.html($config.get('dataPath'));
 		},
+		renderSourceList : function(){
+			var template = TPL.get('sourceList');
+			var pathes = $root.keys();
+			var elSourceList = this.role('source-list');
+			if(pathes.length){
+				elSourceList.show();
+			}else{
+				elSourceList.hide();
+			}
+			pathes = pathes.map(function(path){
+				var item = {};
+				var data = $root.get(path);
+				item.path = path;
+				item.count = $.isArray(data.get('data')) ? data.get('data').length : 0;
+				return item;
+			});
+			var html = $mustache.render(template, pathes);
+			elSourceList.html(html);
+		},
 		checkKey : function(evt){
 			var code = evt.keyCode + '';
 			if(code === '13'){
 				this.addDataSource();
 			}
+		},
+		getSourceData : function(evt){
+			var target = $(evt.currentTarget);
+			var tr = target.parents('tr');
+			var pathNode = tr.find('[data-role="source-path"]');
+			var path = pathNode.html();
+			return $root.get(path);
+		},
+		generatePipeData : function(evt){
+
+		},
+		delDataSource : function(evt){
+			var data = this.getSourceData(evt);
+			var path = data.get('path');
+			$root.removeData(path);
 		}
 	});
 

@@ -29,6 +29,8 @@ input[type="button"]{padding: 5px 10px; }
 .h100{height: 100%;}
 
 h3{font-size: 1.2em;}
+a.button{cursor: pointer; color:#428ad1;margin: 0 3px;}
+a.button:hover{text-decoration: underline;}
 
 .sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
 .sec-menu .current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
@@ -37,4 +39,13 @@ h3{font-size: 1.2em;}
 
 .pathm .name{width: 60px;}
 .pathm .add{width: 80px;text-align: right;}
+
+.list table{background: #ddd;border-spacing: 1px;}
+.list th{text-align: center;}
+.list th, .list td{background: #fff;padding: 5px;}
+
+
+
+
+
 

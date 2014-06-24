@@ -28,6 +28,8 @@ define('mods/model/data',function(require,exports,module){
 				},
 				error : function(rs){
 					$tip(path + ':数据加载失败');
+					that.trigger('destroy');
+					that.destroy();
 				}
 			});
 		},
