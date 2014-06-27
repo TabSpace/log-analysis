@@ -6,11 +6,8 @@ define('mods/view/dataPanel',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
 	var $stage = require('mods/model/stage');
-	var $config = require('mods/model/config');
 	var $tip = require('mods/dialog/tip');
 	var $tpl = require('lib/kit/util/template');
-	var $root = require('mods/model/root');
-	var $mustache = require('lib/more/mustache');
 
 	var TPL = $tpl({
 		box : [
@@ -25,28 +22,9 @@ define('mods/view/dataPanel',function(require,exports,module){
 						'</tr>',
 					'</table>',
 				'</div>',
-				'<div class="pt10 pb10 list" data-role="source-list"></div>',
-				'<div class="pt10 pb10 list" data-role="pipe-list"></div>',
+				'<div class="list" data-role="source-list"></div>',
+				'<div class="list" data-role="pipe-list"></div>',
 			'</section>'
-		],
-		sourceList : [
-			'<table>',
-				'<tr>',
-					'<th>路径</th>',
-					'<th>数据量</th>',
-					'<th>操作</th>',
-				'</tr>',
-				'{{#.}}',
-				'<tr>',
-					'<td data-role="source-path">{{path}}</td>',
-					'<td>{{count}}</td>',
-					'<td>',
-						'<a class="button" data-role="source-del">移除</a>',
-						'<a class="button" data-role="source-generate">生成</a>',
-					'</td>',
-				'</tr>',
-				'{{/.}}',
-			'</table>'
 		]
 	});
 
@@ -57,9 +35,7 @@ define('mods/view/dataPanel',function(require,exports,module){
 			template : TPL.box,
 			events : {
 				'[data-role="add-data"] tap' : 'addDataSource',
-				'[data-role="data-path"] keydown' : 'checkKey',
-				'[data-role="source-del"] tap' : 'delDataSource',
-				'[data-role="source-generate"] tap' : 'generatePipeData'
+				'[data-role="data-path"] keydown' : 'checkKey'
 			}
 		},
 		build : function(){
@@ -74,7 +50,6 @@ define('mods/view/dataPanel',function(require,exports,module){
 			var proxy = this.proxy();
 			this.delegate(action);
 			$stage[action]('change:currentTab', proxy('checkVisible'));
-			$root[action]('change', proxy('renderSourceList'));
 		},
 		checkVisible : function(){
 			var conf = this.conf;
@@ -96,45 +71,11 @@ define('mods/view/dataPanel',function(require,exports,module){
 				this.trigger('addDataSource', path, input.files[0]);
 			}
 		},
-		renderSourceList : function(){
-			var template = TPL.get('sourceList');
-			var pathes = $root.keys();
-			var elSourceList = this.role('source-list');
-			if(pathes.length){
-				elSourceList.show();
-			}else{
-				elSourceList.hide();
-			}
-			pathes = pathes.map(function(path){
-				var item = {};
-				var data = $root.get(path);
-				item.path = path;
-				item.count = $.isArray(data.get('data')) ? data.get('data').length : 0;
-				return item;
-			});
-			var html = $mustache.render(template, pathes);
-			elSourceList.html(html);
-		},
 		checkKey : function(evt){
 			var code = evt.keyCode + '';
 			if(code === '13'){
 				this.addDataSource();
 			}
-		},
-		getSourceData : function(evt){
-			var target = $(evt.currentTarget);
-			var tr = target.parents('tr');
-			var pathNode = tr.find('[data-role="source-path"]');
-			var path = pathNode.html();
-			return $root.get(path);
-		},
-		generatePipeData : function(evt){
-
-		},
-		delDataSource : function(evt){
-			var data = this.getSourceData(evt);
-			var path = data.get('path');
-			$root.removeData(path);
 		}
 	});
 
