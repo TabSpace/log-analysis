@@ -60,6 +60,7 @@ define('mods/view/source',function(require,exports,module){
 				this.list.update(data);
 			}else{
 				this.list = new $dataList({
+					name : this.model.get('path'),
 					parent : this.role('list'),
 					data : data
 				});
