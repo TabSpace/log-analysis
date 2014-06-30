@@ -46,11 +46,11 @@ a.button:hover{text-decoration: underline;}
 /* 数据源路径管理表单 */
 .pathm .add{text-align: right;}
 
-/* 列表中展示的表格 */
-.list table{background: #ddd;border-spacing: 1px;}
-.list th{text-align: center;}
-.list th, .list td{background: #fff;padding: 5px;}
-
+/* 分页列表中展示的表格 */
+.page table{background: #ccc;border-spacing: 1px;}
+.page th{text-align: center; background: #eee;padding: 2px 5px;}
+.page td{background: #fff; padding: 0 5px;}
+.page tr:hover td{background: #ffd;}
 
 
 

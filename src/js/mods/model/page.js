@@ -47,7 +47,6 @@ define('mods/model/page',function(require,exports,module){
 		compute : function(){
 			var page = this.get('page');
 			var data = this.get('data');
-			console.log('compute:', data);
 			if(!data){return;}
 			if($.type(page) !== 'number'){
 				page = parseInt(page, 10) || 0;

@@ -11,7 +11,7 @@ define('mods/view/datalist',function(require,exports,module){
 
 	var TPL = $tpl({
 		box : [
-			'<div class="datalist">',
+			'<div class="page">',
 				'<div data-role="pagelist">计算中...</div>',
 				'<div data-role="page"></div>',
 			'</div>'
@@ -49,11 +49,11 @@ define('mods/view/datalist',function(require,exports,module){
 			if($.isArray(data)){
 				data = data.map(function(item, index){
 					if($.type(item) === 'object'){
-						item.i = index + 1;
+						item.index = index + 1;
 						return item;
 					}else{
 						return {
-							i : index + 1,
+							index : index + 1,
 							value : item
 						};
 					}
@@ -115,7 +115,7 @@ define('mods/view/datalist',function(require,exports,module){
 					listHead.push('<tr>');
 					listTpl.push('{{#.}}<tr>');
 					props.forEach(function(prop){
-						listHead.push('<td>' + prop + '</td>');
+						listHead.push('<th>' + prop + '</th>');
 						listTpl.push('<td>{{' + prop + '}}</td>');
 					});
 					listHead.push('</tr>');
