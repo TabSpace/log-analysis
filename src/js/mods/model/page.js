@@ -101,9 +101,8 @@ define('mods/model/page',function(require,exports,module){
 				var target = page;
 				var pagePrev = [];
 				var pageNext = [];
-
 				around.push({page : target, type : 'current'});
-				for(index = 0; index < aroundCount && index < totalPage; index ++){
+				for(index = 0; index < aroundCount - 1 && index < totalPage; index ++){
 					if(page - index - 1 >= 1){
 						pagePrev.push(page - index - 1);
 					}
@@ -111,11 +110,13 @@ define('mods/model/page',function(require,exports,module){
 						pageNext.push(page + index + 1);
 					}
 					if(index % 2 === 0){
-						target = pagePrev.pop() || pageNext.pop();
+						target = pagePrev.shift() || pageNext.shift();
 					}else{
-						target = pageNext.pop() || pagePrev.pop();
+						target = pageNext.shift() || pagePrev.shift();
 					}
-					if(target){
+					if(target < page){
+						around.unshift({page : target});
+					}else{
 						around.push({page : target});
 					}
 				}
