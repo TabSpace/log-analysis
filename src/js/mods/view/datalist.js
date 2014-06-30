@@ -169,9 +169,10 @@ define('mods/view/datalist',function(require,exports,module){
 
 		},
 		destroy : function(){
-			DataList.superclass.destroy.apply(this,arguments);
 			this.page.destroy();
+			this.role('root').remove();
 			delete this.page;
+			DataList.superclass.destroy.apply(this,arguments);
 		}
 	});
 

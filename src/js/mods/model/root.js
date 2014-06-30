@@ -9,9 +9,7 @@ define('mods/model/root',function(require,exports,module){
 	var $data = require('mods/model/data');
 
 	var Root = $model.extend({
-		defaults : {
-
-		},
+		defaults : {},
 		addData : function(path, blob){
 			var that = this;
 			var data = new $data({
@@ -28,8 +26,8 @@ define('mods/model/root',function(require,exports,module){
 		},
 		removeData : function(path){
 			var data = this.get(path);
-			this.remove(path);
 			data.destroy();
+			this.remove(path);
 		}
 	});
 

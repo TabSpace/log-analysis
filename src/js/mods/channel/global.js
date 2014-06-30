@@ -7,6 +7,6 @@ define('mods/channel/global',function(require,exports,module){
 
 	var $listener = require('lib/common/listener');
 	module.exports = new $listener([
-
+		'remove-source'
 	]);
 });

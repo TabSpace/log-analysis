@@ -9,6 +9,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 	var $root = require('mods/model/root');
 	var $config = require('mods/model/config');
 	var $sourceView = require('mods/view/source');
+	var $channel = require('mods/channel/global');
 
 	var DataPanel = $controller.extend({
 		defaults : {
@@ -26,6 +27,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			var proxy = this.proxy();
 			this.delegate(action);
 			objs.view[action]('addDataSource', proxy('addDataSource'));
+			$channel[action]('remove-source', proxy('removeDataSource'));
 		},
 		addDataSource : function(path, blob){
 			var objs = this.objs;
@@ -53,6 +55,11 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 					objs[sourcePath] = sourceView;
 				}
 			}
+		},
+		removeDataSource : function(path){
+			var sourcePath = 'source:' + path;
+			delete this.objs[sourcePath];
+			$root.removeData(path);
 		}
 	});
 
