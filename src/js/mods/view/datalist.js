@@ -12,13 +12,30 @@ define('mods/view/datalist',function(require,exports,module){
 	var TPL = $tpl({
 		box : [
 			'<div class="page">',
+				'<div data-role="page" class="pn"></div>',
 				'<div data-role="pagelist">计算中...</div>',
-				'<div data-role="page"></div>',
 			'</div>'
 		],
 		page : [
-
-		]
+			'<div class="pinfo">',
+				'<span>总页数：</span>',
+				'<span>{{totalPage}}</span>',
+			'</div>',
+			'<a class="split"></a>',
+			'<div class="pinfo">',
+				'<span>跳转到：</span>',
+				'<input type="text" value="{{page}}"/>',
+			'</div>',
+			'<div class="pinfo">',
+				'<a data-page="{{first}}" class="{{firstEnable}}">首页</a>',
+				'<a data-page="{{prev}}" class="{{prevEnable}}">上一页</a>',
+				'<a data-page="{{next}}" class="{{nextEnable}}">下一页</a>',
+				'<a data-page="{{last}}" class="{{lastEnable}}">末页</a>',
+			'</div>',
+			'<a class="split"></a>',
+			'<div class="pinfo {{aroundEnable}}">{{{aroundpage}}}</div>'
+		],
+		around : '{{#.}}<a data-page="{{page}}" class="{{type}}">{{page}}</a>{{/.}}'
 	});
 
 	var DataList = $view.extend({
@@ -26,7 +43,10 @@ define('mods/view/datalist',function(require,exports,module){
 			name : '',
 			parent : null,
 			data : null,
-			template : TPL.box
+			template : TPL.box,
+			events : {
+				'a[data-page] tap' : 'checkPage'
+			}
 		},
 		build : function(){
 			var conf = this.conf;
@@ -43,6 +63,16 @@ define('mods/view/datalist',function(require,exports,module){
 			this.delegate(action);
 			if(page){
 				page[action]('change', proxy('renderPage'));
+			}
+		},
+		checkPage : function(evt){
+			var el = $(evt.currentTarget);
+			var page = el.attr('data-page');
+			var disabled = el.hasClass('false') || el.hasClass('current') || el.hasClass('split');
+			if(disabled){return;}
+			page = parseInt(page, 10) || 1;
+			if(this.page){
+				this.page.set('page', page);
 			}
 		},
 		formatArrData : function(data){
@@ -63,16 +93,14 @@ define('mods/view/datalist',function(require,exports,module){
 		},
 		update : function(data){
 			var conf = this.conf;
+			if(!this.page){
+				this.page = new $page({
+					data : data
+				});
+			}
 			if($.isArray(data)){
 				data = this.formatArrData(data);
-				if(!this.page){
-					this.page = new $page({
-						data : data
-					});
-					this.renderPage();
-				}else{
-					this.page.set('data', data);
-				}
+				this.page.set('data', data);
 			}else{
 				this.renderValue(data);
 			}
@@ -89,6 +117,7 @@ define('mods/view/datalist',function(require,exports,module){
 			].forEach(function(prop){
 				data[prop] = page.get(prop);
 			});
+			data.aroundpage = $mustache.render(TPL.get('around'), data.around);
 			return data;
 		},
 		renderPage : function(){
@@ -102,9 +131,6 @@ define('mods/view/datalist',function(require,exports,module){
 			var pageTpl = TPL.get('page');
 			var firstItem;
 			var props;
-
-
-			console.log('pageData', pageData);
 
 			if(!list || list.length === 0){
 				listHtml = '<tr><td class="warn">列表为空</td></tr>';
@@ -128,10 +154,16 @@ define('mods/view/datalist',function(require,exports,module){
 			}
 
 			listHtml = '<table>' + listHtml + '</table>';
+			pageHtml = $mustache.render(pageTpl, pageData);
+
+			if(pageData.pageEnable){
+				this.role('page').show();
+			}else{
+				this.role('page').hide();
+			}
 
 			this.role('pagelist').html(listHtml);
 			this.role('page').html(pageHtml);
-
 		},
 		renderValue : function(data){
 

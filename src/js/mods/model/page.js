@@ -27,7 +27,7 @@ define('mods/model/page',function(require,exports,module){
 			nextEnable : false,
 			aroundEnable : false,
 
-			aroundCount : 9,
+			aroundCount : 7,
 			pageSize : 10,
 			list : null,
 			data : null
@@ -57,7 +57,6 @@ define('mods/model/page',function(require,exports,module){
 				this.set('page', 1);
 				return;
 			}
-
 			
 			var pageSize = this.get('pageSize');
 			var totalCount = data.length;
@@ -95,13 +94,15 @@ define('mods/model/page',function(require,exports,module){
 				pageEnable = true;
 				prevEnable = prev !== null;
 				nextEnable = next !== null;
-				firstEnable = first !== 1;
-				lastEnable = last !== totalPage;
+				firstEnable = (first !== page) && (first >= 1);
+				lastEnable = (last !== 1) && (page !== last);
 
 				around = [];
 				var target = page;
 				var pagePrev = [];
 				var pageNext = [];
+
+				around.push({page : target, type : 'current'});
 				for(index = 0; index < aroundCount && index < totalPage; index ++){
 					if(page - index - 1 >= 1){
 						pagePrev.push(page - index - 1);
@@ -109,17 +110,13 @@ define('mods/model/page',function(require,exports,module){
 					if(page + index + 1 <= totalPage){
 						pageNext.push(page + index + 1);
 					}
-					if(around.length <= 0){
-						around.push({page : target, type : 'current'});
+					if(index % 2 === 0){
+						target = pagePrev.pop() || pageNext.pop();
 					}else{
-						if(index % 2 === 0){
-							target = pagePrev.pop() || pageNext.pop();
-						}else{
-							target = pageNext.pop() || pagePrev.pop();
-						}
-						if(target){
-							around.push({page : target});
-						}
+						target = pageNext.pop() || pagePrev.pop();
+					}
+					if(target){
+						around.push({page : target});
 					}
 				}
 
@@ -137,7 +134,7 @@ define('mods/model/page',function(require,exports,module){
 					around.push({page : totalPage, type : 'last'});
 				}
 
-				aroundEnable = around.length > 1;
+				aroundEnable = totalPage > 1;
 			}
 
 			this.set({

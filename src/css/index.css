@@ -52,7 +52,17 @@ a.button:hover{text-decoration: underline;}
 .page td{background: #fff; padding: 0 5px;}
 .page tr:hover td{background: #ffd;}
 
-
-
-
+/* 分页列表中展示的页码 */
+.page .pn{margin-bottom: 5px;}
+.page .pn .pinfo{display: inline-block;margin-right: 5px;}
+.page .pn .pinfo input{text-align: center;width: 50px;}
+.page .pn a{display: inline-block; padding:0 5px; border: 1px solid #ddd; height: 20px; cursor: pointer;line-height: 20px;vertical-align: middle; text-align: center; margin-right: 5px;}
+.page .pn a:hover{background: #ffd;}
+.page .pn a.false{color:#999; opacity:0.5; cursor: default;}
+.page .pn a.false:hover{background: none;}
+.page .pn a.split{border: none; cursor: default;padding: 0;}
+.page .pn a.split:hover{background: none;}
+.page .pn a.current{cursor: default;background: #ddd;}
+.page .pn a.current:hover{background: #ddd;}
+.page .pn div.false{display: none;}
 
