@@ -37,6 +37,7 @@ h6{font-size: 1.1em; font-weight: bold;}
 a.button{cursor: pointer; color:#428ad1;margin: 0 3px;}
 a.button:hover{text-decoration: underline;}
 
+input[type="file"]{width: 150px;}
 .box{overflow: hidden;}
 
 /* 导航TAB菜单 */
@@ -53,6 +54,7 @@ a.button:hover{text-decoration: underline;}
 .page tr:hover td{background: #ffd;}
 
 /* 分页列表中展示的页码 */
+.page .pl{overflow:auto;-webkit-overflow-scrolling:touch;}
 .page .pn{margin-bottom: 5px;}
 .page .pn .pinfo{display: inline-block;margin-right: 5px;}
 .page .pn .pinfo input{text-align: center;width: 50px;}

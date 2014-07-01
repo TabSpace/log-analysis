@@ -13,7 +13,7 @@ define('mods/view/datalist',function(require,exports,module){
 		box : [
 			'<div class="page">',
 				'<div data-role="page" class="pn"></div>',
-				'<div data-role="pagelist">计算中...</div>',
+				'<div data-role="pagelist" class="pl">计算中...</div>',
 			'</div>'
 		],
 		page : [
