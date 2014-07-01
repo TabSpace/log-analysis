@@ -33,33 +33,31 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			var objs = this.objs;
 			var data = $root.get(path);
 			var sourceBox = objs.view.role('source-list');
-			var sourcePath = 'source:' + path;
 			var sourceView;
 
 			if(data){
-				if(confirm('该数据记录已加载，需要重新加载吗？')){
+				if(blob && confirm('该数据记录已加载，需要重新加载吗？')){
 					data.set('data', null);
 					data.readBlob(blob);
 				}else{
 					return;
 				}
 			}else{
-				$root.addData(path, blob);
+				$root.addSource(path, blob);
 				data = $root.get(path);
-				sourceView = objs[sourcePath];
+				sourceView = objs[path];
 				if(!sourceView){
 					sourceView = new $sourceView({
 						parent : sourceBox,
 						model : data
 					});
-					objs[sourcePath] = sourceView;
+					objs[path] = sourceView;
 				}
 			}
 		},
 		removeDataSource : function(path){
-			var sourcePath = 'source:' + path;
-			delete this.objs[sourcePath];
-			$root.removeData(path);
+			delete this.objs[path];
+			$root.removeSource(path);
 		}
 	});
 

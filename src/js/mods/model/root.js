@@ -8,9 +8,17 @@ define('mods/model/root',function(require,exports,module){
 	var $model = require('lib/mvc/model');
 	var $data = require('mods/model/data');
 
+	var STORAGE_KEY = 'LOG_ANALYSIS_SOURCE_DATA';
+
 	var Root = $model.extend({
 		defaults : {},
-		addData : function(path, blob){
+		events : {
+			'change' : 'save'
+		},
+		build : function(){
+			this.load();
+		},
+		addSource : function(path, blob){
 			var that = this;
 			var data = new $data({
 				path : path
@@ -19,15 +27,30 @@ define('mods/model/root',function(require,exports,module){
 				that.trigger('change');
 			});
 			data.on('destroy', function(){
-				that.removeData(path);
+				that.removeSource(path);
 			});
 			this.set(path, data);
 			data.readBlob(blob);
 		},
-		removeData : function(path){
+		removeSource : function(path){
 			var data = this.get(path);
 			data.destroy();
 			this.remove(path);
+		},
+		save : function(){
+			var that = this;
+			var data = {};
+			var keys = this.keys();
+			keys.forEach(function(path){
+				var source = that.get(path);
+				data[path] = source.get('data');
+			});
+		},
+		load : function(){
+
+			try{
+
+			}catch(e){}
 		}
 	});
 

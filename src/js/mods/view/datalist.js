@@ -17,23 +17,23 @@ define('mods/view/datalist',function(require,exports,module){
 			'</div>'
 		],
 		page : [
-			'<div class="pinfo">',
+			'<div class="pinfo mb5 mr5">',
 				'<span>总页数：</span>',
 				'<span>{{totalPage}}</span>',
 			'</div>',
-			'<a class="split"></a>',
-			'<div class="pinfo">',
+			'<a class="split mb5"></a>',
+			'<div class="pinfo mb5 mr5">',
 				'<span>跳转到：</span>',
 				'<input type="text" value="{{page}}"/>',
 			'</div>',
-			'<div class="pinfo">',
+			'<div class="pinfo mb5 mr5">',
 				'<a data-page="{{first}}" class="{{firstEnable}}">首页</a>',
 				'<a data-page="{{prev}}" class="{{prevEnable}}">上一页</a>',
 				'<a data-page="{{next}}" class="{{nextEnable}}">下一页</a>',
 				'<a data-page="{{last}}" class="{{lastEnable}}">末页</a>',
 			'</div>',
-			'<a class="split"></a>',
-			'<div class="pinfo {{aroundEnable}}">{{{aroundpage}}}</div>'
+			'<a class="split mb5"></a>',
+			'<div class="mb5 pinfo {{aroundEnable}}">{{{aroundpage}}}</div>'
 		],
 		around : '{{#.}}<a data-page="{{page}}" class="{{type}}">{{page}}</a>{{/.}}'
 	});
@@ -45,7 +45,8 @@ define('mods/view/datalist',function(require,exports,module){
 			data : null,
 			template : TPL.box,
 			events : {
-				'a[data-page] tap' : 'checkPage'
+				'a[data-page] tap' : 'checkPage',
+				'input keydown' : 'checkKey'
 			}
 		},
 		build : function(){
@@ -71,6 +72,16 @@ define('mods/view/datalist',function(require,exports,module){
 			var disabled = el.hasClass('false') || el.hasClass('current') || el.hasClass('split');
 			if(disabled){return;}
 			page = parseInt(page, 10) || 1;
+			if(this.page){
+				this.page.set('page', page);
+			}
+		},
+		checkKey : function(evt){
+			var keyCode = evt.keyCode + '';
+			if(keyCode !== '13'){return;}
+			var el = $(evt.currentTarget);
+			var value = el.val();
+			var page = parseInt(value, 10) || 1;
 			if(this.page){
 				this.page.set('page', page);
 			}

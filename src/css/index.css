@@ -21,6 +21,12 @@ input[type="button"]{padding: 5px 10px; }
 .ml10{margin-left: 10px;}
 .mr10{margin-right: 10px;}
 
+.m5{margin: 5px;}
+.mb5{margin-bottom: 5px;}
+.mt5{margin-top: 5px;}
+.ml5{margin-left: 5px;}
+.mr5{margin-right: 5px;}
+
 .bd1{border:1px solid #ddd;}
 .bdt1{border-top: 1px solid #ddd;}
 .bdb1{border-bottom: 1px solid #ddd;}
@@ -55,8 +61,7 @@ input[type="file"]{width: 150px;}
 
 /* 分页列表中展示的页码 */
 .page .pl{overflow:auto;-webkit-overflow-scrolling:touch;}
-.page .pn{margin-bottom: 5px;}
-.page .pn .pinfo{display: inline-block;margin-right: 5px;}
+.page .pn .pinfo{display: inline-block;}
 .page .pn .pinfo input{text-align: center;width: 50px;}
 .page .pn a{display: inline-block; padding:0 5px; border: 1px solid #ddd; height: 20px; cursor: pointer;line-height: 20px;vertical-align: middle; text-align: center; margin-right: 5px;}
 .page .pn a:hover{background: #ffd;}
