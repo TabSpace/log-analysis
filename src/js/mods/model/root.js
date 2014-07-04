@@ -37,6 +37,33 @@ define('mods/model/root',function(require,exports,module){
 			data.destroy();
 			this.remove(path);
 		},
+		getIndexDBReq : function(){
+			if('indexedDB' in window){
+				console.log('support indexedDB');
+				var request = indexedDB.open("library");
+				request.onupgradeneeded = function(){
+					var db = request.result;
+					var store = db.createObjectStore("books", {keyPath: "isbn"});
+					var titleIndex = store.createIndex("by_title", "title", {unique: true});
+					var authorIndex = store.createIndex("by_author", "author");
+
+					// Populate with initial data.
+					store.put({title: "Quarry Memories", author: "Fred", isbn: 123456});
+					store.put({title: "Water Buffaloes", author: "Fred", isbn: 234567});
+					store.put({title: "Bedrock Nights", author: "Barney", isbn: 345678});
+				};
+
+				request.onsuccess = function() {
+					db = request.result;
+				};
+
+				tx.oncomplete = function() {
+				// All requests have succeeded and the transaction has committed.
+				};
+
+				return request;
+			}
+		},
 		save : function(){
 			var that = this;
 			var data = {};
@@ -45,6 +72,7 @@ define('mods/model/root',function(require,exports,module){
 				var source = that.get(path);
 				data[path] = source.get('data');
 			});
+			console.log('save', data);
 		},
 		load : function(){
 
