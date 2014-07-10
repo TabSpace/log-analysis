@@ -59,9 +59,11 @@ define('mods/view/source',function(require,exports,module){
 			model[action]('change:path', proxy('renderPath'));
 			model[action]('change:data', proxy('buildList'));
 		},
+		//显示数据源的路径
 		renderPath : function(){
 			this.role('source-path').html(this.model.get('path'));
 		},
+		//构造数据列表
 		buildList : function(){
 			var data = this.model.get('data');
 			if(this.list){
@@ -74,16 +76,19 @@ define('mods/view/source',function(require,exports,module){
 				});
 			}
 		},
+		//讲数据输出到控制台
 		outputToConsole : function(){
 			window.data = this.model.get('data');
 			$tip('数据输出为window.data');
 		},
+		//移除数据源
 		remove : function(){
 			if(window.confirm('确认要移除数据源吗？')){
 				$channel.trigger('remove-source', this.model.get('path'));
 				this.destroy();
 			}
 		},
+		//刷新数据源，并更新依赖该数据源的所有管道对象
 		refresh : function(){
 			$tip('更新依赖此数据源的所有数据...');
 		},

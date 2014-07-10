@@ -13,13 +13,18 @@ define('mods/model/data',function(require,exports,module){
 			path : '',
 			data : null
 		},
+		//读取一个文本文件，或者一个JSON作为自己的数据
 		readBlob : function(blob){
 			var that = this;
-			var reader = new FileReader();
-			reader.readAsText(blob);
-			reader.onload = function(){
-				that.buildData(reader.result);
-			};
+			if(blob && blob.size){
+				var reader = new FileReader();
+				reader.readAsText(blob);
+				reader.onload = function(){
+					that.buildData(reader.result);
+				};
+			}else if($.type(blob) === 'array'){
+				that.set('data', blob);
+			}
 		},
 		buildData : function(text){
 			var list = text.split(/[\r\n]/);

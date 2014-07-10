@@ -28,7 +28,9 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			this.delegate(action);
 			objs.view[action]('addDataSource', proxy('addDataSource'));
 			$channel[action]('remove-source', proxy('removeDataSource'));
+			$channel[action]('load-data', proxy('loadDataSource'));
 		},
+		//添加数据源
 		addDataSource : function(path, blob){
 			var objs = this.objs;
 			var data = $root.get(path);
@@ -55,9 +57,19 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 				}
 			}
 		},
+		//移除数据源
 		removeDataSource : function(path){
 			delete this.objs[path];
 			$root.removeSource(path);
+		},
+		//加载从数据库读取的源数据
+		loadDataSource : function(data){
+			var that = this;
+			$.each(data, function(path, source){
+				if(path && source){
+					that.addDataSource(path, source);
+				}
+			});
 		}
 	});
 

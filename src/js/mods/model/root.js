@@ -17,6 +17,12 @@ define('mods/model/root',function(require,exports,module){
 		build : function(){
 
 		},
+		setEvents : function(action){
+			var proxy = this.proxy();
+			this.delegate(action);
+			$database.on('loadData', proxy('load'));
+		},
+		//添加一个源数据
 		addSource : function(path, blob){
 			var that = this;
 			var data = new $data({
@@ -31,11 +37,13 @@ define('mods/model/root',function(require,exports,module){
 			this.set(path, data);
 			data.readBlob(blob);
 		},
+		//移除一个源数据
 		removeSource : function(path){
 			var data = this.get(path);
 			data.destroy();
 			this.remove(path);
 		},
+		//保存数据
 		save : function(){
 			var that = this;
 			var data = {};
@@ -45,11 +53,6 @@ define('mods/model/root',function(require,exports,module){
 				data[path] = source.get('data');
 			});
 			$database.save(data);
-		},
-		load : function(){
-			try{
-
-			}catch(e){}
 		}
 	});
 

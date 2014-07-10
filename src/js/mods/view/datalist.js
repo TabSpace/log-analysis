@@ -66,6 +66,7 @@ define('mods/view/datalist',function(require,exports,module){
 				page[action]('change', proxy('renderPage'));
 			}
 		},
+		//检查页码
 		checkPage : function(evt){
 			var el = $(evt.currentTarget);
 			var page = el.attr('data-page');
@@ -76,6 +77,7 @@ define('mods/view/datalist',function(require,exports,module){
 				this.page.set('page', page);
 			}
 		},
+		//检查按键，如果是enter，则设置页码
 		checkKey : function(evt){
 			var keyCode = evt.keyCode + '';
 			if(keyCode !== '13'){return;}
@@ -86,6 +88,7 @@ define('mods/view/datalist',function(require,exports,module){
 				this.page.set('page', page);
 			}
 		},
+		//格式化数组数据
 		formatArrData : function(data){
 			if($.isArray(data)){
 				data = data.map(function(item, index){
@@ -102,6 +105,7 @@ define('mods/view/datalist',function(require,exports,module){
 			}
 			return data;
 		},
+		//更新列表的数据
 		update : function(data){
 			var conf = this.conf;
 			if(!this.page){
@@ -115,7 +119,9 @@ define('mods/view/datalist',function(require,exports,module){
 			}else{
 				this.renderValue(data);
 			}
+			this.renderPage();
 		},
+		//获取分页数据
 		getPageData : function(){
 			var page = this.page;
 			var data = {};
@@ -131,6 +137,7 @@ define('mods/view/datalist',function(require,exports,module){
 			data.aroundpage = $mustache.render(TPL.get('around'), data.around);
 			return data;
 		},
+		//渲染列表的一页数据
 		renderPage : function(){
 			var conf = this.conf;
 			var pageData = this.getPageData();
@@ -176,6 +183,7 @@ define('mods/view/datalist',function(require,exports,module){
 			this.role('pagelist').html(listHtml);
 			this.role('page').html(pageHtml);
 		},
+		//渲染列表的某个值
 		renderValue : function(data){
 
 		},
