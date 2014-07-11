@@ -38,6 +38,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 		addPipe : function(name, pipeConf){
 			var objs = this.objs;
 			var pipe = $pipelist.get(name);
+			var pipeBox = objs.view.role('pipe-list');
 
 			if(pipe){
 				$tip('已存在同名过滤器');
@@ -51,11 +52,9 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			var pipeView = objs['pipe-' + name];
 			if(!pipeView){
 				pipeView = objs['pipe-' + name] = new $pipeView({
-					parent : '',
+					parent : pipeBox,
 					model : pipe
 				});
-			}else{
-				pipeView.setModel(pipe);
 			}
 		},
 		//移除一个过滤器
@@ -64,7 +63,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 				this.objs['pipe-' + name].destroy();
 			}
 			delete this.objs['pipe-' + name];
-			$pipelist.removeSource(pipe);
+			$pipelist.removePipe(pipe);
 		},
 		//从页面存储中加载过滤器
 		loadPipe : function(){
