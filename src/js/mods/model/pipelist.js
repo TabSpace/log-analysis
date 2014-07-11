@@ -5,50 +5,25 @@
 define('mods/model/pipelist',function(require,exports,module){
 
 	var $ = require('lib');
-	var $collection = require('lib/mvc/collection');
+	var $model = require('lib/mvc/model');
 	var $pipe = require('mods/model/pipe');
-	var $find = require('lib/kit/util/find');
 
-	var PipeList = $collection.extend({
+	var PipeList = $model.extend({
 		defaults : {
 
 		},
 		build : function(){
 
 		},
-		getPipeIndex : function(name){
-			var index = $find(this, function(item){
-				var result = false;
-				if(item && item.conf && item.conf.name){
-					result  = item.conf.name === name;
-				}
-				return result;
-			}, this)[0];
-			return index;
-		},
-		getPipeByIndex : function(index){
-			if($.type(index) === 'number'){
-				return this.get(index);
-			}
-		},
-		getPipeByName : function(name){
-			var index = this.getPipeIndex(name);
-			var pipe = this.getPipeByIndex(index);
-			return pipe;
-		},
-		addPipe : function(spec){
-			var pipe = new $pipe(spec);
-			pipe.on('change', function(){
-				this.trigger('change');
-			}.bind(this));
-			this.push(pipe);
+		addPipe : function(name){
+			var pipe = new $pipe({
+				name : name
+			});
+			this.set(name, pipe);
 			return pipe;
 		},
 		removePipe : function(name){
-			var index = this.getPipeIndex(name);
-			var pipe = this.getPipeByIndex(index);
-			pipe.destroy();
-			this.remove(index);
+			this.remove(name);
 		}
 	});
 

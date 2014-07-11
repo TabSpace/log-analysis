@@ -15,7 +15,18 @@ define('mods/view/pipe',function(require,exports,module){
 	});
 
 	var Pipe = $view.extend({
-		
+		defaults : {
+
+		},
+		build : function(){
+
+		},
+		setEvents : function(action){
+			this.delegate(action);
+		},
+		setModel : function(){
+
+		}
 	});
 
 	module.exports = Pipe;

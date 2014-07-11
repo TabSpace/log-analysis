@@ -16,16 +16,18 @@ define('mods/view/source',function(require,exports,module){
 			'<div class="pt10 pb10 bdb1">',
 				'<div class="box header">',
 					'<div class="fl">',
-						'<span>数据源路径：</span>',
+						'<span>数据源：</span>',
 						'<span data-role="source-path"></span>',
+						'<span class="ml10" data-role="data-info"></span>',
 					'</div>',
 					'<div class="fr">',
+						'<a class="button" data-role="source-toggle">显示列表</a>',
 						'<a class="button" data-role="source-output" title="将数据输出到控制台">输出</a>',
 						'<a class="button" data-role="source-del">移除</a>',
 						'<a class="button" data-role="source-refresh">刷新</a>',
 					'</div>',
 				'</div>',
-				'<div data-role="list"></div>',
+				'<div data-role="list" style="display:none;"></div>',
 			'</div>'
 		]
 	});
@@ -36,6 +38,7 @@ define('mods/view/source',function(require,exports,module){
 			model : null,
 			template : TPL.box,
 			events : {
+				'[data-role="source-toggle"] tap' : 'toggleList',
 				'[data-role="source-output"] tap' : 'outputToConsole',
 				'[data-role="source-del"] tap' : 'remove',
 				'[data-role="source-refresh"] tap' : 'refresh'
@@ -59,6 +62,17 @@ define('mods/view/source',function(require,exports,module){
 			model[action]('change:path', proxy('renderPath'));
 			model[action]('change:data', proxy('buildList'));
 		},
+		toggleList : function(){
+			var button = this.role('source-toggle');
+			var list = this.role('list');
+			if(list.css('display') === 'none'){
+				list.show();
+				button.html('隐藏列表');
+			}else{
+				list.hide();
+				button.html('显示列表');
+			}
+		},
 		//显示数据源的路径
 		renderPath : function(){
 			this.role('source-path').html(this.model.get('path'));
@@ -66,6 +80,17 @@ define('mods/view/source',function(require,exports,module){
 		//构造数据列表
 		buildList : function(){
 			var data = this.model.get('data');
+			
+			var count = 0;
+			if($.isArray(data)){
+				count = data.length;
+			}else if($.isPlainObject(data)){
+				count = Object.keys(data);
+			}else{
+				count = 1;
+			}
+			this.role('data-info').html('数据数量:' + count);
+
 			if(this.list){
 				this.list.update(data);
 			}else{

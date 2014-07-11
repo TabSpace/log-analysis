@@ -18,7 +18,12 @@ define('mods/view/dataPanel',function(require,exports,module){
 						'<tr>',
 							'<td class="name">数据源：</td>',
 							'<td class="path"><input data-role="data-path" type="file" vlaue="添加数据"/></td>',
-							'<td class="add"><input data-role="add-data" type="button" value="添加"/></td>',
+							'<td class="add"><input data-role="add-data" type="button" value="添加数据源"/></td>',
+						'</tr>',
+						'<tr>',
+							'<td class="name">过滤器：</td>',
+							'<td><input data-role="data-pipe" type="text" placeholder="过滤器名称"/></td>',
+							'<td class="add"><input data-role="add-pipe" type="button" value="添加过滤器"/></td>',
 						'</tr>',
 					'</table>',
 				'</div>',
@@ -35,7 +40,8 @@ define('mods/view/dataPanel',function(require,exports,module){
 			template : TPL.box,
 			events : {
 				'[data-role="add-data"] tap' : 'addDataSource',
-				'[data-role="data-path"] keydown' : 'checkKey'
+				'[data-role="data-path"] keydown' : 'checkKey',
+				'[data-role="add-pipe"] tap' : 'addPipe'
 			}
 		},
 		build : function(){
@@ -69,6 +75,15 @@ define('mods/view/dataPanel',function(require,exports,module){
 				$tip('请选择数据文件');
 			}else{
 				this.trigger('addDataSource', path, input.files[0]);
+			}
+		},
+		addPipe : function(){
+			var elPipeInput = this.role('data-pipe');
+			var name = elPipeInput.val();
+			if(!name){
+				$tip('请填写过滤器名称');
+			}else{
+				this.trigger('addPipe', name);
 			}
 		},
 		checkKey : function(evt){
