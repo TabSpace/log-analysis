@@ -48,16 +48,16 @@ input[type="file"]{width: 150px;}
 
 /* 导航TAB菜单 */
 .sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
-.sec-menu .current{background: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
+.sec-menu .current{background-color: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
 
 /* 数据源路径管理表单 */
 .pathm .add{text-align: right;}
 
 /* 分页列表中展示的表格 */
-.page table{background: #ccc;border-spacing: 1px;}
-.page th{text-align: center; background: #eee;padding: 2px 5px;}
-.page td{background: #fff; padding: 0 5px;}
-.page tr:hover td{background: #ffd;}
+.page table{background-color: #ccc;border-spacing: 1px;}
+.page th{text-align: center; background-color: #eee;padding: 2px 5px;}
+.page td{background-color: #fff; padding: 0 5px;}
+.page tr:hover td{background-color: #ffd;}
 
 /* 分页列表中展示的页码 */
 .page .pl{overflow:auto;-webkit-overflow-scrolling:touch;}
@@ -72,4 +72,19 @@ input[type="file"]{width: 150px;}
 .page .pn a.current{cursor: default;background: #ddd;}
 .page .pn a.current:hover{background: #ddd;}
 .page .pn div.false{display: none;}
+
+/* 删除按钮 */
+.delete{background-color: #eee; color: #444; width: 20px; height: 20px;text-align: center;vertical-align: middle;line-height: 20px;border-radius: 3px; -webkit-transition:0.5s linear; cursor: pointer;}
+.delete:hover{background-color: #333; color: #fff;}
+
+/* 过滤器 */
+.pipe .conf ul li{overflow:hidden;}
+.pipe .conf ul li:hover{background-color: #eee;}
+.pipe .variables input{width: 100px;}
+.pipe .code textarea{height: 100px;width: 99%;overflow: auto;word-wrap: normal;}
+
+
+
+
+
 

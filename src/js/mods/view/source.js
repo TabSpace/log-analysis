@@ -13,7 +13,7 @@ define('mods/view/source',function(require,exports,module){
 
 	var TPL = $tpl({
 		box : [
-			'<div class="pt10 pb10 bdb1">',
+			'<div class="pt10 pb10 bdb1 source">',
 				'<div class="box header">',
 					'<div class="fl">',
 						'<span>数据源：</span>',

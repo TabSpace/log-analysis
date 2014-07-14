@@ -10,7 +10,7 @@ define('mods/view/pipe',function(require,exports,module){
 
 	var TPL = $tpl({
 		box : [
-			'<div class="pt10 pb10 bdb1">',
+			'<div class="pt10 pb10 bdb1 pipe">',
 				'<div class="box header">',
 					'<div class="fl">',
 						'<span>名称：</span>',
@@ -24,25 +24,36 @@ define('mods/view/pipe',function(require,exports,module){
 						'<a class="button" data-role="pipe-refresh">刷新</a>',
 					'</div>',
 				'</div>',
-				'<div data-role="conf" style="display:none;">',
-					'<div>',
-						'<input type="button" value="添加数据入口">',
+				'<div class="conf" data-role="conf" style="display:none;">',
+					'<div class="mb5">',
+						'<a class="button" data-role="add-data">添加入口数据</a>',
 					'</div>',
-					'<ul>',
-						'<li>',
+					'<ul class="variables mb10">',
+						'<li class="mb5">',
 							'<span>',
 								'var ',
 								'<input type="text" value="" placeholder="变量名"/>',
 								' = ',
-								'<select value="">',
-									'<option value="">""</option>',
-								'</select>',
-								';',
+								'<input type="text" value="" placeholder="选择数据"/>',
+								' ;',
 							'</span>',
-							'<a title="删除">-</a>',
+							'<a title="删除" class="fr delete">-</a>',
+						'</li>',
+						'<li class="mb5">',
+							'<span>',
+								'var ',
+								'<input type="text" value="" placeholder="变量名"/>',
+								' = ',
+								'<input type="text" value="" placeholder="选择数据"/>',
+								' ;',
+							'</span>',
+							'<a title="删除" class="fr delete">-</a>',
 						'</li>',
 					'</ul>',
-					'<div data-role="list"></div>',
+					'<div class="code mb5">',
+						'<textarea placeholder="请填入数据过滤代码"></textarea>',
+					'</div>',
+					'<div class="datalist" data-role="list"></div>',
 				'</div>',
 			'</div>'
 		]
@@ -58,18 +69,20 @@ define('mods/view/pipe',function(require,exports,module){
 			}
 		},
 		build : function(){
-			console.log('build');
 			var conf = this.conf;
 			this.model = conf.model;
 			this.insert();
+			this.render();
 		},
 		insert : function(){
 			var conf = this.conf;
-			console.log('insert', conf.parent);
 			this.role('root').appendTo($(conf.parent));
 		},
 		setEvents : function(action){
 			this.delegate(action);
+			var proxy = this.proxy();
+			var model = this.model;
+			model[action]('change', proxy('render'));
 		},
 		toggleConf : function(){
 			var button = this.role('pipe-toggle');
@@ -81,6 +94,10 @@ define('mods/view/pipe',function(require,exports,module){
 				box.hide();
 				button.html('显示配置');
 			}
+		},
+		render : function(){
+			var model = this.model;
+			this.role('name').html(model.get('name'));
 		}
 	});
 
