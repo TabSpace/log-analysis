@@ -15,10 +15,14 @@ define('mods/model/pipelist',function(require,exports,module){
 		build : function(){
 
 		},
+		getPipe : function(name){
+			return this.get(name);
+		},
 		addPipe : function(name){
 			var pipe = new $pipe({
 				name : name
 			});
+			pipe.pipelist = this;
 			this.set(name, pipe);
 			return pipe;
 		},

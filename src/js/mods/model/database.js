@@ -34,7 +34,7 @@ define('mods/model/database',function(require,exports,module){
 				if(!this.db){
 					var request = indexedDB.open(DATABASE_NAME);
 					request.onerror = function(e) {
-						console.log("db open error:", e.value);
+						console.error("db open error:", e.value);
 					};
 					request.onupgradeneeded = function(){
 						var db = request.result;

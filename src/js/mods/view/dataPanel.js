@@ -68,7 +68,6 @@ define('mods/view/dataPanel',function(require,exports,module){
 			}
 		},
 		addDataSource : function(){
-			console.log('add data source');
 			var elPath = this.role('data-path');
 			var input = elPath.get(0);
 			var path = elPath.val().trim();

@@ -167,7 +167,7 @@ define('mods/view/datalist',function(require,exports,module){
 					listHtml = listHead.join('') + $mustache.render(listTpl.join(''), list);
 				}else{
 					listHtml = '<tr><td class="warn">数据格式错误</td></tr>';
-					console.log(conf.name + ':datalist数据格式错误:firstItem:', firstItem);
+					console.warn(conf.name + ':datalist数据格式错误 -> firstItem:', firstItem);
 				}
 			}
 

@@ -7,6 +7,9 @@ define('mods/view/pipe',function(require,exports,module){
 	var $view = require('lib/mvc/view');
 	var $tpl = require('lib/kit/util/template');
 	var $mustache = require('lib/more/mustache');
+	var $dataList = require('mods/view/datalist');
+	var $tip = require('mods/dialog/tip');
+	var $channel = require('mods/channel/global');
 
 	var TPL = $tpl({
 		box : [
@@ -19,43 +22,34 @@ define('mods/view/pipe',function(require,exports,module){
 					'</div>',
 					'<div class="fr">',
 						'<a class="button" data-role="pipe-toggle">显示配置</a>',
-						'<a class="button" data-role="pipe-output" title="将数据输出到控制台">输出</a>',
 						'<a class="button" data-role="pipe-del">移除</a>',
 						'<a class="button" data-role="pipe-refresh">刷新</a>',
 					'</div>',
 				'</div>',
 				'<div class="conf" data-role="conf" style="display:none;">',
 					'<div class="mb5">',
-						'<a class="button" data-role="add-data">添加入口数据</a>',
+						'<a class="button" data-role="add-entry">添加入口数据</a>',
+						'<a class="button" data-role="output-entry">输出到控制台</a>',
 					'</div>',
-					'<ul class="variables mb10">',
-						'<li class="mb5">',
-							'<span>',
-								'var ',
-								'<input type="text" value="" placeholder="变量名"/>',
-								' = ',
-								'<input type="text" value="" placeholder="选择数据"/>',
-								' ;',
-							'</span>',
-							'<a title="删除" class="fr delete">-</a>',
-						'</li>',
-						'<li class="mb5">',
-							'<span>',
-								'var ',
-								'<input type="text" value="" placeholder="变量名"/>',
-								' = ',
-								'<input type="text" value="" placeholder="选择数据"/>',
-								' ;',
-							'</span>',
-							'<a title="删除" class="fr delete">-</a>',
-						'</li>',
-					'</ul>',
+					'<ul data-role="entries" class="entries mb10"></ul>',
 					'<div class="code mb5">',
-						'<textarea placeholder="请填入数据过滤代码"></textarea>',
+						'<textarea data-role="code" placeholder="请填入数据过滤代码"></textarea>',
 					'</div>',
 					'<div class="datalist" data-role="list"></div>',
 				'</div>',
 			'</div>'
+		],
+		entry : [
+			'<li class="mb5">',
+				'<span>',
+					'var ',
+					'<input type="text" name="name" value="" placeholder="变量名"/>',
+					' = ',
+					'<input type="text" name="path" value="" placeholder="选择数据"/>',
+					' ;',
+				'</span>',
+				'<a data-role="remove-entry" title="删除" class="fr delete">-</a>',
+			'</li>'
 		]
 	});
 
@@ -65,7 +59,11 @@ define('mods/view/pipe',function(require,exports,module){
 			model : null,
 			template : TPL.box,
 			events : {
-				'[data-role="pipe-toggle"] tap' : 'toggleConf'
+				'[data-role="pipe-toggle"] tap' : 'toggleConf',
+				'[data-role="add-entry"] tap' : 'addEntry',
+				'[data-role="remove-entry"] tap' : 'removeEntry',
+				'[data-role="output-entry"] tap' : 'outputEntry',
+				'[data-role="pipe-refresh"] tap' : 'refresh'
 			}
 		},
 		build : function(){
@@ -73,6 +71,7 @@ define('mods/view/pipe',function(require,exports,module){
 			this.model = conf.model;
 			this.insert();
 			this.render();
+			this.buildList();
 		},
 		insert : function(){
 			var conf = this.conf;
@@ -95,9 +94,66 @@ define('mods/view/pipe',function(require,exports,module){
 				button.html('显示配置');
 			}
 		},
+		refresh : function(){
+			var model = this.model;
+			var source = {};
+			this.role('entries').find('li').each(function(){
+				var li = $(this);
+				var key = li.find('input[name="name"]').val();
+				var value = li.find('input[name="path"]').val();
+				if(key && value){
+					source[key] = value;
+				}
+			});
+			model.set('source', source);
+		},
+		outputEntry : function(){
+			var model = this.model;
+			
+		},
+		addEntry : function(){
+			var tpl = TPL.get('entry');
+			$(tpl).appendTo(this.role('entries'));
+		},
+		removeEntry : function(evt){
+			var target = $(evt.currentTarget);
+			var li = target.parent();
+			li.remove();
+		},
 		render : function(){
 			var model = this.model;
 			this.role('name').html(model.get('name'));
+		},
+		buildList : function(){
+			var data = this.model.get('data');
+			
+			var count = 0;
+			if($.isArray(data)){
+				count = data.length;
+			}else if($.isPlainObject(data)){
+				count = Object.keys(data);
+			}else{
+				count = 1;
+			}
+			this.role('data-info').html('数据数量:' + count);
+
+			if(this.list){
+				this.list.update(data);
+			}else{
+				this.list = new $dataList({
+					name : this.model.get('name'),
+					parent : this.role('list'),
+					data : data
+				});
+			}
+		},
+		destroy : function(){
+			if(this.list){
+				this.list.destroy();
+				delete this.list;
+			}
+			this.role('root').remove();
+			Pipe.superclass.destroy.apply(this,arguments);
 		}
 	});
 

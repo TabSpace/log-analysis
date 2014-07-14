@@ -105,6 +105,7 @@ define('mods/view/source',function(require,exports,module){
 		outputToConsole : function(){
 			window.data = this.model.get('data');
 			$tip('数据输出为window.data');
+			console.info('数据输出为window.data');
 		},
 		//移除数据源
 		remove : function(){
@@ -116,10 +117,13 @@ define('mods/view/source',function(require,exports,module){
 		//刷新数据源，并更新依赖该数据源的所有管道对象
 		refresh : function(){
 			$tip('更新依赖此数据源的所有数据...');
+			console.info('更新依赖此数据源的所有数据...');
 		},
 		destroy : function(){
-			this.list.destroy();
-			delete this.list;
+			if(this.list){
+				this.list.destroy();
+				delete this.list;
+			}
 			this.role('root').remove();
 			Source.superclass.destroy.apply(this,arguments);
 		}

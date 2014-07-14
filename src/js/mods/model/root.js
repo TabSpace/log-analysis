@@ -22,6 +22,9 @@ define('mods/model/root',function(require,exports,module){
 			this.delegate(action);
 			$database.on('loadData', proxy('load'));
 		},
+		getSource : function(path){
+			return this.get(path);
+		},
 		//添加一个源数据
 		addSource : function(path, blob){
 			var that = this;

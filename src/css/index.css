@@ -80,7 +80,7 @@ input[type="file"]{width: 150px;}
 /* 过滤器 */
 .pipe .conf ul li{overflow:hidden;}
 .pipe .conf ul li:hover{background-color: #eee;}
-.pipe .variables input{width: 100px;}
+.pipe .entries input{width: 100px;}
 .pipe .code textarea{height: 100px;width: 99%;overflow: auto;word-wrap: normal;}
 
 
