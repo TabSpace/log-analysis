@@ -109,10 +109,12 @@ define('mods/view/pipe',function(require,exports,module){
 		},
 		outputEntry : function(){
 			var model = this.model;
-			if(!model.get('data')){
-				model.compute();
+			var data = model.get('data');
+			if(data){
+
+			}else{
+				$tip('还未能生成数据，点击刷新以更新该过滤器状态.');
 			}
-			console.log(model.get('data'));
 		},
 		addEntry : function(){
 			var tpl = TPL.get('entry');

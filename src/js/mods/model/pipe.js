@@ -6,8 +6,9 @@ define('mods/model/pipe',function(require,exports,module){
 
 	var $ = require('lib');
 	var $model = require('lib/mvc/model');
-	var $root = require('mods/model/root');
 	var $tip = require('mods/dialog/tip');
+	var $channel = require('mods/channel/global');
+	var $getData = require('mods/util/getData');
 
 	var Pipe = $model.extend({
 		defaults : {
@@ -29,56 +30,31 @@ define('mods/model/pipe',function(require,exports,module){
 		setEvents : function(action){
 			this.delegate(action);
 		},
-		//获取数据源数据
-		getSourceData : function(path){
-			var source = $root.getSource(path);
-			if(source && $.isFunction(source.get)){
-				return source.get('data');
-			}else{
-				console.info('数据源：', path, '不存在');
-				this.set('error', 'source');
-				return null;
-			}
-		},
-		//获取过滤器数据
-		getPipeData : function(name){
-			var pipelist = this.pipelist;
-			if(!pipelist){
-				return null;
-			}
-			var pipe = pipelist.getPipe(name);
-			if(pipe && $.isFunction(pipe.get)){
-				return pipe.get('data');
-			}else{
-				console.info('过滤器：', name, '不存在');
-				this.set('error', 'source');
-				return null;
-			}
-		},
-		//获取一个数据列表
-		getData : function(datapath){
-			var data;
-			if((/[\/\\]/).test(datapath)){
-				data = this.getSourceData(datapath);
-			}else{
-				data = this.getPipeData(datapath);
-			}
-			return data;
+		setConf : function(options){
+			this.set(options);
+			console.log('pipeConf:', this.get());
 		},
 		//计算经过自己的过滤器过滤的数据
 		compute : function(){
 			var source = this.get('source');
 			var filter = this.get('filter');
+			var vnames;
 			var vname;
 			var datapath;
 			var dataMap;
 			this.set('error', false);
+			console.log('compute source',source);
 			if($.type(source) !== 'object'){
 				this.set('data', null);
 			}else{
 				if(!filter){
-					vname = Object.keys(source)[0];
-					this.set('data', this.getData(source[vname]));
+					vnames = Object.keys(source);
+					if(vnames.length){
+						vname = vnames[0];
+						this.set('data', $getData(source[vname]));
+					}else{
+						this.set('data', null);
+					}
 				}else{
 
 				}

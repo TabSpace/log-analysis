@@ -33,6 +33,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			objs.view[action]('addPipe', proxy('addPipe'));
 			$channel[action]('remove-source', proxy('removeDataSource'));
 			$channel[action]('load-data', proxy('loadDataSource'));
+			$channel[action]('load-pipes', proxy('loadPipes'));
 		},
 		//添加一个过滤器
 		addPipe : function(name, pipeConf){
@@ -64,10 +65,6 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			}
 			delete this.objs['pipe-' + name];
 			$pipelist.removePipe(pipe);
-		},
-		//从页面存储中加载过滤器
-		loadPipe : function(){
-
 		},
 		//添加数据源
 		addDataSource : function(path, blob){
@@ -110,6 +107,15 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			$.each(data, function(path, source){
 				if(path && source){
 					that.addDataSource(path, source);
+				}
+			});
+		},
+		//加载从本地缓存存储的过滤器
+		loadPipes : function(data){
+			var that = this;
+			$.each(data, function(name, pipeConf){
+				if(name && pipeConf){
+					that.addPipe(name, pipeConf);
 				}
 			});
 		}
