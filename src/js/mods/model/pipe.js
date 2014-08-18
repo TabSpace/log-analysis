@@ -18,7 +18,9 @@ define('mods/model/pipe',function(require,exports,module){
 			filter : null
 		},
 		events : {
+			//数据源变更时需要计算
 			'change:source' : 'compute',
+			//过滤器变更时需要计算
 			'change:filter' : 'compute'
 		},
 		build : function(){
@@ -27,6 +29,7 @@ define('mods/model/pipe',function(require,exports,module){
 		setEvents : function(action){
 			this.delegate(action);
 		},
+		//获取数据源数据
 		getSourceData : function(path){
 			var source = $root.getSource(path);
 			if(source && $.isFunction(source.get)){
@@ -37,6 +40,7 @@ define('mods/model/pipe',function(require,exports,module){
 				return null;
 			}
 		},
+		//获取过滤器数据
 		getPipeData : function(name){
 			var pipelist = this.pipelist;
 			if(!pipelist){
@@ -51,6 +55,7 @@ define('mods/model/pipe',function(require,exports,module){
 				return null;
 			}
 		},
+		//获取一个数据列表
 		getData : function(datapath){
 			var data;
 			if((/[\/\\]/).test(datapath)){
@@ -60,6 +65,7 @@ define('mods/model/pipe',function(require,exports,module){
 			}
 			return data;
 		},
+		//计算经过自己的过滤器过滤的数据
 		compute : function(){
 			var source = this.get('source');
 			var filter = this.get('filter');

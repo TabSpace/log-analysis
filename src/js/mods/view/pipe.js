@@ -28,8 +28,8 @@ define('mods/view/pipe',function(require,exports,module){
 				'</div>',
 				'<div class="conf" data-role="conf" style="display:none;">',
 					'<div class="mb5">',
-						'<a class="button" data-role="add-entry">添加入口数据</a>',
-						'<a class="button" data-role="output-entry">输出到控制台</a>',
+						'<a class="button" data-role="add-entry" title="入口数据将根据下面的代码格式，作为过滤器可访问的变量">添加入口数据</a>',
+						'<a class="button" data-role="output-entry" title="将经过管道过滤的数据输出到控制台">输出到控制台</a>',
 					'</div>',
 					'<ul data-role="entries" class="entries mb10"></ul>',
 					'<div class="code mb5">',
@@ -109,7 +109,10 @@ define('mods/view/pipe',function(require,exports,module){
 		},
 		outputEntry : function(){
 			var model = this.model;
-			
+			if(!model.get('data')){
+				model.compute();
+			}
+			console.log(model.get('data'));
 		},
 		addEntry : function(){
 			var tpl = TPL.get('entry');

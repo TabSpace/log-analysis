@@ -1,5 +1,5 @@
 /**
- * @fileoverview 单页数据
+ * @fileoverview 分页数据模型
  * @authors liangdong2 <liangdong2@staff.sina.com.cn>
  */
 define('mods/model/page',function(require,exports,module){
