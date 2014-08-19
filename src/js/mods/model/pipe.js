@@ -40,23 +40,31 @@ define('mods/model/pipe',function(require,exports,module){
 			var filter = this.get('filter');
 			var vnames;
 			var vname;
-			var datapath;
-			var dataMap;
+			var data;
+
 			this.set('error', false);
 			console.log('compute source',source);
 			if($.type(source) !== 'object'){
 				this.set('data', null);
+				this.set('error', 'source');
 			}else{
-				if(!filter){
-					vnames = Object.keys(source);
-					if(vnames.length){
-						vname = vnames[0];
-						this.set('data', $getData(source[vname]));
+				vnames = Object.keys(source);
+				if(vnames.length){
+					vname = vnames[0];
+					data = $getData(source[vname]);
+					if(data){
+						if(!filter){
+							this.set('data', data);
+						}else{
+
+						}
 					}else{
 						this.set('data', null);
+						this.set('error', 'source');
 					}
 				}else{
-
+					this.set('data', null);
+					this.set('error', 'source');
 				}
 			}
 		}

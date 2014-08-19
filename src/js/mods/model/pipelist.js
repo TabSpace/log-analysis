@@ -21,7 +21,11 @@ define('mods/model/pipelist',function(require,exports,module){
 		},
 		build : function(){
 			this.save = $delay(this.save, 50);
-			this.load();
+		},
+		setEvents : function(action){
+			this.delegate(action);
+			var proxy = this.proxy();
+			$channel[action]('load-data', proxy('load'));
 		},
 		getPipe : function(name){
 			return this.get(name);

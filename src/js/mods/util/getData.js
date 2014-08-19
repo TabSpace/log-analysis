@@ -14,8 +14,6 @@ define('mods/util/getData',function(require,exports,module){
 		if(source && $.isFunction(source.get)){
 			return source.get('data');
 		}else{
-			console.info('数据源：', path, '不存在');
-			this.set('error', 'source');
 			return null;
 		}
 	};
@@ -30,8 +28,6 @@ define('mods/util/getData',function(require,exports,module){
 		if(pipe && $.isFunction(pipe.get)){
 			return pipe.get('data');
 		}else{
-			console.info('过滤器：', name, '不存在');
-			this.set('error', 'source');
 			return null;
 		}
 	};
