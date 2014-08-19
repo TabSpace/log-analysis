@@ -43,9 +43,9 @@ define('mods/view/pipe',function(require,exports,module){
 			'<li class="mb5">',
 				'<span>',
 					'var ',
-					'<input type="text" name="name" value="" placeholder="变量名"/>',
+					'<input type="text" name="name" value="{{name}}" placeholder="变量名"/>',
 					' = ',
-					'<input type="text" name="path" value="" placeholder="选择数据"/>',
+					'<input type="text" name="path" value="{{path}}" placeholder="选择数据"/>',
 					' ;',
 				'</span>',
 				'<a data-role="remove-entry" title="删除" class="fr delete">-</a>',
@@ -117,8 +117,13 @@ define('mods/view/pipe',function(require,exports,module){
 			}
 		},
 		addEntry : function(){
+			this.addEntryNode();
+		},
+		addEntryNode : function(entry){
+			entry = entry || {};
 			var tpl = TPL.get('entry');
-			$(tpl).appendTo(this.role('entries'));
+			var html = $mustache.render(tpl, entry);
+			$(html).appendTo(this.role('entries'));
 		},
 		removeEntry : function(evt){
 			var target = $(evt.currentTarget);
@@ -126,8 +131,18 @@ define('mods/view/pipe',function(require,exports,module){
 			li.remove();
 		},
 		render : function(){
+			var that = this;
 			var model = this.model;
 			this.role('name').html(model.get('name'));
+
+			var source = model.get('source');
+			this.role('entries').html('');
+			$.each(source, function(name, path){
+				that.addEntryNode({
+					name : name,
+					path : path
+				});
+			});
 		},
 		buildList : function(){
 			var data = this.model.get('data');

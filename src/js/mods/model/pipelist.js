@@ -41,7 +41,6 @@ define('mods/model/pipelist',function(require,exports,module){
 			pipe.on('destroy', function(){
 				that.removePipe(name);
 			});
-			pipe.pipelist = this;
 			this.set(name, pipe);
 			return pipe;
 		},
