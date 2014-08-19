@@ -124,17 +124,21 @@ define('mods/view/pipe',function(require,exports,module){
 		outputEntry : function(){
 			var model = this.model;
 			var source = model.get('source');
+			var hasError = false;
 			$.each(source, function(name, path){
-				var tip = '';
 				try{
 					window[name] = $getData(path);
-					tip = path + ':数据输出为window.' + name;
-					$tip(tip);
-					console.info(tip);
+					console.info(path + ':数据输出为window.' + name);
 				}catch(e){
-					$tip(path + ':数据获取失败。');
+					hasError = true;
+					console.error(path + ':数据获取失败。', e.message);
 				}
 			});
+			if(hasError){
+				$tip('部分数据获取失败，详细信息参见控制台。');
+			}else{
+				$tip('来源数据都已输出到控制台。');
+			}
 		},
 		addEntry : function(){
 			this.addEntryNode();

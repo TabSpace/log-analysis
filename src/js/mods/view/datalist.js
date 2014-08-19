@@ -93,8 +93,9 @@ define('mods/view/datalist',function(require,exports,module){
 			if($.isArray(data)){
 				data = data.map(function(item, index){
 					if($.type(item) === 'object'){
-						item.index = index + 1;
-						return item;
+						return $.extend({
+							index : index + 1
+						}, item);
 					}else{
 						return {
 							index : index + 1,

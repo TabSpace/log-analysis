@@ -70,6 +70,7 @@ input[type="file"]{width: 150px;}
 
 /* 分页列表中展示的页码 */
 .page .pl{overflow:auto;-webkit-overflow-scrolling:touch;}
+.page .pn{-webkit-user-select:none;}
 .page .pn .pinfo{display: inline-block;}
 .page .pn .pinfo input{text-align: center;width: 50px;}
 .page .pn a{display: inline-block; padding:0 5px; border: 1px solid #ddd; height: 20px; cursor: pointer;line-height: 20px;vertical-align: middle; text-align: center; margin-right: 5px;}
@@ -87,6 +88,7 @@ input[type="file"]{width: 150px;}
 .delete:hover{background-color: rgba(0,0,0,0.7); color: #fff;}
 
 /* 过滤器 */
+.pipe{transition:background-color 0.3s ease-out;}
 .pipe .conf ul li{overflow:hidden;}
 .pipe .conf ul li:hover{background-color: rgba(0,0,0,0.05);}
 .pipe .entries input{width: 100px;}
