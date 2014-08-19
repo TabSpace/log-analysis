@@ -111,7 +111,9 @@ define('mods/view/pipe',function(require,exports,module){
 			var model = this.model;
 			var data = model.get('data');
 			if(data){
-
+				window.data = data;
+				$tip('数据输出为window.data');
+				console.info('数据输出为window.data');
 			}else{
 				$tip('还未能生成数据，点击刷新以更新该过滤器状态.');
 			}
