@@ -87,7 +87,7 @@ define('lib/mvc/view',function(require,exports,module){
 		destroy : function(){
 			View.superclass.destroy.apply(this,arguments);
 			this.resetRoles();
-			this.nodes = null;
+			this.nodes = {};
 		}
 	});
 

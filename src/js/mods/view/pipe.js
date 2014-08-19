@@ -67,7 +67,8 @@ define('mods/view/pipe',function(require,exports,module){
 				'[data-role="remove-entry"] tap' : 'removeEntry',
 				'[data-role="output-entry"] tap' : 'outputEntry',
 				'[data-role="pipe-output"] tap' : 'outputPipeData',
-				'[data-role="pipe-refresh"] tap' : 'refresh'
+				'[data-role="pipe-refresh"] tap' : 'refresh',
+				'[data-role="pipe-del"] tap' : 'remove'
 			}
 		},
 		build : function(){
@@ -165,8 +166,8 @@ define('mods/view/pipe',function(require,exports,module){
 			root.attr('class', 'pt10 pb10 bdb1 pipe ' + model.get('state'));
 			elName.html(model.get('name'));
 
-			var source = model.get('source');
 			elEntries.html('');
+			var source = model.get('source') || {};
 			$.each(source, function(name, path){
 				that.addEntryNode({
 					name : name,
@@ -196,6 +197,13 @@ define('mods/view/pipe',function(require,exports,module){
 					parent : this.role('list'),
 					data : data
 				});
+			}
+		},
+		//移除数据源
+		remove : function(){
+			if(window.confirm('确认要移除这个过滤器吗？')){
+				$channel.trigger('remove-pipe', this.model.get('name'));
+				this.destroy();
 			}
 		},
 		destroy : function(){

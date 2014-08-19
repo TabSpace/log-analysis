@@ -32,6 +32,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			objs.view[action]('addDataSource', proxy('addDataSource'));
 			objs.view[action]('addPipe', proxy('addPipe'));
 			$channel[action]('remove-source', proxy('removeDataSource'));
+			$channel[action]('remove-pipe', proxy('removePipe'));
 			$channel[action]('load-data', proxy('loadDataSource'));
 			$channel[action]('load-pipes', proxy('loadPipes'));
 		},
@@ -64,7 +65,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 				this.objs['pipe-' + name].destroy();
 			}
 			delete this.objs['pipe-' + name];
-			$pipelist.removePipe(pipe);
+			$pipelist.removePipe(name);
 		},
 		//添加数据源
 		addDataSource : function(path, blob){

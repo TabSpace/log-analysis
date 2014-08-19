@@ -109,7 +109,7 @@ define('mods/view/source',function(require,exports,module){
 		},
 		//移除数据源
 		remove : function(){
-			if(window.confirm('确认要移除数据源吗？')){
+			if(window.confirm('确认要移除这个数据源吗？')){
 				$channel.trigger('remove-source', this.model.get('path'));
 				this.destroy();
 			}
