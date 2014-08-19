@@ -27,9 +27,9 @@ input[type="button"]{padding: 5px 10px; }
 .ml5{margin-left: 5px;}
 .mr5{margin-right: 5px;}
 
-.bd1{border:1px solid #ddd;}
-.bdt1{border-top: 1px solid #ddd;}
-.bdb1{border-bottom: 1px solid #ddd;}
+.bd1{border:1px solid rgba(0,0,0,0.1);}
+.bdt1{border-top: 1px solid rgba(0,0,0,0.1);}
+.bdb1{border-bottom: 1px solid rgba(0,0,0,0.1);}
 
 .w100{width: 100%;}
 .h100{height: 100%;}
@@ -56,17 +56,17 @@ input[type="file"]{width: 150px;}
 .disable{background-color: rgba(0,0,0,0.1);}
 
 /* 导航TAB菜单 */
-.sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid #ccc; background: #ddd; padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
+.sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid rgba(0,0,0,0.1); background-color: rgba(0,0,0,0.1); padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
 .sec-menu .current{background-color: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
 
 /* 数据源路径管理表单 */
 .pathm .add{text-align: right;}
 
 /* 分页列表中展示的表格 */
-.page table{background-color: #ccc;border-spacing: 1px;}
-.page th{text-align: center; background-color: #eee;padding: 2px 5px;}
-.page td{background-color: #fff; padding: 0 5px;}
-.page tr:hover td{background-color: #ffd;}
+.page table{border-spacing: 1px;}
+.page th{text-align: center; border: 1px solid rgba(0,0,0,0.2); background-color: rgba(0,0,255,0.1);padding: 2px 5px;}
+.page td{padding: 0 5px;border: 1px solid rgba(0,0,0,0.2);}
+.page tr:hover td{background-color: rgba(255,0,0,0.1);}
 
 /* 分页列表中展示的页码 */
 .page .pl{overflow:auto;-webkit-overflow-scrolling:touch;}
