@@ -10,10 +10,12 @@ define('mods/view/pipe',function(require,exports,module){
 	var $dataList = require('mods/view/datalist');
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
+	var $delay = require('lib/kit/func/delay');
+	var $getData = require('mods/util/getData');
 
 	var TPL = $tpl({
 		box : [
-			'<div class="pt10 pb10 bdb1 pipe">',
+			'<div class="pt10 pb10 bdb1 pipe prepare">',
 				'<div class="box header">',
 					'<div class="fl">',
 						'<span>名称：</span>',
@@ -22,6 +24,7 @@ define('mods/view/pipe',function(require,exports,module){
 					'</div>',
 					'<div class="fr">',
 						'<a class="button" data-role="pipe-toggle">显示配置</a>',
+						'<a class="button" data-role="pipe-output">输出</a>',
 						'<a class="button" data-role="pipe-del">移除</a>',
 						'<a class="button" data-role="pipe-refresh">刷新</a>',
 					'</div>',
@@ -29,7 +32,7 @@ define('mods/view/pipe',function(require,exports,module){
 				'<div class="conf" data-role="conf" style="display:none;">',
 					'<div class="mb5">',
 						'<a class="button" data-role="add-entry" title="入口数据将根据下面的代码格式，作为过滤器可访问的变量">添加入口数据</a>',
-						'<a class="button" data-role="output-entry" title="将经过管道过滤的数据输出到控制台">输出到控制台</a>',
+						'<a class="button" data-role="output-entry" title="将变量引用的数据输出到控制台，以方便调试">输出到控制台</a>',
 					'</div>',
 					'<ul data-role="entries" class="entries mb10"></ul>',
 					'<div class="code mb5">',
@@ -63,6 +66,7 @@ define('mods/view/pipe',function(require,exports,module){
 				'[data-role="add-entry"] tap' : 'addEntry',
 				'[data-role="remove-entry"] tap' : 'removeEntry',
 				'[data-role="output-entry"] tap' : 'outputEntry',
+				'[data-role="pipe-output"] tap' : 'outputPipeData',
 				'[data-role="pipe-refresh"] tap' : 'refresh'
 			}
 		},
@@ -70,6 +74,7 @@ define('mods/view/pipe',function(require,exports,module){
 			var conf = this.conf;
 			this.model = conf.model;
 			this.insert();
+			this.render = $delay(this.render, 10);
 			this.render();
 			this.buildList();
 		},
@@ -82,6 +87,7 @@ define('mods/view/pipe',function(require,exports,module){
 			var proxy = this.proxy();
 			var model = this.model;
 			model[action]('change', proxy('render'));
+			model[action]('change:data', proxy('buildList'));
 		},
 		toggleConf : function(){
 			var button = this.role('pipe-toggle');
@@ -106,17 +112,29 @@ define('mods/view/pipe',function(require,exports,module){
 				}
 			});
 			model.set('source', source);
+
+			var filter = this.role('code').val();
+			model.set('filter', filter);
+		},
+		outputPipeData : function(){
+			window.data = this.model.get('data');
+			$tip('数据输出为window.data');
+			console.info('数据输出为window.data');
 		},
 		outputEntry : function(){
 			var model = this.model;
-			var data = model.get('data');
-			if(data){
-				window.data = data;
-				$tip('数据输出为window.data');
-				console.info('数据输出为window.data');
-			}else{
-				$tip('还未能生成数据，点击刷新以更新该过滤器状态.');
-			}
+			var source = model.get('source');
+			$.each(source, function(name, path){
+				var tip = '';
+				try{
+					window[name] = $getData(path);
+					tip = path + ':数据输出为window.' + name;
+					$tip(tip);
+					console.info(tip);
+				}catch(e){
+					$tip(path + ':数据获取失败。');
+				}
+			});
 		},
 		addEntry : function(){
 			this.addEntryNode();
@@ -135,20 +153,27 @@ define('mods/view/pipe',function(require,exports,module){
 		render : function(){
 			var that = this;
 			var model = this.model;
-			this.role('name').html(model.get('name'));
+			var root = this.role('root');
+			var elName = this.role('name');
+			var elEntries = this.role('entries');
+			var elCode = this.role('code');
+
+			root.attr('class', 'pt10 pb10 bdb1 pipe ' + model.get('state'));
+			elName.html(model.get('name'));
 
 			var source = model.get('source');
-			this.role('entries').html('');
+			elEntries.html('');
 			$.each(source, function(name, path){
 				that.addEntryNode({
 					name : name,
 					path : path
 				});
 			});
+
+			elCode.val(model.get('filter'));
 		},
 		buildList : function(){
 			var data = this.model.get('data');
-			
 			var count = 0;
 			if($.isArray(data)){
 				count = data.length;
@@ -182,3 +207,11 @@ define('mods/view/pipe',function(require,exports,module){
 	module.exports = Pipe;
 
 });
+
+
+
+
+
+
+
+

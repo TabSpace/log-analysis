@@ -9,13 +9,14 @@ define('mods/model/pipe',function(require,exports,module){
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
 	var $getData = require('mods/util/getData');
+	var $delay = require('lib/kit/func/delay');
 
 	var Pipe = $model.extend({
 		defaults : {
 			name : '',
 			data : null,
 			source : null,
-			error : false,
+			state : 'prepare',
 			filter : null
 		},
 		events : {
@@ -25,6 +26,7 @@ define('mods/model/pipe',function(require,exports,module){
 			'change:filter' : 'compute'
 		},
 		build : function(){
+			this.compute = $delay(this.compute, 10);
 			this.compute();
 		},
 		setEvents : function(action){
@@ -32,21 +34,20 @@ define('mods/model/pipe',function(require,exports,module){
 		},
 		setConf : function(options){
 			this.set(options);
-			console.log('pipeConf:', this.get());
 		},
 		//计算经过自己的过滤器过滤的数据
 		compute : function(){
+			var that = this;
 			var source = this.get('source');
 			var filter = this.get('filter');
 			var vnames;
 			var vname;
 			var data;
 
-			this.set('error', false);
-			console.log('compute source',source);
+			this.set('state', 'prepare');
 			if($.type(source) !== 'object'){
 				this.set('data', null);
-				this.set('error', 'source');
+				this.set('state', 'error');
 			}else{
 				vnames = Object.keys(source);
 				if(vnames.length){
@@ -55,16 +56,42 @@ define('mods/model/pipe',function(require,exports,module){
 					if(data){
 						if(!filter){
 							this.set('data', data);
+							this.set('state', 'success');
 						}else{
+							var code = '';
+							var args = [];
+							vnames.forEach(function(name, index){
+								code = 'var ' + name + ' = arguments[' + index + '];\n';
+								args.push($getData(source[name]));
+							});
+							code = code + filter;
 
+							setTimeout(function(){
+								try{
+									var fn = new Function(code);
+									data = fn.apply(that, args);
+
+									if(data){
+										that.set('data', data);
+										that.set('state', 'success');
+									}else{
+										that.set('data', null);
+										that.set('state', 'error');
+									}
+								}catch(e){
+									console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+									that.set('data', null);
+									that.set('state', 'error');
+								}
+							});
 						}
 					}else{
 						this.set('data', null);
-						this.set('error', 'source');
+						this.set('state', 'error');
 					}
 				}else{
 					this.set('data', null);
-					this.set('error', 'source');
+					this.set('state', 'error');
 				}
 			}
 		}

@@ -116,10 +116,10 @@ define('mods/view/datalist',function(require,exports,module){
 			if($.isArray(data)){
 				data = this.formatArrData(data);
 				this.page.set('data', data);
+				this.renderPage();
 			}else{
 				this.renderValue(data);
 			}
-			this.renderPage();
 		},
 		//获取分页数据
 		getPageData : function(){
@@ -185,7 +185,13 @@ define('mods/view/datalist',function(require,exports,module){
 		},
 		//渲染列表的某个值
 		renderValue : function(data){
-
+			var elPageList = this.role('pagelist');
+			if($.isPlainObject(data)){
+				elPageList.html(JSON.stringify(data));
+			}else{
+				elPageList.html('' + data);
+			}
+			this.role('page').html('');
 		},
 		destroy : function(){
 			this.page.destroy();

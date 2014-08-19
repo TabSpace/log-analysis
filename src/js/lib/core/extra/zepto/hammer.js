@@ -106,7 +106,18 @@ define('lib/core/extra/zepto/hammer',function(require,exports,module){
 	};
 
 	$(function(){
-		$(document.body).hammer();
+		$(document.body).hammer({
+			//允许用户选中文字
+			stop_browser_behavior : {
+				userSelect : ''
+			},
+
+			//使tap事件更容易触发
+			tap_max_touchtime	: 350,
+
+			//使swip事件更容易触发
+			swipe_velocity : 0.2
+		});
 	});
 
 });
