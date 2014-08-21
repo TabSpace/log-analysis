@@ -8,7 +8,7 @@ define('mods/model/pipe',function(require,exports,module){
 	var $model = require('lib/mvc/model');
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
-	var $getData = require('mods/util/getData');
+	var $getDataModel = require('mods/util/getDataModel');
 	var $delay = require('lib/kit/func/delay');
 
 	var Pipe = $model.extend({
@@ -17,6 +17,7 @@ define('mods/model/pipe',function(require,exports,module){
 			data : null,
 			source : null,
 			state : 'prepare',
+			ready : false,
 			filter : null
 		},
 		events : {
@@ -27,7 +28,7 @@ define('mods/model/pipe',function(require,exports,module){
 		},
 		build : function(){
 			this.compute = $delay(this.compute, 10);
-			this.compute();
+			this.checkReady();
 		},
 		setEvents : function(action){
 			this.delegate(action);
@@ -35,24 +36,44 @@ define('mods/model/pipe',function(require,exports,module){
 		setConf : function(options){
 			this.set(options);
 		},
+		checkReady : function(){
+			if(this.isReady()){
+				console.log('pipe ready');
+				this.trigger('data-ready', this.get('name'));
+			}else{
+				console.log('pipe prepare');
+				this.trigger('data-prepare', this.get('name'));
+			}
+		},
+		isReady : function(){
+			return !!this.get('ready');
+		},
 		//计算经过自己的过滤器过滤的数据
 		compute : function(){
+			console.log('compute');
 			var that = this;
 			var source = this.get('source');
 			var filter = this.get('filter');
 			var vnames;
 			var vname;
 			var data;
+			var sourceModel;
 
+			this.set('ready', false);
 			this.set('state', 'prepare');
+
 			if($.type(source) !== 'object'){
 				this.set('data', null);
 				this.set('state', 'error');
+				this.set('ready', true);
 			}else{
 				vnames = Object.keys(source);
 				if(vnames.length){
 					if(!filter){
-						data = $getData(source[vnames[0]]);
+						sourceModel = $getDataModel(source[vnames[0]]);
+						if(sourceModel){
+							data = sourceModel.get('data');
+						}
 						if(data){
 							this.set('data', data);
 							this.set('state', 'success');
@@ -60,12 +81,18 @@ define('mods/model/pipe',function(require,exports,module){
 							this.set('data', null);
 							this.set('state', 'error');
 						}
+						this.set('ready', true);
 					}else{
 						var code = '';
 						var args = [];
 						vnames.forEach(function(name, index){
 							code = 'var ' + name + ' = arguments[' + index + '];\n';
-							args.push($getData(source[name]));
+							var smodel = $getDataModel(source[name]);
+							if(smodel){
+								args.push(smodel.get('data'));
+							}else{
+								args.push(null);
+							}
 						});
 						code = code + filter;
 
@@ -85,12 +112,15 @@ define('mods/model/pipe',function(require,exports,module){
 								console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
 								that.set('data', null);
 								that.set('state', 'error');
+							}finally{
+								that.set('ready', true);
 							}
 						});
 					}
 				}else{
 					this.set('data', null);
 					this.set('state', 'error');
+					this.set('ready', true);
 				}
 			}
 		}

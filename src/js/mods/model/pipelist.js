@@ -30,11 +30,15 @@ define('mods/model/pipelist',function(require,exports,module){
 		getPipe : function(name){
 			return this.get(name);
 		},
-		addPipe : function(name){
+		addPipe : function(name, pipeConf){
 			var that = this;
-			var pipe = new $pipe({
-				name : name
-			});
+
+			pipeConf = pipeConf || {};
+			pipeConf.name = name;
+			delete pipeConf.state;
+			delete pipeConf.ready;
+			var pipe = new $pipe(pipeConf);
+
 			pipe.on('change', function(){
 				that.trigger('change');
 			});

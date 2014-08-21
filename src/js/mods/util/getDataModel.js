@@ -1,44 +1,44 @@
 /**
- * @fileoverview 根据源路径或者过滤器名称获取数据
+ * @fileoverview 根据源路径或者过滤器名称获取数据模型对象
  * @authors liangdong2 <liangdong2@staff.sina.com.cn>
  */
-define('mods/util/getData',function(require,exports,module){
+define('mods/util/getDataModel',function(require,exports,module){
 
 	var $ = require('lib');
 
-	//获取数据源数据
-	var getSourceData = function(path){
+	//获取数据源
+	var getSourceModel = function(path){
 		var root = window.globalRoot;
 		if(!root){return null;}
 		var source = root.getSource(path);
 		if(source && $.isFunction(source.get)){
-			return source.get('data');
+			return source;
 		}else{
 			return null;
 		}
 	};
 
-	//获取过滤器数据
-	var getPipeData = function(name){
+	//获取过滤器
+	var getPipeModel = function(name){
 		var pipelist = window.globalPipeList;
 		if(!pipelist){return null;}
 		var pipe = pipelist.getPipe(name);
 		if(pipe && $.isFunction(pipe.get)){
-			return pipe.get('data');
+			return pipe;
 		}else{
 			return null;
 		}
 	};
 
-	//获取一个数据列表
+	//获取一个数据模型
 	module.exports = function(datapath){
-		var data;
+		var model;
 		if((/[\/\\]/).test(datapath)){
-			data = getSourceData(datapath);
+			model = getSourceModel(datapath);
 		}else{
-			data = getPipeData(datapath);
+			model = getPipeModel(datapath);
 		}
-		return data;
+		return model;
 	};
 
 });

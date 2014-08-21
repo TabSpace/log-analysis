@@ -45,10 +45,7 @@ define('mods/ctrl/dataPanel',function(require,exports,module){
 			if(pipe){
 				$tip('已存在同名过滤器');
 			}else{
-				pipe = $pipelist.addPipe(name);
-				if(pipeConf){
-					pipe.setConf(pipeConf);
-				}
+				pipe = $pipelist.addPipe(name, pipeConf);
 			}
 
 			var pipeView = objs['pipe-' + name];
