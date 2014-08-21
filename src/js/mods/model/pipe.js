@@ -51,43 +51,42 @@ define('mods/model/pipe',function(require,exports,module){
 			}else{
 				vnames = Object.keys(source);
 				if(vnames.length){
-					vname = vnames[0];
-					data = $getData(source[vname]);
-					if(data){
-						if(!filter){
+					if(!filter){
+						data = $getData(source[vnames[0]]);
+						if(data){
 							this.set('data', data);
 							this.set('state', 'success');
 						}else{
-							var code = '';
-							var args = [];
-							vnames.forEach(function(name, index){
-								code = 'var ' + name + ' = arguments[' + index + '];\n';
-								args.push($getData(source[name]));
-							});
-							code = code + filter;
+							this.set('data', null);
+							this.set('state', 'error');
+						}
+					}else{
+						var code = '';
+						var args = [];
+						vnames.forEach(function(name, index){
+							code = 'var ' + name + ' = arguments[' + index + '];\n';
+							args.push($getData(source[name]));
+						});
+						code = code + filter;
 
-							setTimeout(function(){
-								try{
-									var fn = new Function(code);
-									data = fn.apply(that, args);
+						setTimeout(function(){
+							try{
+								var fn = new Function(code);
+								data = fn.apply(that, args);
 
-									if(data){
-										that.set('data', data);
-										that.set('state', 'success');
-									}else{
-										that.set('data', null);
-										that.set('state', 'error');
-									}
-								}catch(e){
-									console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+								if(data){
+									that.set('data', data);
+									that.set('state', 'success');
+								}else{
 									that.set('data', null);
 									that.set('state', 'error');
 								}
-							});
-						}
-					}else{
-						this.set('data', null);
-						this.set('state', 'error');
+							}catch(e){
+								console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+								that.set('data', null);
+								that.set('state', 'error');
+							}
+						});
 					}
 				}else{
 					this.set('data', null);

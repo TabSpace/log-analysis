@@ -59,7 +59,7 @@ define('mods/model/root',function(require,exports,module){
 		}
 	});
 
-	module.exports = new Root();
+	module.exports = window.globalRoot = new Root();
 
 });
 

@@ -79,7 +79,7 @@ define('mods/model/pipelist',function(require,exports,module){
 		}
 	});
 
-	module.exports = new PipeList();
+	module.exports = window.globalPipeList = new PipeList();
 
 });
 

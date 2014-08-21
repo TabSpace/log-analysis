@@ -116,6 +116,8 @@ define('mods/view/pipe',function(require,exports,module){
 
 			var filter = this.role('code').val();
 			model.set('filter', filter);
+
+			model.compute();
 		},
 		outputPipeData : function(){
 			window.data = this.model.get('data');
