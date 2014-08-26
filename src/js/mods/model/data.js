@@ -7,6 +7,7 @@ define('mods/model/data',function(require,exports,module){
 	var $ = require('lib');
 	var $model = require('lib/mvc/model');
 	var $tip = require('mods/dialog/tip');
+	var $channel = require('mods/channel/global');
 
 	var Data = $model.extend({
 		defaults : {
@@ -42,11 +43,9 @@ define('mods/model/data',function(require,exports,module){
 		},
 		checkReady : function(){
 			if(this.isReady()){
-				console.log('data ready');
-				this.trigger('data-ready', this.get('path'));
+				$channel.trigger('data-ready', this.get('path'));
 			}else{
-				console.log('data prepare');
-				this.trigger('data-prepare', this.get('path'));
+				$channel.trigger('data-prepare', this.get('path'));
 			}
 		},
 		isReady : function(){

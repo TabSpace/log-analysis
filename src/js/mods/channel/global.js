@@ -7,6 +7,10 @@ define('mods/channel/global',function(require,exports,module){
 
 	var $listener = require('lib/common/listener');
 	module.exports = new $listener([
+		//数据开始准备
+		'data-prepare',
+		//数据生成完毕
+		'data-ready',
 		//从localstorage加载了存储的过滤器
 		'load-pipes',
 		//移除过滤器

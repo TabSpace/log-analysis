@@ -11,7 +11,7 @@ define('mods/view/pipe',function(require,exports,module){
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
 	var $delay = require('lib/kit/func/delay');
-	var $getData = require('mods/util/getData');
+	var $getDataModel = require('mods/util/getDataModel');
 
 	var TPL = $tpl({
 		box : [
@@ -130,7 +130,7 @@ define('mods/view/pipe',function(require,exports,module){
 			var hasError = false;
 			$.each(source, function(name, path){
 				try{
-					window[name] = $getData(path);
+					window[name] = $getDataModel(path).get('data');
 					console.info(path + ':数据输出为window.' + name);
 				}catch(e){
 					hasError = true;

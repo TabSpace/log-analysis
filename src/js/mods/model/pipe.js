@@ -10,6 +10,7 @@ define('mods/model/pipe',function(require,exports,module){
 	var $channel = require('mods/channel/global');
 	var $getDataModel = require('mods/util/getDataModel');
 	var $delay = require('lib/kit/func/delay');
+	var $contains = require('lib/kit/arr/contains');
 
 	var Pipe = $model.extend({
 		defaults : {
@@ -24,29 +25,86 @@ define('mods/model/pipe',function(require,exports,module){
 			//数据源变更时需要计算
 			'change:source' : 'compute',
 			//过滤器变更时需要计算
-			'change:filter' : 'compute'
+			'change:filter' : 'compute',
+			'change:ready' : 'checkReady',
 		},
 		build : function(){
 			this.compute = $delay(this.compute, 10);
+			this.checkPrepare();
+			this.checkUpdate();
 			this.checkReady();
 		},
 		setEvents : function(action){
+			var proxy = this.proxy();
 			this.delegate(action);
+			$channel[action]('data-prepare', proxy('checkPrepare'));
+			$channel[action]('data-ready', proxy('checkUpdate'));
 		},
 		setConf : function(options){
 			this.set(options);
 		},
+		//检查数据是否准备完毕，准备完毕后要发送广播通知关联组件更新数据
 		checkReady : function(){
 			if(this.isReady()){
-				console.log('pipe ready');
-				this.trigger('data-ready', this.get('name'));
+				$channel.trigger('data-ready', this.get('name'));
 			}else{
-				console.log('pipe prepare');
-				this.trigger('data-prepare', this.get('name'));
+				$channel.trigger('data-prepare', this.get('name'));
 			}
 		},
 		isReady : function(){
 			return !!this.get('ready');
+		},
+		//检查是否要将自己变更为数据准备中状态
+		checkPrepare : function(name){
+			if(name === this.get('name')){return;}
+			var requiredPath = this.getRequiredPath();
+			if(name){
+				if($contains(requiredPath, name)){
+					this.set('ready', false);
+					this.set('state', 'prepare');
+				}else{
+					//do nothing
+				}
+			}else{
+				this.set('ready', false);
+				this.set('state', 'prepare');
+			}
+		},
+		//检查是否要更新自己的数据
+		checkUpdate : function(name){
+			if(name === this.get('name')){return;}
+			var requiredPath = this.getRequiredPath();
+			if(name){
+				if($contains(requiredPath, name)){
+					this.checkCompute();
+				}else{
+					//do nothing
+				}
+			}else{
+				this.checkCompute();
+			}
+		},
+		//检查是否可以进行数据计算
+		checkCompute : function(){
+			var requiredPath = this.getRequiredPath();
+			var allReady = requiredPath.every(function(name){
+				var requiredModel = $getDataModel(name);
+				return requiredModel.isReady();
+			});
+			if(allReady){
+				this.compute();
+			}
+		},
+		//根据用户设置的源数据表单项，获取源数据列表
+		getRequiredPath : function(){
+			var source = this.get('source');
+			if(source){
+				return Object.keys(source).map(function(key){
+					return source[key];
+				});
+			}else{
+				return [];
+			}
 		},
 		//计算经过自己的过滤器过滤的数据
 		compute : function(){
@@ -54,23 +112,22 @@ define('mods/model/pipe',function(require,exports,module){
 			var that = this;
 			var source = this.get('source');
 			var filter = this.get('filter');
-			var vnames;
-			var vname;
+			var requiredPath = this.getRequiredPath();
 			var data;
 			var sourceModel;
 
 			this.set('ready', false);
 			this.set('state', 'prepare');
+			this.checkReady();
 
 			if($.type(source) !== 'object'){
 				this.set('data', null);
 				this.set('state', 'error');
 				this.set('ready', true);
 			}else{
-				vnames = Object.keys(source);
-				if(vnames.length){
+				if(requiredPath.length){
 					if(!filter){
-						sourceModel = $getDataModel(source[vnames[0]]);
+						sourceModel = $getDataModel(requiredPath[0]);
 						if(sourceModel){
 							data = sourceModel.get('data');
 						}
@@ -85,7 +142,7 @@ define('mods/model/pipe',function(require,exports,module){
 					}else{
 						var code = '';
 						var args = [];
-						vnames.forEach(function(name, index){
+						Object.keys(source).forEach(function(name, index){
 							code = 'var ' + name + ' = arguments[' + index + '];\n';
 							var smodel = $getDataModel(source[name]);
 							if(smodel){
