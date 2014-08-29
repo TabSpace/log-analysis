@@ -63,9 +63,13 @@ input[type="file"]{width: 150px;}
 .pathm .add{text-align: right;}
 
 /* 分页列表中展示的表格 */
-.page table{border-spacing: 1px;}
+.page table{border-spacing: 1px; counter-reset: table;}
 .page th{text-align: center; border: 1px solid rgba(0,0,0,0.2); background-color: rgba(0,0,255,0.1);padding: 2px 5px;}
 .page td{padding: 0 5px;border: 1px solid rgba(0,0,0,0.2);}
+.page tr{counter-increment: table;}
+.page tr:first-child{counter-increment: none;}
+.page tr:before{content:counter(table);display: table-cell;padding: 0 5px;border: 1px solid rgba(0,0,0,0.2);text-align: center;vertical-align: middle;}
+.page tr:first-child:before{content:"index";background-color: rgba(0,0,255,0.1);padding: 2px 5px;font-weight: bold;}
 .page tr:hover td{background-color: rgba(255,0,0,0.1);}
 
 /* 分页列表中展示的页码 */

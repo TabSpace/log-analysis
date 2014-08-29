@@ -93,14 +93,9 @@ define('mods/view/datalist',function(require,exports,module){
 			if($.isArray(data)){
 				data = data.map(function(item, index){
 					if($.type(item) === 'object'){
-						return $.extend({
-							index : index + 1
-						}, item);
+						return item;
 					}else{
-						return {
-							index : index + 1,
-							value : item
-						};
+						return {value : item};
 					}
 				});
 			}
@@ -172,7 +167,14 @@ define('mods/view/datalist',function(require,exports,module){
 				}
 			}
 
-			listHtml = '<table>' + listHtml + '</table>';
+			listHtml = [
+				'<table ',
+					'style="counter-reset:table ',
+					(pageData.page - 1)  * pageData.pageSize,
+				'">',
+					listHtml,
+				'</table>'
+			].join('');
 			pageHtml = $mustache.render(pageTpl, pageData);
 
 			if(pageData.pageEnable){
