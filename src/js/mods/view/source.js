@@ -116,8 +116,10 @@ define('mods/view/source',function(require,exports,module){
 		},
 		//刷新数据源，并更新依赖该数据源的所有管道对象
 		refresh : function(){
-			$tip('更新依赖此数据源的所有数据...');
-			console.info('更新依赖此数据源的所有数据...');
+			var message = '更新依赖数据源:' + this.model.get('path') + '的所有数据...';
+			$tip(message);
+			console.info(message);
+			this.model.refresh();
 		},
 		destroy : function(){
 			if(this.list){

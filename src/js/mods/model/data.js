@@ -50,6 +50,13 @@ define('mods/model/data',function(require,exports,module){
 		},
 		isReady : function(){
 			return !!this.get('ready');
+		},
+		refresh : function(){
+			var that = this;
+			this.set('ready', false);
+			setTimeout(function(){
+				that.set('ready', true);
+			}, 50);
 		}
 	});
 
