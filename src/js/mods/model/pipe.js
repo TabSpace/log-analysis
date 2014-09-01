@@ -127,7 +127,7 @@ define('mods/model/pipe',function(require,exports,module){
 				'};'
 			]);
 
-			var blob = new Blob(code);
+			var blob = new Blob(code, {type: "text/javascript;charset=UTF-8"});
 			var url = window.URL.createObjectURL(blob);
 			var worker = new Worker(url);
 			worker.onerror = function(e){
