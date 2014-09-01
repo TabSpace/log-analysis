@@ -106,9 +106,96 @@ define('mods/model/pipe',function(require,exports,module){
 				return [];
 			}
 		},
+		//使用多线程计算
+		runWithWorker : function(){
+			var that = this;
+			var source = this.get('source');
+			var filter = this.get('filter');
+			var code = [];
+			code = code.concat([
+				'onmessage = function(e){',
+				'    postMessage(',
+				'        (function(' + Object.keys(source).join(',') + '){',
+							filter,
+				'        })(' +
+						Object.keys(source).map(function(name){
+							return 'e.data["' + name + '"]';
+						}).join(',') + ')',
+				'    );',
+				'    self.close();',
+				'};'
+			]);
+
+			var blob = new Blob(code);
+			var url = window.URL.createObjectURL(blob);
+			var worker = new Worker(url);
+			worker.onerror = function(e){
+				worker.terminate();
+				console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+				that.set('data', null);
+				that.set('state', 'error');
+				that.set('ready', true);
+			};
+			worker.onmessage = function(e){
+				worker.terminate();
+				that.set('data', e.data);
+				that.set('state', 'success');
+				that.set('ready', true);
+			};
+
+			var rs = {};
+			$.each(source, function(name, path){
+				var smodel = $getDataModel(path);
+				if(smodel){
+					rs[name] = smodel.get('data');
+				}else{
+					rs[name] = null;
+				}
+			});
+			worker.postMessage(rs);
+		},
+		//不使用多线程计算
+		runWithoutWorker : function(){
+			var that = this;
+			var source = this.get('source');
+			var filter = this.get('filter');
+			var code = '';
+			var args = [];
+			var data;
+			Object.keys(source).forEach(function(name, index){
+				code = 'var ' + name + ' = arguments[' + index + '];\n';
+				var smodel = $getDataModel(source[name]);
+				if(smodel){
+					args.push(smodel.get('data'));
+				}else{
+					args.push(null);
+				}
+			});
+			code = code + filter;
+
+			setTimeout(function(){
+				try{
+					var fn = new Function(code);
+					data = fn.apply(that, args);
+
+					if(data){
+						that.set('data', data);
+						that.set('state', 'success');
+					}else{
+						that.set('data', null);
+						that.set('state', 'error');
+					}
+				}catch(e){
+					console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+					that.set('data', null);
+					that.set('state', 'error');
+				}finally{
+					that.set('ready', true);
+				}
+			});
+		},
 		//计算经过自己的过滤器过滤的数据
 		compute : function(){
-			console.log('compute');
 			var that = this;
 			var source = this.get('source');
 			var filter = this.get('filter');
@@ -140,39 +227,11 @@ define('mods/model/pipe',function(require,exports,module){
 						}
 						this.set('ready', true);
 					}else{
-						var code = '';
-						var args = [];
-						Object.keys(source).forEach(function(name, index){
-							code = 'var ' + name + ' = arguments[' + index + '];\n';
-							var smodel = $getDataModel(source[name]);
-							if(smodel){
-								args.push(smodel.get('data'));
-							}else{
-								args.push(null);
-							}
-						});
-						code = code + filter;
-
-						setTimeout(function(){
-							try{
-								var fn = new Function(code);
-								data = fn.apply(that, args);
-
-								if(data){
-									that.set('data', data);
-									that.set('state', 'success');
-								}else{
-									that.set('data', null);
-									that.set('state', 'error');
-								}
-							}catch(e){
-								console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
-								that.set('data', null);
-								that.set('state', 'error');
-							}finally{
-								that.set('ready', true);
-							}
-						});
+						if(window.Worker){
+							this.runWithWorker();
+						}else{
+							this.runWithoutWorker();
+						}
 					}
 				}else{
 					this.set('data', null);

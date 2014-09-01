@@ -75,7 +75,8 @@ define('mods/view/pipe',function(require,exports,module){
 			var conf = this.conf;
 			this.model = conf.model;
 			this.insert();
-			this.render = $delay(this.render, 10);
+			this.render = $delay(this.render, 50);
+			this.updateState = $delay(this.updateState, 50);
 			this.render();
 			this.buildList();
 		},
@@ -165,9 +166,10 @@ define('mods/view/pipe',function(require,exports,module){
 			var elEntries = this.role('entries');
 			var elCode = this.role('code');
 
-			root.attr('class', 'pt10 pb10 bdb1 pipe ' + model.get('state'));
+			//更新过滤器的名称
 			elName.html(model.get('name'));
 
+			//更新过滤器的入口展示DOM结构
 			elEntries.html('');
 			var source = model.get('source') || {};
 			$.each(source, function(name, path){
@@ -177,7 +179,19 @@ define('mods/view/pipe',function(require,exports,module){
 				});
 			});
 
+			//填充过滤器的代码
 			elCode.val(model.get('filter'));
+
+			//更新过滤器的状态样式
+			this.updateState();
+		},
+		//更新过滤器的状态样式
+		updateState : function(){
+			this.role('root').attr(
+				'class',
+				'pt10 pb10 bdb1 pipe ' +
+					this.model.get('state')
+			);
 		},
 		buildList : function(){
 			var data = this.model.get('data');
