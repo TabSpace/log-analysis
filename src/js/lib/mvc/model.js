@@ -109,20 +109,29 @@ define('lib/mvc/model',function(require,exports,module){
 		},
 		//获取模型对应属性的值的拷贝
 		//如果不传参数，则直接获取整个模型数据
-		get : function(key){
+		get : function(direct, key){
 			var value;
+			key = $.type(direct) === 'string' ? direct : key;
 			if($.type(key) === 'string'){
 				value = this.data[key];
-				if($.isPlainObject(value)){
-					return $.extend(true, {}, value);
-				}else if($.isArray(value)){
-					return $.extend(true, [], value);
-				}else{
+				if(direct === true){
 					return value;
+				}else{
+					if($.isPlainObject(value)){
+						return $.extend(true, {}, value);
+					}else if($.isArray(value)){
+						return $.extend(true, [], value);
+					}else{
+						return value;
+					}
 				}
 			}
 			if(typeof key === 'undefined'){
-				return $.extend(true, {}, this.data);
+				if(direct === true){
+					return this.data;
+				}else{
+					return $.extend(true, {}, this.data);
+				}
 			}
 		},
 		//设置自动计算属性

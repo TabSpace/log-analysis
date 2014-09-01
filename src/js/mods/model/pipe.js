@@ -30,6 +30,7 @@ define('mods/model/pipe',function(require,exports,module){
 		},
 		build : function(){
 			this.compute = $delay(this.compute, 10);
+			this.executeCompute = $delay(this.executeCompute, 50);
 			this.checkPrepare();
 			this.checkUpdate();
 			this.checkReady();
@@ -147,11 +148,12 @@ define('mods/model/pipe',function(require,exports,module){
 			$.each(source, function(name, path){
 				var smodel = $getDataModel(path);
 				if(smodel){
-					rs[name] = smodel.get('data');
+					rs[name] = smodel.get(true, 'data');
 				}else{
 					rs[name] = null;
 				}
 			});
+
 			worker.postMessage(rs);
 		},
 		//不使用多线程计算
@@ -194,18 +196,13 @@ define('mods/model/pipe',function(require,exports,module){
 				}
 			});
 		},
-		//计算经过自己的过滤器过滤的数据
-		compute : function(){
+		executeCompute : function(){
 			var that = this;
 			var source = this.get('source');
 			var filter = this.get('filter');
 			var requiredPath = this.getRequiredPath();
 			var data;
 			var sourceModel;
-
-			this.set('ready', false);
-			this.set('state', 'prepare');
-			this.checkReady();
 
 			if($.type(source) !== 'object'){
 				this.set('data', null);
@@ -239,6 +236,14 @@ define('mods/model/pipe',function(require,exports,module){
 					this.set('ready', true);
 				}
 			}
+		},
+		//计算经过自己的过滤器过滤的数据
+		compute : function(){
+			this.set('ready', false);
+			this.set('state', 'prepare');
+			this.checkReady();
+
+			this.executeCompute();
 		}
 	});
 
