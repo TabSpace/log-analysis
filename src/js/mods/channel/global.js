@@ -11,13 +11,17 @@ define('mods/channel/global',function(require,exports,module){
 		'data-prepare',
 		//数据生成完毕
 		'data-ready',
-		//从localstorage加载了存储的过滤器
+		//从localstorage加载存储的过滤器
 		'load-pipes',
 		//移除过滤器
 		'remove-pipe',
 		//从indexedDB加载了存储的数据
 		'load-data',
 		//移除数据源
-		'remove-source'
+		'remove-source',
+		//从localstorage加载存储的图表
+		'load-diagrams',
+		//删除图表
+		'remove-diagram'
 	]);
 });

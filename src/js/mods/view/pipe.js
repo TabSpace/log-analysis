@@ -76,7 +76,7 @@ define('mods/view/pipe',function(require,exports,module){
 			this.model = conf.model;
 			this.insert();
 			this.render = $delay(this.render, 10);
-			this.updateState = $delay(this.updateState, 50);
+			this.updateState = $delay(this.updateState, 10);
 			this.render();
 			this.buildList();
 		},

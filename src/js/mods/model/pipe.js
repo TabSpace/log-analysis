@@ -31,7 +31,7 @@ define('mods/model/pipe',function(require,exports,module){
 		},
 		build : function(){
 			this.compute = $delay(this.compute, 10);
-			this.executeCompute = $delay(this.executeCompute, 50);
+			this.executeCompute = $delay(this.executeCompute, 10);
 			this.checkPrepare();
 			this.checkUpdate();
 			this.checkReady();
@@ -91,7 +91,7 @@ define('mods/model/pipe',function(require,exports,module){
 			var requiredPath = this.getRequiredPath();
 			var allReady = requiredPath.every(function(name){
 				var requiredModel = $getDataModel(name);
-				return requiredModel.isReady();
+				return requiredModel ? requiredModel.isReady() : false;
 			});
 			if(allReady){
 				this.compute();
