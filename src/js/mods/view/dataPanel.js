@@ -12,7 +12,7 @@ define('mods/view/dataPanel',function(require,exports,module){
 	var TPL = $tpl({
 		box : [
 			'<section class="m10 sec-ctrl" style="display:none;">',
-				'<h3 class="pd1 pb10 bdb1">数据列表</h3>',
+				'<h3 class="pd1 pb10 bdb1">数据模型</h3>',
 				'<div class="bdb1">',
 					'<table class="pt10 pb10 pathm">',
 						'<tr>',
@@ -40,8 +40,9 @@ define('mods/view/dataPanel',function(require,exports,module){
 			template : TPL.box,
 			events : {
 				'.pathm [data-role="add-data"] tap' : 'addDataSource',
+				'.pathm [data-role="add-pipe"] tap' : 'addPipe',
 				'.pathm [data-role="data-path"] keydown' : 'checkKey',
-				'.pathm [data-role="add-pipe"] tap' : 'addPipe'
+				'.pathm [data-role="data-pipe"] keydown' : 'checkKey'
 			}
 		},
 		build : function(){
@@ -87,9 +88,14 @@ define('mods/view/dataPanel',function(require,exports,module){
 			}
 		},
 		checkKey : function(evt){
+			var target = $(evt.target);
 			var code = evt.keyCode + '';
 			if(code === '13'){
-				this.addDataSource();
+				if(target.attr('data-role') === 'data-path'){
+					this.addDataSource();
+				}else if(target.attr('data-role') === 'data-pipe'){
+					this.addPipe();
+				}
 			}
 		}
 	});

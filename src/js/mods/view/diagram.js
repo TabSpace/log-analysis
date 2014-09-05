@@ -1,8 +1,8 @@
 /**
- * @fileoverview 数据管道 / 过滤器
+ * @fileoverview 图表
  * @authors liangdong2 <liangdong2@staff.sina.com.cn>
  */
-define('mods/view/pipe',function(require,exports,module){
+define('mods/view/diagram',function(require,exports,module){
 
 	var $view = require('lib/mvc/view');
 	var $tpl = require('lib/kit/util/template');
@@ -23,10 +23,10 @@ define('mods/view/pipe',function(require,exports,module){
 						'<span class="ml10" data-role="data-info"></span>',
 					'</div>',
 					'<div class="fr">',
-						'<a class="button" data-role="toggle">显示配置</a>',
-						'<a class="button" data-role="output-data">输出</a>',
-						'<a class="button" data-role="del">移除</a>',
-						'<a class="button" data-role="refresh">刷新</a>',
+						'<a class="button" data-role="pipe-toggle">显示配置</a>',
+						'<a class="button" data-role="pipe-output">输出</a>',
+						'<a class="button" data-role="pipe-del">移除</a>',
+						'<a class="button" data-role="pipe-refresh">刷新</a>',
 					'</div>',
 				'</div>',
 				'<div class="conf" data-role="conf" style="display:none;">',
@@ -62,13 +62,13 @@ define('mods/view/pipe',function(require,exports,module){
 			model : null,
 			template : TPL.box,
 			events : {
-				'[data-role="toggle"] tap' : 'toggleConf',
+				'[data-role="pipe-toggle"] tap' : 'toggleConf',
 				'[data-role="add-entry"] tap' : 'addEntry',
 				'[data-role="remove-entry"] tap' : 'removeEntry',
 				'[data-role="output-entry"] tap' : 'outputEntry',
-				'[data-role="output-data"] tap' : 'outputData',
-				'[data-role="refresh"] tap' : 'refresh',
-				'[data-role="del"] tap' : 'remove'
+				'[data-role="pipe-output"] tap' : 'outputPipeData',
+				'[data-role="pipe-refresh"] tap' : 'refresh',
+				'[data-role="pipe-del"] tap' : 'remove'
 			}
 		},
 		build : function(){
@@ -92,7 +92,7 @@ define('mods/view/pipe',function(require,exports,module){
 			model[action]('change:data', proxy('buildList'));
 		},
 		toggleConf : function(){
-			var button = this.role('toggle');
+			var button = this.role('pipe-toggle');
 			var box = this.role('conf');
 			if(box.css('display') === 'none'){
 				box.show();
@@ -120,7 +120,7 @@ define('mods/view/pipe',function(require,exports,module){
 
 			model.compute();
 		},
-		outputData : function(){
+		outputPipeData : function(){
 			window.data = this.model.get('data');
 			$tip('数据输出为window.data');
 			console.info('数据输出为window.data');

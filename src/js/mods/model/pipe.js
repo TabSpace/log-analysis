@@ -1,5 +1,5 @@
 /**
- * @fileoverview 数据中心 - 管道对象，包含过滤规则和被过滤的数据，作为数据树的节点
+ * @fileoverview 管道对象，包含过滤规则和被过滤的数据，作为数据树的节点
  * @authors liangdong2 <liangdong2@staff.sina.com.cn>
  */
 define('mods/model/pipe',function(require,exports,module){
@@ -14,6 +14,7 @@ define('mods/model/pipe',function(require,exports,module){
 
 	var Pipe = $model.extend({
 		defaults : {
+			type : 'pipe',
 			name : '',
 			data : null,
 			source : null,
@@ -132,7 +133,7 @@ define('mods/model/pipe',function(require,exports,module){
 			var worker = new Worker(url);
 			worker.onerror = function(e){
 				worker.terminate();
-				console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+				console.error(this.get('type') + ' ' + that.get('name') + ' compute error:', e.message);
 				that.set('data', null);
 				that.set('state', 'error');
 				that.set('ready', true);
@@ -188,7 +189,7 @@ define('mods/model/pipe',function(require,exports,module){
 						that.set('state', 'error');
 					}
 				}catch(e){
-					console.error('Pipe ' + that.get('name') + ' compute error:', e.message);
+					console.error(this.get('type') + ' ' + that.get('name') + ' compute error:', e.message);
 					that.set('data', null);
 					that.set('state', 'error');
 				}finally{

@@ -1,5 +1,5 @@
 /**
- * @fileoverview 数据中心 - 管道对象集合
+ * @fileoverview 管道对象集合
  * @authors liangdong2 <liangdong2@staff.sina.com.cn>
  */
 define('mods/model/pipelist',function(require,exports,module){
