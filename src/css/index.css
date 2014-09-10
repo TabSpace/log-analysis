@@ -104,5 +104,5 @@ input[type="file"]{width: 150px;}
 .diagram .conf ul li:hover{background-color: rgba(0,0,0,0.05);}
 .diagram .entries input{width: 100px;}
 .diagram .code textarea{height: 100px;width: 99%;overflow: auto;word-wrap: normal;}
-
+.diagram .chart-box{overflow: auto;}
 

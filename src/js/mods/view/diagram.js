@@ -8,6 +8,7 @@ define('mods/view/diagram',function(require,exports,module){
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
 	var $pipeView = require('mods/view/pipe');
+	var $charts = require('mods/util/charts');
 
 	var TPL = $tpl({
 		box : [
@@ -19,7 +20,9 @@ define('mods/view/diagram',function(require,exports,module){
 						'<span class="ml10" data-role="data-info"></span>',
 					'</div>',
 				'</div>',
-				'<div class="datalist" data-role="chart"></div>',
+				'<div class="chart-box">',
+					'<div class="chart" data-role="chart"></div>',
+				'</div>',
 				'<div class="datalist" data-role="list"></div>',
 				'<div class="box header">',
 					'<div class="fr">',
@@ -30,6 +33,10 @@ define('mods/view/diagram',function(require,exports,module){
 					'</div>',
 				'</div>',
 				'<div class="conf" data-role="conf" style="display:none;">',
+					'<div class="mb5">',
+						'选择图表类型：<select data-role="chart-type"><option value="">无</option></select>',
+					'</div>',
+					'<ul data-role="chart-conf" class="mb10"></ul>',
 					'<div class="mb5">',
 						'<a class="button" data-role="add-entry" title="入口数据将根据下面的代码格式，作为过滤器可访问的变量">添加入口数据</a>',
 						'<a class="button" data-role="output-entry" title="将变量引用的数据输出到控制台，以方便调试">输出到控制台</a>',
@@ -78,6 +85,18 @@ define('mods/view/diagram',function(require,exports,module){
 				'pt10 pb10 bdb1 diagram ' +
 					this.model.get('state')
 			);
+			this.renderChart();
+		},
+		//构建图表
+		renderChart : function(){
+			var elChart = this.role('chart');
+			elChart.css({
+				'width' : '600px',
+				'height' : '200px'
+			});
+			$charts.build('type', {
+				node : this.role('chart').get(0)
+			});
 		},
 		//移除数据源
 		remove : function(){
