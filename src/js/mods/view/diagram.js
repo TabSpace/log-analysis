@@ -60,6 +60,7 @@ define('mods/view/diagram',function(require,exports,module){
 			parent : null,
 			model : null,
 			template : TPL.box,
+			hideSinglePage : true,
 			events : {
 				'[data-role="toggle"] tap' : 'toggleConf',
 				'[data-role="add-entry"] tap' : 'addEntry',

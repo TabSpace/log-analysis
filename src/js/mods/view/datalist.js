@@ -44,6 +44,7 @@ define('mods/view/datalist',function(require,exports,module){
 			parent : null,
 			data : null,
 			template : TPL.box,
+			hideSinglePage : false,
 			events : {
 				'a[data-page] tap' : 'checkPage',
 				'input keydown' : 'checkKey'
@@ -176,6 +177,10 @@ define('mods/view/datalist',function(require,exports,module){
 				'</table>'
 			].join('');
 			pageHtml = $mustache.render(pageTpl, pageData);
+
+			if(conf.hideSinglePage && pageData.totalPage <= 1){
+				pageHtml = '';
+			}
 
 			if(pageData.pageEnable){
 				this.role('page').show();

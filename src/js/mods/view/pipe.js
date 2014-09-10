@@ -61,6 +61,7 @@ define('mods/view/pipe',function(require,exports,module){
 			parent : null,
 			model : null,
 			template : TPL.box,
+			hideSinglePage : false,
 			events : {
 				'[data-role="toggle"] tap' : 'toggleConf',
 				'[data-role="add-entry"] tap' : 'addEntry',
@@ -203,6 +204,7 @@ define('mods/view/pipe',function(require,exports,module){
 			);
 		},
 		buildList : function(){
+			var conf = this.conf;
 			var data = this.model.get('data');
 			var count = 0;
 			if($.isArray(data)){
@@ -220,6 +222,7 @@ define('mods/view/pipe',function(require,exports,module){
 				this.list = new $dataList({
 					name : this.model.get('name'),
 					parent : this.role('list'),
+					hideSinglePage : conf.hideSinglePage,
 					data : data
 				});
 			}
