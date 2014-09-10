@@ -102,7 +102,7 @@ define('mods/view/pipe',function(require,exports,module){
 				button.html('显示配置');
 			}
 		},
-		refresh : function(){
+		refreshSource : function(){
 			var model = this.model;
 			var source = {};
 			this.role('entries').find('li').each(function(){
@@ -114,11 +114,15 @@ define('mods/view/pipe',function(require,exports,module){
 				}
 			});
 			model.set('source', source);
-
+		},
+		refreshFilter : function(){
 			var filter = this.role('code').val();
-			model.set('filter', filter);
-
-			model.compute();
+			this.model.set('filter', filter);
+		},
+		refresh : function(){
+			this.refreshSource();
+			this.refreshFilter();
+			this.model.compute();
 		},
 		outputData : function(){
 			window.data = this.model.get('data');
@@ -129,6 +133,11 @@ define('mods/view/pipe',function(require,exports,module){
 			var model = this.model;
 			var source = model.get('source');
 			var hasError = false;
+			this.refreshSource();
+			if(!source){
+				$tip('尚未设置入口数据。');
+				return;
+			}
 			$.each(source, function(name, path){
 				try{
 					window[name] = $getDataModel(path).get('data');
