@@ -20,6 +20,7 @@ define('mods/model/diagram',function(require,exports,module){
 			source : null,
 			state : 'prepare',
 			ready : false,
+			chart : null,
 			filter : null
 		},
 		//检查数据是否准备完毕，准备完毕后要发送广播通知关联组件更新数据

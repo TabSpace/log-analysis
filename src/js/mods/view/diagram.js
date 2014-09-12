@@ -9,6 +9,7 @@ define('mods/view/diagram',function(require,exports,module){
 	var $channel = require('mods/channel/global');
 	var $pipeView = require('mods/view/pipe');
 	var $charts = require('mods/util/charts');
+	var $delay = require('lib/kit/func/delay');
 
 	var TPL = $tpl({
 		box : [
@@ -36,7 +37,7 @@ define('mods/view/diagram',function(require,exports,module){
 					'<div class="mb5">',
 						'选择图表类型：<select data-role="chart-type"><option value="">无</option></select>',
 					'</div>',
-					'<ul data-role="chart-conf" class="mb10"></ul>',
+					'<ul data-role="chart-conf" class="mb10" style="display:none;"></ul>',
 					'<div class="mb5">',
 						'<a class="button" data-role="add-entry" title="入口数据将根据下面的代码格式，作为过滤器可访问的变量">添加入口数据</a>',
 						'<a class="button" data-role="output-entry" title="将变量引用的数据输出到控制台，以方便调试">输出到控制台</a>',
@@ -75,8 +76,26 @@ define('mods/view/diagram',function(require,exports,module){
 				'[data-role="output-entry"] tap' : 'outputEntry',
 				'[data-role="output-data"] tap' : 'outputData',
 				'[data-role="refresh"] tap' : 'refresh',
-				'[data-role="del"] tap' : 'remove'
+				'[data-role="del"] tap' : 'remove',
+				'[data-role="chart-type"] change' : 'updateChartOptions'
 			}
+		},
+		build : function(){
+			var conf = this.conf;
+			this.model = conf.model;
+			this.insert();
+			this.render = $delay(this.render, 10);
+			this.updateState = $delay(this.updateState, 10);
+			this.renderChartTypes();
+			this.render();
+			this.buildList();
+		},
+		setEvents : function(action){
+			this.delegate(action);
+			var proxy = this.proxy();
+			var model = this.model;
+			model[action]('change', proxy('render'));
+			model[action]('change:data', proxy('buildList'));
 		},
 		//更新过滤器的状态样式
 		updateState : function(){
@@ -85,18 +104,70 @@ define('mods/view/diagram',function(require,exports,module){
 				'pt10 pb10 bdb1 diagram ' +
 					this.model.get('state')
 			);
+			this.renderChartConf();
 			this.renderChart();
+		},
+		//渲染图表类型下拉列表
+		renderChartTypes : function(){
+			var elChartType = this.role('chart-type');
+			var select = elChartType.get(0);
+			var types = $charts.getTypes();
+
+			types.forEach(function(item){
+				select.options.add(new Option(item.name, item.type));
+			});
+		},
+		//渲染图表的配置项
+		renderChartConf : function(){
+			var chartConf = this.model.get('chart');
+			var elChartType = this.role('chart-type');
+			var elChartConf = this.role('chart-conf');
+			if(!chartConf || !chartConf.type){
+				elChartType.val('');
+				elChartConf.html('');
+				elChartConf.hide();
+			}else{
+				elChartType.val(chartConf.type);
+				elChartConf.show();
+			}
 		},
 		//构建图表
 		renderChart : function(){
+			var chartConf = this.model.get('chart');
 			var elChart = this.role('chart');
-			elChart.css({
-				'width' : '600px',
-				'height' : '200px'
-			});
-			$charts.build('type', {
-				node : this.role('chart').get(0)
-			});
+			if(!chartConf || !chartConf.type){
+				elChart.html('');
+				elChart.hide();
+			}else{
+				elChart.show();
+				elChart.css({
+					'width' : '600px',
+					'height' : '200px'
+				});
+				$charts.build(chartConf.type, {
+					node : elChart.get(0)
+				});
+			}
+		},
+		refresh : function(){
+			this.refreshSource();
+			this.refreshFilter();
+			this.updateChartOptions();
+			this.model.compute();
+		},
+		//更新图表选项
+		updateChartOptions : function(){
+			var model = this.model;
+			var elChartType = this.role('chart-type');
+			var select = elChartType.get(0);
+			var chartConf = {};
+
+			if(!elChartType.val()){
+				model.set('chart', null);
+			}else{
+				chartConf.type = elChartType.val();
+				model.set('chart', chartConf);
+			}
 		},
 		//移除数据源
 		remove : function(){
