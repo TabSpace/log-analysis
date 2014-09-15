@@ -37,7 +37,7 @@ define('mods/view/diagram',function(require,exports,module){
 					'<div class="mb5">',
 						'选择图表类型：<select data-role="chart-type"><option value="">无</option></select>',
 					'</div>',
-					'<ul data-role="chart-conf" class="mb10" style="display:none;"></ul>',
+					'<div data-role="chart-conf" class="mb10" style="display:none;"></div>',
 					'<div class="mb5">',
 						'<a class="button" data-role="add-entry" title="入口数据将根据下面的代码格式，作为过滤器可访问的变量">添加入口数据</a>',
 						'<a class="button" data-role="output-entry" title="将变量引用的数据输出到控制台，以方便调试">输出到控制台</a>',
@@ -104,8 +104,8 @@ define('mods/view/diagram',function(require,exports,module){
 				'pt10 pb10 bdb1 diagram ' +
 					this.model.get('state')
 			);
-			this.renderChartConf();
 			this.renderChart();
+			this.renderChartConf();
 		},
 		//渲染图表类型下拉列表
 		renderChartTypes : function(){
@@ -122,12 +122,18 @@ define('mods/view/diagram',function(require,exports,module){
 			var chartConf = this.model.get('chart');
 			var elChartType = this.role('chart-type');
 			var elChartConf = this.role('chart-conf');
+			var chartConfHtml = '';
 			if(!chartConf || !chartConf.type){
 				elChartType.val('');
 				elChartConf.html('');
 				elChartConf.hide();
 			}else{
 				elChartType.val(chartConf.type);
+				if(this.chart){
+					chartConfHtml = $charts.getOptionsHtml(chartConf.type, chartConf);
+					this.chart.getOptionsHtml(chartConf);
+				}
+				elChartConf.html(chartConfHtml);
 				elChartConf.show();
 			}
 		},
@@ -140,12 +146,9 @@ define('mods/view/diagram',function(require,exports,module){
 				elChart.hide();
 			}else{
 				elChart.show();
-				elChart.css({
-					'width' : '600px',
-					'height' : '200px'
-				});
-				$charts.build(chartConf.type, {
-					node : elChart.get(0)
+				this.chart = $charts.build(chartConf.type, {
+					node : elChart.get(0),
+					dataMap : this.model.get('data')
 				});
 			}
 		},

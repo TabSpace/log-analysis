@@ -14,12 +14,34 @@ define('mods/util/chartManager',function(require,exports,module){
 		charts[type] = chart;
 	};
 
+	//获取依据图表选项渲染的选项列表DOM
+	manager.getOptionsHtml = function(type, options){
+		var chart = charts[type];
+		var html = '';
+		options = options || {};
+		if(chart && chart.getOptionsHtml){
+			html = chart.getOptionsHtml(options);
+		}
+		return html;
+	};
+
+	//从DOM中读取图表选项
+	manager.readOptions = function(type, node){
+		var chart = charts[type];
+		var options = {};
+		if(chart && chart.readOptions){
+			options = chart.readOptions(node);
+		}
+		return options;
+	};
+
 	//构建一个图表组件
 	manager.build = function(type, options){
 		var chart = charts[type];
 		if(chart && chart.build){
 			chart.build(options);
 		}
+		return chart;
 	};
 
 	//获取已注册的图表的类型
