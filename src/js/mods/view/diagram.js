@@ -37,7 +37,7 @@ define('mods/view/diagram',function(require,exports,module){
 					'<div class="mb5">',
 						'选择图表类型：<select data-role="chart-type"><option value="">无</option></select>',
 					'</div>',
-					'<div data-role="chart-conf" class="mb10" style="display:none;"></div>',
+					'<form data-role="chart-conf" class="mb10" style="display:none;"></form>',
 					'<div class="mb5">',
 						'<a class="button" data-role="add-entry" title="入口数据将根据下面的代码格式，作为过滤器可访问的变量">添加入口数据</a>',
 						'<a class="button" data-role="output-entry" title="将变量引用的数据输出到控制台，以方便调试">输出到控制台</a>',
@@ -146,10 +146,9 @@ define('mods/view/diagram',function(require,exports,module){
 				elChart.hide();
 			}else{
 				elChart.show();
-				this.chart = $charts.build(chartConf.type, {
-					node : elChart.get(0),
-					dataMap : this.model.get('data')
-				});
+				chartConf.node = elChart.get(0);
+				chartConf.dataMap = this.model.get('data');
+				this.chart = $charts.build(chartConf.type, chartConf);
 			}
 		},
 		refresh : function(){
@@ -162,6 +161,7 @@ define('mods/view/diagram',function(require,exports,module){
 		updateChartOptions : function(){
 			var model = this.model;
 			var elChartType = this.role('chart-type');
+			var elChartConf = this.role('chart-conf');
 			var select = elChartType.get(0);
 			var chartConf = {};
 
@@ -169,6 +169,7 @@ define('mods/view/diagram',function(require,exports,module){
 				model.set('chart', null);
 			}else{
 				chartConf.type = elChartType.val();
+				chartConf = $charts.readOptions(chartConf.type, elChartConf);
 				model.set('chart', chartConf);
 			}
 		},

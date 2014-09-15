@@ -32,6 +32,7 @@ define('mods/util/chartManager',function(require,exports,module){
 		if(chart && chart.readOptions){
 			options = chart.readOptions(node);
 		}
+		options.type = type;
 		return options;
 	};
 

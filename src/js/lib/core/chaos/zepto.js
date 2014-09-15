@@ -9,6 +9,7 @@ define('lib/core/chaos/zepto',function(require,exports,module){
 	require('lib/core/zepto/event');
 	require('lib/core/zepto/fx');
 	require('lib/core/zepto/ajax');
+	require('lib/core/zepto/form');
 
 	//zepto plugin
 	require('lib/core/extra/zepto/zepto');
