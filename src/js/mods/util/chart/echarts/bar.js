@@ -85,8 +85,6 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 
 			if(!$.isPlainObject(dataMap[0])){return;}
 
-			
-
 			var keys = Object.keys(dataMap[0]);
 			if(keys.length < 2){return;}
 
