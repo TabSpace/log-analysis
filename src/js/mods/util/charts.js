@@ -9,6 +9,7 @@ define('mods/util/charts',function(require,exports,module){
 
 	require('mods/util/chart/echarts/bar');
 	require('mods/util/chart/echarts/line');
+	require('mods/util/chart/echarts/scatter');
 
 	var charts = $chartManager;
 
