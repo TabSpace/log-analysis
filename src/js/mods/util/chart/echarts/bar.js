@@ -20,6 +20,7 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 				'<li>数据名称：<input name="dataName" placeholder="{{defaults.dataName}}" value="{{dataName}}"/></li>',
 				'<li>X轴：<input name="xAxis" value="{{xAxis}}"/></li>',
 				'<li>Y轴：<input name="yAxis" value="{{yAxis}}"/></li>',
+				'<li>X轴标记间隔：<input name="x-axis-label-interval" placeholder="auto" title="整数，默认为 auto，0为全部显示" value="{{x-axis-label-interval}}"/></li>',
 			'</ul>'
 		]
 	});
@@ -99,6 +100,12 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 				return item[yAxisName];
 			});
 
+			conf['x-axis-label-interval'] = (
+				conf['x-axis-label-interval'] === '' ||
+				conf['x-axis-label-interval'] === undefined
+			) ? 'auto' :
+				( parseInt(conf['x-axis-label-interval'], 10) || 0 );
+
 			var option = {
 				tooltip: {
 					show: true
@@ -106,6 +113,9 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 				xAxis : [
 					{
 						type : 'category',
+						axisLabel : {
+							interval : conf['x-axis-label-interval']
+						},
 						data : xAxisData
 					}
 				],

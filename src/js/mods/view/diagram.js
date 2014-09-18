@@ -84,8 +84,8 @@ define('mods/view/diagram',function(require,exports,module){
 			var conf = this.conf;
 			this.model = conf.model;
 			this.insert();
-			this.render = $delay(this.render, 10);
-			this.updateState = $delay(this.updateState, 10);
+			this.render = $delay(this.render, 20);
+			this.updateState = $delay(this.updateState, 20);
 			this.renderChartTypes();
 			this.render();
 			this.buildList();
