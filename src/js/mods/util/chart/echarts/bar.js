@@ -18,9 +18,9 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 				'<li>宽度：<input name="width" placeholder="{{defaults.width}}" value="{{width}}"/> px</li>',
 				'<li>高度：<input name="height" placeholder="{{defaults.height}}" value="{{height}}"/> px</li>',
 				'<li>数据名称：<input name="dataName" placeholder="{{defaults.dataName}}" value="{{dataName}}"/></li>',
-				'<li>X轴：<input name="xAxis" value="{{xAxis}}"/></li>',
-				'<li>Y轴：<input name="yAxis" value="{{yAxis}}"/></li>',
-				'<li>X轴标记间隔：<input name="x-axis-label-interval" placeholder="auto" title="整数，默认为 auto，0为全部显示" value="{{x-axis-label-interval}}"/></li>',
+				'<li>X轴：<input name="category" value="{{category}}"/></li>',
+				'<li>Y轴：<input name="value" value="{{value}}"/></li>',
+				'<li>类别标记间隔：<input name="category-label-interval" placeholder="auto" title="整数，默认为 auto，0为全部显示" value="{{category-label-interval}}"/></li>',
 			'</ul>'
 		]
 	});
@@ -89,22 +89,22 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 			var keys = Object.keys(dataMap[0]);
 			if(keys.length < 2){return;}
 
-			var xAxisName = conf.xAxis || keys[0];
-			var yAxisName = conf.yAxis || keys[1];
+			var categoryName = conf.category || keys[0];
+			var valueName = conf.value || keys[1];
 
-			var xAxisData = dataMap.map(function(item){
-				return item[xAxisName];
+			var categoryData = dataMap.map(function(item){
+				return item[categoryName];
 			});
 
-			var yAxisData = dataMap.map(function(item){
-				return item[yAxisName];
+			var valueData = dataMap.map(function(item){
+				return item[valueName];
 			});
 
-			conf['x-axis-label-interval'] = (
-				conf['x-axis-label-interval'] === '' ||
-				conf['x-axis-label-interval'] === undefined
+			conf['category-label-interval'] = (
+				conf['category-label-interval'] === '' ||
+				conf['category-label-interval'] === undefined
 			) ? 'auto' :
-				( parseInt(conf['x-axis-label-interval'], 10) || 0 );
+				( parseInt(conf['category-label-interval'], 10) || 0 );
 
 			var option = {
 				tooltip: {
@@ -114,9 +114,9 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 					{
 						type : 'category',
 						axisLabel : {
-							interval : conf['x-axis-label-interval']
+							interval : conf['category-label-interval']
 						},
-						data : xAxisData
+						data : categoryData
 					}
 				],
 				yAxis : [
@@ -128,7 +128,7 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 					{
 						'name':conf.dataName,
 						"type":"bar",
-						"data":yAxisData
+						"data":valueData
 					}
 				]
 			};

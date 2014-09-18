@@ -18,8 +18,8 @@ define('mods/util/chart/echarts/scatter',function(require,exports,module){
 				'<li>宽度：<input name="width" placeholder="{{defaults.width}}" value="{{width}}"/> px</li>',
 				'<li>高度：<input name="height" placeholder="{{defaults.height}}" value="{{height}}"/> px</li>',
 				'<li>数据名称：<input name="dataName" placeholder="{{defaults.dataName}}" value="{{dataName}}"/></li>',
-				'<li>X轴：<input name="xAxis" value="{{xAxis}}"/></li>',
-				'<li>Y轴：<input name="yAxis" value="{{yAxis}}"/></li>',
+				'<li>X轴：<input name="category" value="{{category}}"/></li>',
+				'<li>Y轴：<input name="value" value="{{value}}"/></li>',
 			'</ul>'
 		]
 	});
@@ -88,13 +88,13 @@ define('mods/util/chart/echarts/scatter',function(require,exports,module){
 			var keys = Object.keys(dataMap[0]);
 			if(keys.length < 2){return;}
 
-			var xAxisName = conf.xAxis || keys[0];
-			var yAxisName = conf.yAxis || keys[1];
+			var categoryName = conf.category || keys[0];
+			var valueName = conf.value || keys[1];
 
 			var seriesData = dataMap.map(function(item){
 				var arr = [];
-				arr.push(item[xAxisName]);
-				arr.push(item[yAxisName]);
+				arr.push(item[categoryName]);
+				arr.push(item[valueName]);
 				return arr;
 			});
 
