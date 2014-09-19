@@ -18,6 +18,9 @@
 				'<li>宽度：<input name="width" placeholder="{{defaults.width}}" value="{{width}}"/> px</li>',
 				'<li>高度：<input name="height" placeholder="{{defaults.height}}" value="{{height}}"/> px</li>',
 				'<li>数据名称：<input name="dataName" placeholder="{{defaults.dataName}}" value="{{dataName}}"/></li>',
+				'<li>半径：<input name="seriesRadius" placeholder="{{defaults.seriesRadius}}" value="{{seriesRadius}}"/>%</li>',
+				'<li>中心点X轴位置：<input name="seriesCenterX" placeholder="{{defaults.seriesCenterX}}" value="{{seriesCenterX}}"/>%</li>',
+				'<li>中心点Y轴位置：<input name="seriesCenterY" placeholder="{{defaults.seriesCenterY}}" value="{{seriesCenterY}}"/>%</li>',
 				'<li>名称：<input name="category" value="{{category}}"/></li>',
 				'<li>值：<input name="value" value="{{value}}"/></li>',
 			'</ul>'
@@ -30,6 +33,9 @@
 			var defaults = {
 				dataMap : null,
 				dataName : 'value',
+				seriesRadius : 75,
+				seriesCenterX : 50,
+				seriesCenterY : 50,
 				width : Math.floor(window.screen.width * 0.8),
 				height : Math.floor(window.screen.height * 0.3)
 			};
@@ -88,21 +94,29 @@
 			var keys = Object.keys(dataMap[0]);
 			if(keys.length < 2){return;}
 
-			var yAxisName = conf.yAxis || keys[1];
+			var categoryName = conf.category || keys[0];
+			var valueName = conf.value || keys[1];
 
-			var yAxisData = dataMap.map(function(item){
-				return item[yAxisName];
+			var seriesData = dataMap.map(function(item){
+				var obj = {};
+				obj.name = item[categoryName];
+				obj.value = item[valueName];
+				return obj;
 			});
 
 			var option = {
 				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)",
 					show: true
 				},
 				series : [
 					{
-						'name':conf.dataName,
-						"type":"pie",
-						"data":yAxisData
+						name : conf.dataName,
+						type : 'pie',
+						radius : conf.seriesRadius + '%',
+						center : [conf.seriesCenterX + '%', conf.seriesCenterY + '%'],
+						data : seriesData
 					}
 				]
 			};

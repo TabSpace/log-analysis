@@ -20,7 +20,7 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 				'<li>数据名称：<input name="dataName" placeholder="{{defaults.dataName}}" value="{{dataName}}"/></li>',
 				'<li>X轴：<input name="category" value="{{category}}"/></li>',
 				'<li>Y轴：<input name="value" value="{{value}}"/></li>',
-				'<li>类别标记间隔：<input name="category-label-interval" placeholder="auto" title="整数，默认为 auto，0为全部显示" value="{{category-label-interval}}"/></li>',
+				'<li>类别标记间隔：<input name="categoryLabelInterval" placeholder="auto" title="整数，默认为 auto，0为全部显示" value="{{categoryLabelInterval}}"/></li>',
 			'</ul>'
 		]
 	});
@@ -100,11 +100,11 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 				return item[valueName];
 			});
 
-			conf['category-label-interval'] = (
-				conf['category-label-interval'] === '' ||
-				conf['category-label-interval'] === undefined
+			conf.categoryLabelInterval = (
+				conf.categoryLabelInterval === '' ||
+				conf.categoryLabelInterval === undefined
 			) ? 'auto' :
-				( parseInt(conf['category-label-interval'], 10) || 0 );
+				( parseInt(conf.categoryLabelInterval, 10) || 0 );
 
 			var option = {
 				tooltip: {
@@ -114,7 +114,7 @@ define('mods/util/chart/echarts/bar',function(require,exports,module){
 					{
 						type : 'category',
 						axisLabel : {
-							interval : conf['category-label-interval']
+							interval : conf.categoryLabelInterval
 						},
 						data : categoryData
 					}
