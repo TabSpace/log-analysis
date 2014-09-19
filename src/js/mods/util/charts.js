@@ -11,6 +11,7 @@ define('mods/util/charts',function(require,exports,module){
 	require('mods/util/chart/echarts/line');
 	require('mods/util/chart/echarts/scatter');
 	require('mods/util/chart/echarts/pie');
+	require('mods/util/chart/echarts/custom');
 
 	var charts = $chartManager;
 
