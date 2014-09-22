@@ -51,15 +51,18 @@ define('mods/model/diagramlist',function(require,exports,module){
 		removeDiagram : function(name){
 			this.remove(name);
 		},
-		save : function(){
-			var storeData = {};
+		getConf : function(){
+			var configs = {};
 			var data = this.get();
-			$.each(data, function(name, diagram){
-				var diagramConf = diagram.get();
-				delete diagramConf.data;
-				storeData[name] = diagramConf;
+			$.each(data, function(name, obj){
+				var conf = obj.get();
+				delete conf.data;
+				configs[name] = conf;
 			});
-
+			return configs;
+		},
+		save : function(){
+			var storeData = this.getConf();
 			try{
 				localStorage.setItem(DIAGRAM_LIST_NAME, JSON.stringify(storeData));
 			}catch(e){
