@@ -133,7 +133,7 @@ define('mods/model/pipe',function(require,exports,module){
 			var worker = new Worker(url);
 			worker.onerror = function(e){
 				worker.terminate();
-				console.error(this.get('type') + ' ' + that.get('name') + ' compute error:', e.message);
+				console.error(that.get('type') + ' ' + that.get('name') + ' compute error:', e.message);
 				that.set('data', null);
 				that.set('state', 'error');
 				that.set('ready', true);

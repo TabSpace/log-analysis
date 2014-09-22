@@ -7,6 +7,7 @@ define('mods/view/menu',function(require,exports,module){
 	var $view = require('lib/mvc/view');
 	var $stage = require('mods/model/stage');
 	var $tpl = require('lib/kit/util/template');
+	var $channel = require('mods/channel/global');
 
 	var TPL = $tpl({
 		box : [
@@ -39,6 +40,10 @@ define('mods/view/menu',function(require,exports,module){
 			var proxy = this.proxy();
 			this.delegate(action);
 			$stage[action]('change:currentTab', proxy('checkTab'));
+			$channel[action]('switch-tab-to', proxy('switchTabTo'));
+		},
+		switchTabTo : function(role){
+			$stage.set('currentTab', role);
 		},
 		switchTab : function(evt){
 			var li = $(evt.currentTarget);

@@ -7,6 +7,8 @@ define('mods/channel/global',function(require,exports,module){
 
 	var $listener = require('lib/common/listener');
 	module.exports = new $listener([
+		//切换显示面板
+		'switch-tab-to',
 		//数据开始准备
 		'data-prepare',
 		//数据生成完毕

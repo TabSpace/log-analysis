@@ -78,7 +78,21 @@ define('mods/ctrl/controlPanel',function(require,exports,module){
 				console.error('resetConfig error:', e.message);
 				return;
 			}
-			console.log(config);
+
+			this.resetConfig();
+			$channel.trigger('switch-tab-to', 'data');
+			
+			if($.isPlainObject(config.pipelist)){
+				setTimeout(function(){
+					$channel.trigger('load-pipes', config.pipelist);
+				});
+			}
+
+			if($.isPlainObject(config.diagramlist)){
+				setTimeout(function(){
+					$channel.trigger('load-diagrams', config.diagramlist);
+				});
+			}
 		}
 	});
 
