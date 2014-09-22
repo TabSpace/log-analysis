@@ -8,6 +8,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 	var $stage = require('mods/model/stage');
 	var $tpl = require('lib/kit/util/template');
 	var $tip = require('mods/dialog/tip');
+	var $config = require('mods/model/config');
 
 	var TPL = $tpl({
 		box : [
@@ -49,6 +50,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 		build : function(){
 			this.insert();
 			this.checkVisible();
+			this.updateFileName();
 		},
 		insert : function(){
 			var conf = this.conf;
@@ -58,6 +60,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 			var proxy = this.proxy();
 			this.delegate(action);
 			$stage[action]('change:currentTab', proxy('checkVisible'));
+			$config[action]('change:fileName', proxy('updateFileName'));
 		},
 		checkVisible : function(){
 			var conf = this.conf;
@@ -69,6 +72,13 @@ define('mods/view/controlPanel',function(require,exports,module){
 				root.hide();
 			}
 		},
+		//更新保存的配置文件名
+		updateFileName : function(){
+			var fileName = $config.get('fileName');
+			var elExportName = this.role('export-name');
+			fileName = fileName || 'config';
+			elExportName.attr('placeholder', fileName);
+		},
 		//重置配置文件
 		resetConfig : function(){
 			if(confirm('确认要清除所有过滤器和图表的配置吗？')){
@@ -77,19 +87,36 @@ define('mods/view/controlPanel',function(require,exports,module){
 		},
 		//导出配置文件
 		exportConfig : function(){
-			var fileName = this.role('export-name').val() || 'config';
-			fileName = fileName + '.json';
+			var elExportName = this.role('export-name');
+			var fileName = elExportName.val() || elExportName.attr('placeholder') || 'config';
 			this.trigger('exportConfig', fileName);
 		},
 		//导入配置文件
 		importConfig : function(){
+			var that = this;
 			var elConfigPath = this.role('config-path');
 			var input = elConfigPath.get(0);
 			var path = elConfigPath.val().trim();
 			if(!path || !input.files.length){
 				$tip('请选择配置文件');
 			}else{
-				this.trigger('importConfig', input.files[0]);
+				var blob = input.files[0];
+				if(blob && blob.size){
+					var reader = new FileReader();
+					reader.readAsText(blob);
+					reader.onload = function(){
+						var strConfig = reader.result;
+						var config = {};
+						try{
+							config = JSON.parse(strConfig);
+						}catch(e){
+							console.error('Import onfig error:', e.message);
+							return;
+						}
+
+						that.trigger('importConfig', config);
+					};
+				}
 			}
 		}
 	});

@@ -11,6 +11,7 @@ define('mods/ctrl/controlPanel',function(require,exports,module){
 	var $saveAs = require('vendor/saveAs');
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
+	var $config = require('mods/model/config');
 
 	var ControlPanel = $controller.extend({
 		defaults : {
@@ -36,6 +37,7 @@ define('mods/ctrl/controlPanel',function(require,exports,module){
 			var allPipeNames = $pipelist.keys();
 			var allDiagramNames = $diagramlist.keys();
 
+			$config.clear();
 			allDiagramNames.forEach(function(name){
 				$channel.trigger('remove-diagram', name);
 			});
@@ -46,41 +48,31 @@ define('mods/ctrl/controlPanel',function(require,exports,module){
 		//保存配置文件
 		saveConfig : function(fileName){
 			if(!fileName){return;}
+			$config.set('fileName', fileName);
 
 			var config = {};
+			config.common = $config.get();
 			config.pipelist = $pipelist.getConf();
 			config.diagramlist = $diagramlist.getConf();
+
+			console.info('Save config:', config);
 
 			var strConfig = JSON.stringify(config);
 			var blob = new Blob([strConfig], {
 				type: "application/json;charset=UTF-8"
 			});
-			$saveAs(blob, fileName);
+			$saveAs(blob, fileName + '.json');
 		},
 		//加载配置文件
-		loadConfig : function(blob){
-			var that = this;
-			if(blob && blob.size){
-				var reader = new FileReader();
-				reader.readAsText(blob);
-				reader.onload = function(){
-					var strConfig = reader.result;
-					that.setConfig(strConfig);
-				};
-			}
-		},
-		//配置配置文件
-		setConfig : function(strConfig){
-			var config = {};
-			try{
-				config = JSON.parse(strConfig);
-			}catch(e){
-				console.error('resetConfig error:', e.message);
-				return;
-			}
-
+		loadConfig : function(config){
 			this.resetConfig();
 			$channel.trigger('switch-tab-to', 'data');
+
+			console.info('Load config:', config);
+
+			if($.isPlainObject(config.common)){
+				$config.set(config.common);
+			}
 			
 			if($.isPlainObject(config.pipelist)){
 				setTimeout(function(){
