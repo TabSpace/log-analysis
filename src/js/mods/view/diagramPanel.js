@@ -7,6 +7,7 @@ define('mods/view/diagramPanel',function(require,exports,module){
 	var $view = require('lib/mvc/view');
 	var $stage = require('mods/model/stage');
 	var $tpl = require('lib/kit/util/template');
+	var $tip = require('mods/dialog/tip');
 
 	var TPL = $tpl({
 		box : [
