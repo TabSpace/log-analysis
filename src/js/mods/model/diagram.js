@@ -8,7 +8,6 @@ define('mods/model/diagram',function(require,exports,module){
 	var $tip = require('mods/dialog/tip');
 	var $channel = require('mods/channel/global');
 	var $pipe = require('mods/model/pipe');
-	var $getDataModel = require('mods/util/getDataModel');
 
 	var $contains = require('lib/kit/arr/contains');
 
@@ -17,6 +16,7 @@ define('mods/model/diagram',function(require,exports,module){
 			type : 'diagram',
 			name : '',
 			data : null,
+			dataVisible : true,
 			source : null,
 			state : 'prepare',
 			ready : false,

@@ -171,10 +171,11 @@ module.exports = function(grunt){
 		outputConfig.common = config.common;
 
 		var tplData = {};
+		var fileName = config.common ? config.common.fileName : 'exports';
 		tplData['CONFIG_DATA'] = JSON.stringify(outputConfig);
 		tplData['SRC_PATH'] = srcPath;
-
-		var fileName = config.common ? config.common.fileName : 'exports';
+		tplData['TITLE'] = fileName;
+		
 		grunt.log.write('\n');
 		var template = grunt.file.read(templatePath, {charset : 'utf-8'});
 		var html = substitute(template, tplData);

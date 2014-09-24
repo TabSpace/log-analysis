@@ -5,6 +5,22 @@
 @import url('mods/common.css');
 @import url('mods/page.css');
 @import url('mods/pipe.css');
+@import url('mods/diagram.css');
 
+.sec-ctrl>h3{
+	border-bottom: 2px solid #999;
+}
 
+.diagram{
+	border-bottom: 2px solid #999;
+}
 
+.diagram .header{
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.diagram .header [data-role="data-info"]{
+	font-weight: normal;
+	font-size: 12px;
+}

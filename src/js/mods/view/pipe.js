@@ -207,14 +207,19 @@ define('mods/view/pipe',function(require,exports,module){
 			var conf = this.conf;
 			var data = this.model.get('data');
 			var count = 0;
+			var elInfo = this.role('data-info');
+
 			if($.isArray(data)){
 				count = data.length;
-			}else if($.isPlainObject(data)){
-				count = Object.keys(data);
 			}else{
-				count = 1;
+				count = null;
 			}
-			this.role('data-info').html('数据数量:' + count);
+
+			if(count === null){
+				elInfo.html('');
+			}else{
+				elInfo.html('数据数量:' + count);
+			}
 
 			if(this.list){
 				this.list.update(data);

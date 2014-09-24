@@ -25,9 +25,10 @@ define('mods/view/diagram',function(require,exports,module){
 					'<div class="chart" data-role="chart"></div>',
 				'</div>',
 				'<div class="datalist" data-role="list"></div>',
-				'<div class="box header">',
+				'<div class="box header" data-role="operation">',
 					'<div class="fr">',
-						'<a class="button" data-role="toggle">显示配置</a>',
+						'<a class="button" data-role="toggle-data">隐藏数据</a>',
+						'<a class="button" data-role="toggle-conf">显示配置</a>',
 						'<a class="button" data-role="output-data">输出</a>',
 						'<a class="button" data-role="del">移除</a>',
 						'<a class="button" data-role="refresh">刷新</a>',
@@ -68,9 +69,11 @@ define('mods/view/diagram',function(require,exports,module){
 			parent : null,
 			model : null,
 			template : TPL.box,
+			hideOperation : false,
 			hideSinglePage : true,
 			events : {
-				'[data-role="toggle"] tap' : 'toggleConf',
+				'[data-role="toggle-data"] tap' : 'toggleData',
+				'[data-role="toggle-conf"] tap' : 'toggleConf',
 				'[data-role="add-entry"] tap' : 'addEntry',
 				'[data-role="remove-entry"] tap' : 'removeEntry',
 				'[data-role="output-entry"] tap' : 'outputEntry',
@@ -86,8 +89,9 @@ define('mods/view/diagram',function(require,exports,module){
 			this.insert();
 			this.render = $delay(this.render, 20);
 			this.updateState = $delay(this.updateState, 20);
-			this.renderChartTypes();
 			this.render();
+			this.renderChartTypes();
+			this.renderOperations();
 			this.buildList();
 		},
 		setEvents : function(action){
@@ -97,6 +101,10 @@ define('mods/view/diagram',function(require,exports,module){
 			model[action]('change', proxy('render'));
 			model[action]('change:data', proxy('buildList'));
 		},
+		toggleData : function(){
+			var model = this.model;
+			model.set('dataVisible', !model.get('dataVisible'));
+		},
 		//更新过滤器的状态样式
 		updateState : function(){
 			this.role('root').attr(
@@ -104,8 +112,26 @@ define('mods/view/diagram',function(require,exports,module){
 				'pt10 pb10 bdb1 diagram ' +
 					this.model.get('state')
 			);
+			this.renderDataVisible();
 			this.renderChart();
 			this.renderChartConf();
+		},
+		//渲染操作列表
+		renderOperations : function(){
+			var conf = this.conf;
+			if(conf.hideOperation){
+				this.role('operation').hide();
+			}
+		},
+		//渲染数据表是否显示隐藏
+		renderDataVisible : function(){
+			var dataVisible = this.model.get('dataVisible');
+			var elList = this.role('list');
+			if(dataVisible){
+				elList.show();
+			}else{
+				elList.hide();
+			}
 		},
 		//渲染图表类型下拉列表
 		renderChartTypes : function(){
