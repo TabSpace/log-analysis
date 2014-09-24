@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url('mods/reset.css');
+@import url('mods/common.css');
+@import url('mods/state.css');
+@import url('mods/page.css');
+@import url('mods/pipe.css');
+@import url('mods/diagram.css');
+
+/* 导航TAB菜单 */
+.sec-menu li{ display: inline-block; font-size: 1.2em; font-weight: bold; border: 1px solid rgba(0,0,0,0.1); background-color: rgba(0,0,0,0.1); padding: 10px 20px;margin:0 -1px -1px 0;border-radius: 10px 10px 0 0;cursor: pointer;}
+.sec-menu .current{background-color: #f8f8f8;border-bottom: 1px solid #f8f8f8;cursor: default;}
+
+/* 数据源路径管理表单 */
+.pathm .add{text-align: left;}
+
+/* 删除按钮 */
+.delete{background-color: rgba(0,0,0,0.05); color: #444; width: 20px; height: 20px;text-align: center;vertical-align: middle;line-height: 20px;border-radius: 3px; -webkit-transition:0.5s linear; cursor: pointer;}
+.delete:hover{background-color: rgba(0,0,0,0.7); color: #fff;}
+
+
+
+
+
