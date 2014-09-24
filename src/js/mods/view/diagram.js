@@ -126,11 +126,14 @@ define('mods/view/diagram',function(require,exports,module){
 		//渲染数据表是否显示隐藏
 		renderDataVisible : function(){
 			var dataVisible = this.model.get('dataVisible');
+			var elToggleData = this.role('toggle-data');
 			var elList = this.role('list');
 			if(dataVisible){
 				elList.show();
+				elToggleData.html('隐藏数据');
 			}else{
 				elList.hide();
+				elToggleData.html('显示数据');
 			}
 		},
 		//渲染图表类型下拉列表
