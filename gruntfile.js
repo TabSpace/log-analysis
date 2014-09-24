@@ -2,14 +2,16 @@ var $path = require('path');
 
 module.exports = function(grunt) {
 	grunt.initConfig({
-		basePath : $path.resolve(__dirname,'../'),
+		basePath : $path.resolve(__dirname,'./'),
 		pkg: grunt.file.readJSON('package.json'),
 		generateDiagram : {
-			options: {
-				cwd: '<%=basePath%>'
-			},
+			options: {},
 			demo : {
-
+				'srcPath' : '../src/',
+				'configPath' : '<%=basePath%>/demo',
+				'inputPath' : '<%=basePath%>/demo',
+				'outputPath' : '<%=basePath%>/demo',
+				'templatePath' : '<%=basePath%>/src/template/template.html'
 			}
 		}
 	});

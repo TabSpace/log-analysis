@@ -1,0 +1,7 @@
+/* 图表 */
+.diagram{transition:background-color 0.3s ease-out;}
+.diagram .conf ul li{overflow:hidden;}
+.diagram .conf ul li:hover{background-color: rgba(0,0,0,0.05);}
+.diagram .entries input{width: 100px;}
+.diagram .code textarea{height: 100px;width: 99%;overflow: auto;word-wrap: normal;}
+.diagram .chart-box{overflow: auto;}

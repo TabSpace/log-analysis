@@ -1,0 +1,46 @@
+body{font-size:12px;}
+input[type="button"]{padding: 5px 10px; }
+
+.fl{float:left;}
+.fr{float:right;}
+
+.p10{padding: 10px;}
+.pb10{padding-bottom: 10px;}
+.pt10{padding-top: 10px;}
+.pl10{padding-left: 10px;}
+.pr10{padding-right: 10px;}
+
+.m10{margin: 10px;}
+.mb10{margin-bottom: 10px;}
+.mt10{margin-top: 10px;}
+.ml10{margin-left: 10px;}
+.mr10{margin-right: 10px;}
+
+.m5{margin: 5px;}
+.mb5{margin-bottom: 5px;}
+.mt5{margin-top: 5px;}
+.ml5{margin-left: 5px;}
+.mr5{margin-right: 5px;}
+
+.bd1{border:1px solid rgba(0,0,0,0.1);}
+.bdt1{border-top: 1px solid rgba(0,0,0,0.1);}
+.bdb1{border-bottom: 1px solid rgba(0,0,0,0.1);}
+
+.w100{width: 100%;}
+.h100{height: 100%;}
+
+h1{font-size: 1.6em; font-weight: bold;}
+h2{font-size: 1.5em; font-weight: bold;}
+h3{font-size: 1.4em; font-weight: bold;}
+h4{font-size: 1.3em; font-weight: bold;}
+h5{font-size: 1.2em; font-weight: bold;}
+h6{font-size: 1.1em; font-weight: bold;}
+a.button{cursor: pointer; color:#428ad1;margin: 0 3px;}
+a.button:hover{text-decoration: underline;}
+
+input[type="file"]{width: 150px;}
+.box{overflow: hidden;}
+
+
+
+

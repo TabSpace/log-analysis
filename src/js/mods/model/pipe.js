@@ -162,11 +162,11 @@ define('mods/model/pipe',function(require,exports,module){
 			var that = this;
 			var source = this.get('source');
 			var filter = this.get('filter');
-			var code = '';
+			var code = [];
 			var args = [];
 			var data;
 			Object.keys(source).forEach(function(name, index){
-				code = 'var ' + name + ' = arguments[' + index + '];\n';
+				code.push('var ' + name + ' = arguments[' + index + '];');
 				var smodel = $getDataModel(source[name]);
 				if(smodel){
 					args.push(smodel.get('data'));
@@ -174,6 +174,7 @@ define('mods/model/pipe',function(require,exports,module){
 					args.push(null);
 				}
 			});
+			code = code.join('\n') + '\n';
 			code = code + filter;
 
 			setTimeout(function(){

@@ -27,7 +27,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 						'<tr>',
 							'<td>导出配置文件：</td>',
 							'<td><input data-role="export-name" type="text" placeholder="config" value=""/>.json</td>',
-							'<td><input data-role="export-config" type="button" value="保存"/></td>',
+							'<td><input data-role="export-config" type="button" value="保存"/> <input data-role="log-config" type="button" value="输出到控制台"/></td>',
 						'</tr>',
 					'</table>',
 				'</div>',
@@ -43,6 +43,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 			template : TPL.box,
 			events : {
 				'[data-role="reset-config"] tap' : 'resetConfig',
+				'[data-role="log-config"] tap' : 'logConfig',
 				'[data-role="import-config"] tap' : 'importConfig',
 				'[data-role="export-config"] tap' : 'exportConfig'
 			}
@@ -84,6 +85,10 @@ define('mods/view/controlPanel',function(require,exports,module){
 			if(confirm('确认要清除所有过滤器和图表的配置吗？')){
 				this.trigger('resetConfig');
 			}
+		},
+		//将配置信息输出到控制台
+		logConfig : function(){
+			this.trigger('logConfig');
 		},
 		//导出配置文件
 		exportConfig : function(){

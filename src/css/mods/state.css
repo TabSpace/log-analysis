@@ -1,0 +1,11 @@
+/* red */
+.error{background-color: rgba(255,0,0,0.1);}
+/* green */
+.success{background-color: rgba(0,255,0,0.1);}
+/* yellow */
+.prepare{background-color: rgba(255,255,0,0.1);}
+/* gray */
+.disable{background-color: rgba(0,0,0,0.1);}
+
+
+

@@ -1,0 +1,6 @@
+/* 过滤器 */
+.pipe{transition:background-color 0.3s ease-out;}
+.pipe .conf ul li{overflow:hidden;}
+.pipe .conf ul li:hover{background-color: rgba(0,0,0,0.05);}
+.pipe .entries input{width: 100px;}
+.pipe .code textarea{height: 100px;width: 99%;overflow: auto;word-wrap: normal;}
