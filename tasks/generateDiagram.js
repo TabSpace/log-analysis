@@ -3,6 +3,7 @@ var $path = require('path');
 
 module.exports = function(grunt){
 
+	//扩展一个对象
 	var append = function(){
 		var args = Array.prototype.slice.call(arguments);
 		original = args.shift() || {};
@@ -27,6 +28,7 @@ module.exports = function(grunt){
 		});
 	};
 
+	//获取配置文件
 	var getConfigFiles = function(configPath){
 		var configFiles = [];
 		grunt.file.recurse(configPath, function(abspath, rootdir, subdir, filename){
@@ -201,17 +203,19 @@ module.exports = function(grunt){
 			var data = this.data;
 
 			var that = this;
+			var targetPath = data.path;
+			var modulePath = $path.resolve(__dirname, '../');
 
-			var configFiles = getConfigFiles(data.configPath);
+			var configFiles = getConfigFiles(targetPath);
 
 			configFiles.forEach(function(configPath){
 				outputViewFile({
 					taskName : that.target,
 					configPath : configPath,
-					srcPath : data.srcPath,
-					inputPath : data.inputPath,
-					outputPath : data.outputPath,
-					templatePath : data.templatePath
+					srcPath : $path.relative(targetPath, $path.join(modulePath, 'src')),
+					inputPath : targetPath,
+					outputPath : targetPath,
+					templatePath : $path.join(modulePath, 'src/template/template.html')
 				});
 			});
 
