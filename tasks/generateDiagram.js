@@ -124,15 +124,18 @@ module.exports = function(grunt){
 				code = code + filter;
 
 				try{
+					var t1 = new Date();
 					var fn = new Function(code);
 					conf.data = fn.apply(null, args);
-					grunt.log.writeln(
-						name + ' compute complete:' +
-						(Array.isArray(conf.data) ?
-							' array length ' + conf.data.length :
-							' object'
-						)
-					);
+
+					grunt.log.writeln([
+						'[name:' + name + ']',
+						'[type:' + (Array.isArray(conf.data) ?
+							'array length ' + conf.data.length :
+							'object'
+						) + ']',
+						'[time:' + (new Date() - t1) + 'ms]'
+					].join(' '));
 				}catch(e){
 					grunt.log.errorlns(name + ' compute error:' + e.message);
 				}
@@ -151,13 +154,13 @@ module.exports = function(grunt){
 		};
 
 		//处理过滤器
-		grunt.log.writeln('\n计算过滤器数据:');
+		grunt.log.writeln('\nGenerate pipe data:');
 		Object.keys(pipelist).forEach(function(name){
 			prepareData(name);
 		});
 
 		//处理图表
-		grunt.log.writeln('\n计算图表数据:');
+		grunt.log.writeln('\nGenerate diagram data:');
 		var diagramlist = config.diagramlist;
 		Object.keys(diagramlist).forEach(function(name){
 			var conf = diagramlist[name] || {};

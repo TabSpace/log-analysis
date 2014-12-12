@@ -1,6 +1,6 @@
 {
   "name": "log-analysis",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Generate report file from data file.",
   "author": "Tony Liang <pillar0514@gmail.com>",
   "homepage": "https://github.com/Esoul/log-analysis",
