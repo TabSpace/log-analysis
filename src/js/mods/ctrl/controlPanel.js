@@ -33,6 +33,7 @@ define('mods/ctrl/controlPanel',function(require,exports,module){
 			objs.view[action]('logConfig', proxy('logConfig'));
 			objs.view[action]('exportConfig', proxy('saveConfig'));
 			objs.view[action]('importConfig', proxy('loadConfig'));
+			objs.view[action]('mergeConfig', proxy('mergeConfig'));
 		},
 		//重置配置文件
 		resetConfig : function(){
@@ -79,14 +80,19 @@ define('mods/ctrl/controlPanel',function(require,exports,module){
 		//加载配置文件
 		loadConfig : function(config){
 			this.resetConfig();
-			$channel.trigger('switch-tab-to', 'data');
-
-			console.info('Load config:', config);
 
 			if($.isPlainObject(config.common)){
 				$config.set(config.common);
 			}
 			
+			this.mergeConfig(config);
+		},
+		//混合配置文件
+		mergeConfig : function(config){
+			$channel.trigger('switch-tab-to', 'data');
+
+			console.info('Read config:', config);
+
 			if($.isPlainObject(config.pipelist)){
 				setTimeout(function(){
 					$channel.trigger('load-pipes', config.pipelist);

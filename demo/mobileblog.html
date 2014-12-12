@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>mobileblog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<script>
+var $CONFIG = {"diagramlist":{"单位时间阶段内pagelets报告次数":{"type":"diagram","name":"单位时间阶段内pagelets报告次数","dataVisible":true,"source":{"data":"单位时间阶段内pagelets报告次数"},"state":"success","ready":true,"chart":{"type":"echarts/bar"},"filter":"return data;","data":[]},"博文页渲染各个阶段消耗时间":{"type":"diagram","name":"博文页渲染各个阶段消耗时间","dataVisible":true,"source":{"rs":"博文页渲染各个阶段消耗时间"},"state":"success","ready":true,"chart":{"width":"600","dataName":"time","value":"interval","categoryLabelInterval":"0","type":"echarts/bar"},"filter":"return rs;","data":[]},"博文页渲染各个阶段消耗时间-饼图":{"type":"diagram","name":"博文页渲染各个阶段消耗时间-饼图","dataVisible":true,"source":{"rs":"博文页渲染各个阶段消耗时间"},"state":"success","ready":true,"chart":{"width":"600","dataName":"interval","seriesCenterX":"50","value":"interval","type":"echarts/pie"},"filter":"return rs;","data":[]},"博文页渲染各个阶段消耗时间 - 自定义图表":{"type":"diagram","name":"博文页渲染各个阶段消耗时间 - 自定义图表","dataVisible":false,"source":{"rs":"博文页渲染各个阶段消耗时间"},"state":"success","ready":true,"chart":{"width":"600","type":"echarts/custom"},"filter":"var option = {\n  tooltip: {\n    show: true\n  },\n  xAxis : [\n    {\n      type : 'category',\n      axisLabel : {\n        interval : 0\n      },\n      data : rs.map(function(item){\n        return item.type;\n      })\n    }\n  ],\n  yAxis : [\n    {\n      type : 'value'\n    }\n  ],\n  series : [\n    {\n      name : '消耗时间',\n\t  type : \"bar\",\n\t  data : rs.map(function(item){\n        return item.time;\n      })\n\t},\n    {\n      name : '间隔时间',\n\t  type : \"bar\",\n\t  data : rs.map(function(item){\n        return item.interval;\n      })\n\t}\n  ]\n};\n\nreturn option;","data":{"tooltip":{"show":true},"xAxis":[{"type":"category","axisLabel":{"interval":0},"data":[]}],"yAxis":[{"type":"value"}],"series":[{"name":"消耗时间","type":"bar","data":[]},{"name":"间隔时间","type":"bar","data":[]}]}}},"common":{"fileName":"mobileblog"}};
+</script>
+<link rel="stylesheet" type="text/css" href="../src//css/output.css">
+</head>
+<body>
+<div class="wrapper" id="wrapper"></div>
+<script src="../src//js/lithe.js" data-config="/config.js" data-main="conf/page/output.js"></script>
+</body>
+</html>

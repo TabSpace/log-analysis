@@ -1,8 +1,14 @@
 {
   "name": "log-analysis",
-  "version": "0.0.0",
-  "description": "Generate report files for data.",
+  "version": "0.0.1",
+  "description": "Generate report file from data file.",
+  "author": "Tony Liang <pillar0514@gmail.com>",
+  "homepage": "https://github.com/Esoul/log-analysis",
   "main": "gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Esoul/log-analysis.git"
+  },
   "dependencies": {
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-clean": "~0.5.0",
@@ -15,14 +21,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Esoul/log-analysis.git"
-  },
-  "author": "Tony.Liang",
-  "license": "MIT",
+  "files": [
+    "src",
+    "tasks",
+    "gruntfile.js",
+    "index.html",
+    "LICENSE"
+  ],
   "bugs": {
     "url": "https://github.com/Esoul/log-analysis/issues"
   },
-  "homepage": "https://github.com/Esoul/log-analysis"
+  "license": "MIT"
 }

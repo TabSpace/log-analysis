@@ -22,7 +22,10 @@ define('mods/view/controlPanel',function(require,exports,module){
 						'<tr>',
 							'<td class="name">导入配置文件：</td>',
 							'<td class="path"><input data-role="config-path" type="file" vlaue=""/></td>',
-							'<td class="add"><input data-role="import-config" type="button" value="导入"/></td>',
+							'<td class="add">',
+								'<input data-role="import-config" type="button" value="导入"/> ',
+								'<input data-role="merge-config" type="button" value="混合"/>',
+							'</td>',
 						'</tr>',
 						'<tr>',
 							'<td>导出配置文件：</td>',
@@ -45,6 +48,7 @@ define('mods/view/controlPanel',function(require,exports,module){
 				'[data-role="reset-config"] tap' : 'resetConfig',
 				'[data-role="log-config"] tap' : 'logConfig',
 				'[data-role="import-config"] tap' : 'importConfig',
+				'[data-role="merge-config"] tap' : 'mergeConfig',
 				'[data-role="export-config"] tap' : 'exportConfig'
 			}
 		},
@@ -96,8 +100,8 @@ define('mods/view/controlPanel',function(require,exports,module){
 			var fileName = elExportName.val() || elExportName.attr('placeholder') || 'config';
 			this.trigger('exportConfig', fileName);
 		},
-		//导入配置文件
-		importConfig : function(){
+		//加载配置文件
+		loadConfig : function(method){
 			var that = this;
 			var elConfigPath = this.role('config-path');
 			var input = elConfigPath.get(0);
@@ -115,14 +119,21 @@ define('mods/view/controlPanel',function(require,exports,module){
 						try{
 							config = JSON.parse(strConfig);
 						}catch(e){
-							console.error('Import onfig error:', e.message);
+							console.error('Read config error:', e.message);
 							return;
 						}
-
-						that.trigger('importConfig', config);
+						that.trigger(method + 'Config', config);
 					};
 				}
 			}
+		},
+		//混合配置文件
+		mergeConfig : function(){
+			this.loadConfig('merge');
+		},
+		//导入配置文件
+		importConfig : function(){
+			this.loadConfig('import');
 		}
 	});
 
