@@ -42,39 +42,61 @@ module.exports = function(grunt){
 
 	var outputViewFile = function(options){
 		options = options || {};
-		var taskName = options.taskName || '';
-		grunt.log.writeln('Task ' + taskName + ' start:');
-
 		var configPath = options.configPath;
+
+		grunt.log.writeln();
+		grunt.log.writeln('Generate diagram file from ' + configPath + ' :');
+
 		if(!configPath){
-			grunt.log.errorlns('Task ' + taskName + ' need configPath!', options);
+			grunt.log.errorlns('Missing configPath!', options);
 			return;
 		}
 
-		var srcPath = options.srcPath || '../';
-		grunt.log.writeln('Task ' + taskName + ' assign srcPath to: ' + srcPath);
+		var srcPath = options.srcPath || '';
+		if(srcPath){
+			grunt.log.writeln('Assign srcPath to: ' + srcPath);
+		}else{
+			grunt.log.errorlns('Missing srcPath!');
+			return;
+		}
 
 		var inputPath = options.inputPath;
 		if(!inputPath){
-			grunt.log.errorlns('Task ' + taskName + ' need inputPath!', options);
+			grunt.log.errorlns('Missing inputPath!', options);
 			return;
 		}
 
 		var outputPath = options.outputPath;
 		if(!outputPath){
-			grunt.log.errorlns('Task ' + taskName + ' need outputPath!', options);
+			grunt.log.errorlns('Missing outputPath!', options);
 			return;
 		}
 
 		var templatePath = options.templatePath;
 		if(!templatePath){
-			grunt.log.errorlns('Task ' + taskName + ' need templatePath!', options);
+			grunt.log.errorlns('Missing templatePath!', options);
 			return;
 		}
 
 		var config = grunt.file.readJSON(configPath);
+
 		if(!Array.isArray(config.sources) || !config.sources.length){
-			grunt.log.errorlns('There is no source data.');
+			grunt.log.errorlns('Missing source data.');
+			return;
+		}
+
+		if(!config.common){
+			grunt.log.errorlns('Missing common data.');
+			return;
+		}
+
+		if(!config.pipelist){
+			grunt.log.errorlns('Missing pipelist data.');
+			return;
+		}
+
+		if(!config.diagramlist){
+			grunt.log.errorlns('Missing diagramlist data.');
 			return;
 		}
 
@@ -210,7 +232,6 @@ module.exports = function(grunt){
 
 			configFiles.forEach(function(configPath){
 				outputViewFile({
-					taskName : that.target,
 					configPath : configPath,
 					srcPath : $path.relative(targetPath, $path.join(modulePath, 'src')),
 					inputPath : targetPath,
