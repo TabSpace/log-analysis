@@ -231,11 +231,12 @@ module.exports = function(grunt){
 			var configFiles = getConfigFiles(targetPath);
 
 			configFiles.forEach(function(configPath){
+				var configDir = $path.dirname(configPath);
 				outputViewFile({
 					configPath : configPath,
-					srcPath : $path.relative(targetPath, $path.join(modulePath, 'src')),
-					inputPath : targetPath,
-					outputPath : targetPath,
+					srcPath : $path.relative(configDir, $path.join(modulePath, 'src')),
+					inputPath : configDir,
+					outputPath : configDir,
 					templatePath : $path.join(modulePath, 'src/template/template.html')
 				});
 			});
