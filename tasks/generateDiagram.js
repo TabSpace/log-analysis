@@ -1,6 +1,5 @@
 var $fs = require('fs');
 var $path = require('path');
-var $clone = require('clone');
 
 module.exports = function(grunt){
 
@@ -140,7 +139,7 @@ module.exports = function(grunt){
 
 					var sourceConf = tree[sourceName];
 					if(sourceConf && sourceConf.data){
-						args.push($clone(sourceConf.data));
+						args.push(sourceConf.data);
 					}else{
 						args.push(null);
 					}
