@@ -1,5 +1,6 @@
 var $fs = require('fs');
 var $path = require('path');
+var $clone = require('clone');
 
 module.exports = function(grunt){
 
@@ -129,6 +130,7 @@ module.exports = function(grunt){
 			if(source && filter){
 				var code = [];
 				var args = [];
+				var t1 = new Date();
 				Object.keys(source).forEach(function(valName, index){
 					var sourceName = source[valName];
 					code.push('var ' + valName + ' = arguments[' + index + '];');
@@ -138,7 +140,7 @@ module.exports = function(grunt){
 
 					var sourceConf = tree[sourceName];
 					if(sourceConf && sourceConf.data){
-						args.push(sourceConf.data);
+						args.push($clone(sourceConf.data));
 					}else{
 						args.push(null);
 					}
@@ -148,7 +150,6 @@ module.exports = function(grunt){
 				code = code + filter;
 
 				try{
-					var t1 = new Date();
 					var fn = new Function(code);
 					conf.data = fn.apply(null, args);
 
