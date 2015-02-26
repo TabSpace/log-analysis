@@ -1,6 +1,6 @@
 /**
  * @fileoverview 通用浮层配置模块
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/common/layer',function(require,exports,module){
 

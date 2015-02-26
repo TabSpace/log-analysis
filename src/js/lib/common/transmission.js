@@ -1,6 +1,6 @@
 /**
  * @fileoverview 接口管理器
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/common/transmission',function(require,exports,module){
 

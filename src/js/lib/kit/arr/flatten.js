@@ -1,6 +1,6 @@
 /**
  * @fileoverview 数组扁平化 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @param {Array} arr 要操作的数组
  * @return {Number} 经过扁平化处理的数组
  * @example

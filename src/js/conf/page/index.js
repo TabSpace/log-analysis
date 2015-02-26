@@ -1,6 +1,6 @@
 /**
  * @fileoverview 数据统计首页
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('conf/page/index',function(require,exports,module){
 	require('conf/global');

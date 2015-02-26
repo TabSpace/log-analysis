@@ -1,6 +1,6 @@
 /**
  * @fileoverview 数据管道 / 过滤器
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/view/pipe',function(require,exports,module){
 

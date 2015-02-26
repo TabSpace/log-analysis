@@ -1,6 +1,6 @@
 /**
  * @fileoverview 根据源路径或者过滤器名称获取数据模型对象
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/util/getDataModel',function(require,exports,module){
 

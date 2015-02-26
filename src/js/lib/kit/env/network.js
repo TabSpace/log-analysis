@@ -1,6 +1,6 @@
 /**
  * @fileoverview 网络环境检测
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/kit/env/network',function(require,exports,module){

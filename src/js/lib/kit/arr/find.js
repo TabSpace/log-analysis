@@ -1,6 +1,6 @@
 /**
  * @fileoverview 查找符合条件的元素在数组中的位置 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @param {Array} arr 要操作的数组
  * @param {Function} fn 条件函数
  * @return {Array} 符合条件的元素在数组中的位置

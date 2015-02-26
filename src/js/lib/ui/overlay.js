@@ -1,6 +1,6 @@
 /**
  * @fileoverview 覆盖物基本UI
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/ui/overlay',function(require,exports,module){

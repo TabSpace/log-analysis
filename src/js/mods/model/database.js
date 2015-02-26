@@ -1,6 +1,6 @@
 /**
  * @fileoverview 数据库模型，负责与indexedDB的交互
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/model/database',function(require,exports,module){
 

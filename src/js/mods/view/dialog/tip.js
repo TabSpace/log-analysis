@@ -1,6 +1,6 @@
 /**
  * @fileoverview 对话框 - 提示
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('mods/view/dialog/tip',function(require,exports,module){

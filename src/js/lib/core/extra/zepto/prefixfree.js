@@ -1,6 +1,6 @@
 /**
  * @fileoverview zepto插件 - 提供免前缀设置CSS3功能 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/core/extra/zepto/prefixfree',function(require,exports,module){
 

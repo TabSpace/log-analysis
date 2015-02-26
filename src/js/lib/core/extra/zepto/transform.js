@@ -1,6 +1,6 @@
 /**
  * @fileoverview zepto transform属性获取与设置 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @param {String} property 要设置的 transform 属性
  * @param {Object} property transform 键值对
  * @param {String} value 要设置的 transform 值

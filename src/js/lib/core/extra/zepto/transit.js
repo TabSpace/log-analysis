@@ -1,6 +1,6 @@
 /**
  * @fileoverview 封装使用transition的动画
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/core/extra/zepto/transit',function(require,exports,module){
 

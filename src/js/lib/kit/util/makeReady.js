@@ -1,6 +1,6 @@
 /**
  * @fileoverview 构建一个Ready事件管理组件
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @example
 	var prop = '';
 	var obj = $makeReady({

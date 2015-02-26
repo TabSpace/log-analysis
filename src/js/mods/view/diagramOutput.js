@@ -1,6 +1,6 @@
 /**
  * @fileoverview 最终输出的图表
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/view/diagramOutput',function(require,exports,module){
 

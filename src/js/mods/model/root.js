@@ -1,6 +1,6 @@
 /**
  * @fileoverview 数据挂载的根节点
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/model/root',function(require,exports,module){
 

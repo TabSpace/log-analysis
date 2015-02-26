@@ -1,6 +1,6 @@
 /**
  * @fileoverview 图表注册管理工具
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/util/chartManager',function(require,exports,module){
 

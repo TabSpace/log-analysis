@@ -1,6 +1,6 @@
 /**
  * @fileoverview 图表模型
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/model/diagram',function(require,exports,module){
 

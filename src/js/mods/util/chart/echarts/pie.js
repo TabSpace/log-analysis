@@ -1,6 +1,6 @@
 /**
  * @fileoverview 饼图
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
  define('mods/util/chart/echarts/pie',function(require,exports,module){

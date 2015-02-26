@@ -1,6 +1,6 @@
 /**
  * @fileoverview 基础工厂元件类
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/mvc/base',function(require,exports,module){
 	var $ = require('lib');

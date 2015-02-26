@@ -1,6 +1,6 @@
 /**
  * @fileoverview 提供try catch 处理机制 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/kit/util/attempt',function(require,exports,module){

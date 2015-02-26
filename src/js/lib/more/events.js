@@ -1,6 +1,6 @@
 /**
  * @fileoverview 事件
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/more/events',function(require,exports,module){

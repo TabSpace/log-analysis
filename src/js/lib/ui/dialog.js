@@ -1,6 +1,6 @@
 /**
  * @fileoverview 对话框基本UI
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/ui/dialog',function(require,exports,module){

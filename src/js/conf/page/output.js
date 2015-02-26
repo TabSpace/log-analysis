@@ -1,6 +1,6 @@
 /**
  * @fileoverview 数据输出页
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('conf/page/output',function(require,exports,module){
 	require('conf/global');

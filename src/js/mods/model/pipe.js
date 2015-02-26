@@ -1,6 +1,6 @@
 /**
  * @fileoverview 管道对象，包含过滤规则和被过滤的数据，作为数据树的节点
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/model/pipe',function(require,exports,module){
 

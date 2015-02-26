@@ -1,6 +1,6 @@
 /**
  * @fileoverview zepto 函数扩充插件 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/core/extra/zepto/zepto',function(require,exports,module){
 

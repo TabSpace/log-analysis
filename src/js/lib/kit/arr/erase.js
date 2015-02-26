@@ -1,6 +1,6 @@
 /**
  * @fileoverview 删除数组中的对象 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @param {Array} arr 要操作的数组
  * @param {Mixed} item 要清除的对象
  * @return {Number} 对象原本所在位置

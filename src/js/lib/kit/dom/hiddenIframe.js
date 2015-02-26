@@ -1,6 +1,6 @@
 /**
  * @fileoverview 隐藏iframe工具 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/kit/dom/hiddenIframe',function(require,exports,module){
 

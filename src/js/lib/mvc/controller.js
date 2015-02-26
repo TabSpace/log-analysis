@@ -1,6 +1,6 @@
 /**
  * @fileoverview 基本控制器
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/mvc/controller',function(require,exports,module){
 	var $ = require('lib');

@@ -1,6 +1,6 @@
 /**
  * @fileoverview 触摸事件管理组件 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('vendor/hammer/hammer',function(require,exports,module){
 

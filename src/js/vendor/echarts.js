@@ -45345,7 +45345,7 @@ _global['zrender'] = zrender;
 
 /**
  * @fileoverview 百度图表工具 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('vendor/echarts', function(require,exports,module){
 

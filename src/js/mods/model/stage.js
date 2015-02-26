@@ -1,6 +1,6 @@
 /**
  * @fileoverview 场景公共数据
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/model/stage',function(require,exports,module){
 

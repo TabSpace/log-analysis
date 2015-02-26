@@ -1,6 +1,6 @@
 /**
  * @fileoverview 修正补位
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @param {String} str 字符串
  * @param {Number} w 补位数量
  * @returns {String} 经过补位的字符串

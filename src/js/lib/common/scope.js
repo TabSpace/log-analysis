@@ -1,6 +1,6 @@
 /**
  * @fileoverview 全局scope对象管理器
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/common/scope',function(require,exports,module){
 

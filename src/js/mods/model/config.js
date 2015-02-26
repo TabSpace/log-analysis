@@ -1,6 +1,6 @@
 /**
  * @fileoverview 设置
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('mods/model/config',function(require,exports,module){
 

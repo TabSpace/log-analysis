@@ -1,6 +1,6 @@
 /**
  * @fileoverview 确认对象是否在数组中 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  * @param {Array} arr 要操作的数组
  * @param {Mixed} item 要搜索的对象
  * @return {Boolean} 如果对象在数组中，返回true

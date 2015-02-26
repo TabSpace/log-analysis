@@ -1,6 +1,6 @@
 /**
  * @fileoverview 获取 transform rotate 的不带单位的值
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 define('lib/kit/dom/getRotate',function(require,exports,module){
 

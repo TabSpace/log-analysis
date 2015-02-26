@@ -1,6 +1,6 @@
 /**
  * @fileoverview 散点图
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('mods/util/chart/echarts/scatter',function(require,exports,module){

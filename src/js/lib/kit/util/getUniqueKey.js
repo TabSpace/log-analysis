@@ -1,6 +1,6 @@
 /**
  * @fileoverview 获取唯一ID 
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/kit/util/getUniqueKey',function(require,exports,module){

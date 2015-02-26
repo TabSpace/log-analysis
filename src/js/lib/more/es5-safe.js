@@ -1,7 +1,7 @@
 /**
  * @fileoverview ECMA-SCRIPT兼容处理
  * @desc 仅留存了移动端低版本设备可能存在兼容性问题的函数
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/more/es5-safe',function(require,exports,module){

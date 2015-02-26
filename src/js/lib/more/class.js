@@ -1,6 +1,6 @@
 /**
  * @fileoverview 类
- * @authors liangdong2 <liangdong2@staff.sina.com.cn>
+ * @authors Tony Liang <pillar0514@163.com>
  */
 
 define('lib/more/class',function(require,exports,module){
