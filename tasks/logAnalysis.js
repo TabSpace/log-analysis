@@ -117,7 +117,7 @@ module.exports = function(grunt){
 			var text = grunt.file.read(filePath, {
 				encoding : 'utf-8'
 			});
-			var list = text.split(/[\r\n]/);
+			var list = text.split(/[\r\n]+/);
 			tree[path] = {
 				type : 'source',
 				name : path,

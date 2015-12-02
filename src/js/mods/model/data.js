@@ -38,7 +38,7 @@ define('mods/model/data',function(require,exports,module){
 			}
 		},
 		buildData : function(text){
-			var list = text.split(/[\r\n]/);
+			var list = text.split(/[\r\n]+/);
 			this.set('data', list);
 		},
 		checkReady : function(){
