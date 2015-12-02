@@ -31,9 +31,16 @@ module.exports = function(grunt){
 	//获取配置文件
 	var getConfigFiles = function(configPath){
 		var configFiles = [];
-		grunt.file.recurse(configPath, function(abspath, rootdir, subdir, filename){
-			configFiles.push(abspath);
-		});
+		if(grunt.file.isFile){
+			configFiles.push(
+				$path.resolve(__dirname, configPath)
+			);
+		}else{
+			grunt.file.recurse(configPath, function(abspath, rootdir, subdir, filename){
+				configFiles.push(abspath);
+			});
+		}
+
 		return configFiles.filter(function(path){
 			var fileName = $path.basename(path);
 			return $path.extname(fileName) === '.json';
