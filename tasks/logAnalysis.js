@@ -222,7 +222,7 @@ module.exports = function(grunt){
 	};
 
 	grunt.registerMultiTask(
-		'generateDiagram',
+		'logAnalysis',
 		'generate diagrams',
 		function(){
 			var done = this.async();

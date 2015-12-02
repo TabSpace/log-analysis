@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 				]
 			}
 		},
-		generateDiagram : {
+		logAnalysis : {
 			options: {},
 			test : {
 				path : $path.resolve(__dirname, 'test/demo')
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 		'the default task',
 		[
 			'copy:test',
-			'generateDiagram'
+			'logAnalysis'
 		]
 	);
 
