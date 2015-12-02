@@ -1,13 +1,13 @@
 {
   "name": "log-analysis",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Generate report file from data file.",
   "author": "Tony Liang <pillar0514@gmail.com>",
-  "homepage": "https://github.com/Esoul/log-analysis",
+  "homepage": "https://github.com/tabspace/log-analysis",
   "main": "gruntfile.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Esoul/log-analysis.git"
+    "url": "git://github.com/tabspace/log-analysis.git"
   },
   "dependencies": {
 
@@ -33,7 +33,7 @@
     "LICENSE"
   ],
   "bugs": {
-    "url": "https://github.com/Esoul/log-analysis/issues"
+    "url": "https://github.com/tabspace/log-analysis/issues"
   },
   "license": "MIT"
 }
