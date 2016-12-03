@@ -141,7 +141,7 @@
 
 0. 在项目目录执行 `grunt`
 
-	报告文件声称到了项目目录下的 index.html
+	报告文件生成到了项目目录下的 index.html
 
 ##Tips
 
