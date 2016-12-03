@@ -10,6 +10,6 @@
   "license": "ISC",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "log-analysis": "0.0.14"
+    "log-analysis": "0.0.15"
   }
 }
