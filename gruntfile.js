@@ -22,9 +22,11 @@ module.exports = function(grunt) {
 			}
 		},
 		logAnalysis : {
-			options: {},
+			options: {
+				staticFilePath: 'src'
+			},
 			test : {
-				path : $path.resolve(__dirname, 'test/demo')
+				src: ['test/demo/**/mobilelog.json']
 			}
 		}
 	});

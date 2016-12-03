@@ -16,9 +16,6 @@
     "grunt": "~0.4.2",
     "grunt-contrib-copy": "^0.6.0"
   },
-  "peerDependencies": {
-    "grunt": "~0.4.0"
-  },
   "directories": {
     "test": "test"
   },
@@ -26,6 +23,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
+    "lib",
     "src",
     "tasks",
     "gruntfile.js",
