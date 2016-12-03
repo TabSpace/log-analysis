@@ -1,6 +1,6 @@
 {
   "name": "log-analysis",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Generate report file from data file.",
   "author": "Tony Liang <pillar0514@gmail.com>",
   "homepage": "https://github.com/tabspace/log-analysis",
@@ -26,7 +26,6 @@
     "lib",
     "src",
     "tasks",
-    "gruntfile.js",
     "index.html",
     "LICENSE"
   ],

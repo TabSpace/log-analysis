@@ -37,7 +37,7 @@ module.exports = function(grunt){
 			if(conf.staticFilePath){
 				staticFilePath = $path.join(gruntFileRoot, conf.staticFilePath);
 			}else{
-				staticFilePath = $path.join(gruntFileRoot, 'node_modules/log-analysis');
+				staticFilePath = $path.join(gruntFileRoot, 'node_modules/log-analysis/src');
 			}
 
 			files.forEach(function(file){
